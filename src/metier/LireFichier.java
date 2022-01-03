@@ -7,6 +7,11 @@ public class LireFichier
 {
 	public LireFichier(String fichier)
 	{
+		System.out.println(LireFichier(fichier));
+	}
+
+	public String LireFichier(String fichier)
+	{
 		try
 		{
 			// Creation d'objet pour la lecture de fichier.txt
@@ -22,12 +27,14 @@ public class LireFichier
 				// Ajoute la ligne au buffer
 				sRet += line + "\n";
 			}
-			isr.close();    
-			System.out.println("Contenu du fichier : ");
+			isr.close();
+
+			String[] split = fichier.split("/");
+			System.out.println("Contenu du fichier " + split[split.length-1] + " : ");
 			System.out.println(sb.toString());
 
-			System.out.print(sRet);
+			return sRet;
 		}
-		catch(IOException e){System.out.println(e);}
+		catch(IOException e){System.out.println(e); return "\nErreur fichier introuvable\n";}
 	}
 }
