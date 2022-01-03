@@ -1,7 +1,11 @@
+import metier.LireFichier;
+import ihm.Vue;
+
 public class Controleur
 {
 	public static void main(String[] args)
 	{
-		System.out.println("Hello");
+		LireFichier lf = new LireFichier("../src/fichiers/file.txt");
+		Vue v = new Vue();
 	}
 }

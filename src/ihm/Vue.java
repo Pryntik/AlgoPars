@@ -1,9 +1,12 @@
-public class Vue{
+package ihm;
 
-	private final static int iNbColonnes = 80;
-	private static String sNomAlgo = "NomAlgo";
-	public static void main(String[] args) {
+public class Vue
+{
+	private final static int    iNbColonnes = 80;
+	private       static String sNomAlgo    = "NomAlgo";
 
+	public Vue()
+	{
 		// *** DESSIN DE L'EN TETE DE BASE *** //
 
 		saut(3);
@@ -43,49 +46,47 @@ public class Vue{
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
-	public static void dessinerLigne(int inbColonnes){
+	public static void dessinerLigne(int inbColonnes)
+	{
 
-		for(int i=0; i<inbColonnes; i++){
+		for(int i=0; i<inbColonnes; i++)
 			System.out.print("-");
-		}
 
 	}
 
-	public static void dessinerTrema(int inbPoints){
+	public static void dessinerTrema(int inbPoints)
+	{
 
-		for(int i=0; i<inbPoints; i++){
+		for(int i=0; i<inbPoints; i++)
 			System.out.print("¨");
-		}
 
 	}
 
-	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar){
+	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
+	{
 
 		String sPrintTexte;
 
-		if(bLeftBar){
+		if(bLeftBar)
 			sPrintTexte = String.format("|%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		}
-		else{
+
+		else
 			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		}
+
 		System.out.print(sPrintTexte);
 
 	}
 
-	public static void saut(int iNbSauts){
-
-		for(int i=0; i<iNbSauts; i++){
+	public static void saut(int iNbSauts)
+	{
+		for(int i=0; i<iNbSauts; i++)
 			System.out.print("\n");
-		}
 
 	}
 
-	public static void espace(int iNbEspaces){
-
-		for(int i=0; i<iNbEspaces; i++){
+	public static void espace(int iNbEspaces)
+	{
+		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
-		}
-
 	}
 }

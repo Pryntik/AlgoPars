@@ -1,34 +1,33 @@
 package metier;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class LireFichier
 {
-	public static void main(String args[])
-	{
-		LireFichier lf = new LireFichier("../fichiers/file.txt");
-	}
-
 	public LireFichier(String fichier)
 	{
 		try
 		{
 			// Creation d'objet pour la lecture de fichier.txt
-			File           file = new File(fichier);    	// Fichier d'entree
-			FileReader     fr   = new FileReader(file);		// File Reader        
-			BufferedReader br   = new BufferedReader(fr);	// BufferedReader
-			StringBuffer   sb   = new StringBuffer();    
+			FileInputStream   fis  = new FileInputStream(fichier);							// Fichier d'entree
+			InputStreamReader isr  = new InputStreamReader(fis, StandardCharsets.UTF_8);	// File Reader
+			BufferedReader    br   = new BufferedReader(isr);								// BufferedReader
+			StringBuffer      sb   = new StringBuffer();    
 			String line;
+			String sRet = "";
+
 			while((line = br.readLine()) != null)
 			{
 				// Ajoute la ligne au buffer
-				sb.append(line);      
-				sb.append("\n");     
+				sRet += line + "\n";
 			}
-			fr.close();    
+			isr.close();    
 			System.out.println("Contenu du fichier : ");
 			System.out.println(sb.toString());
+
+			System.out.print(sRet);
 		}
-		catch(IOException e){e.printStackTrace();}
+		catch(IOException e){System.out.println(e);}
 	}
 }

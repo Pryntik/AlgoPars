@@ -1,5 +1,5 @@
-./src/Controleur.java            -encoding UTF-8 -d ./bin
+./src/Controleur.java         -encoding UTF-8 -d ./bin
 
-./src/metier/LireFichier.java    -encoding UTF-8 -d ./bin
+./src/metier/LireFichier.java -encoding UTF-8 -d ./bin
 
-./src/ihm/FrameVisu.java         -encoding UTF-8 -d ./bin
+./src/ihm/Vue.java            -encoding UTF-8 -d ./bin
