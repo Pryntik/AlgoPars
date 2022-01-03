@@ -1,3 +1,5 @@
+package metier;
+
 import java.io.*;
 
 public class LireFichier
@@ -12,7 +14,7 @@ public class LireFichier
 		try
 		{
 			// Creation d'objet pour la lecture de fichier.txt
-			File           file = new File(fichier);    	// Fichier d'entrée
+			File           file = new File(fichier);    	// Fichier d'entree
 			FileReader     fr   = new FileReader(file);		// File Reader        
 			BufferedReader br   = new BufferedReader(fr);	// BufferedReader
 			StringBuffer   sb   = new StringBuffer();    
