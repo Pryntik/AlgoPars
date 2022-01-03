@@ -7,7 +7,6 @@ public class Controleur
 {
 	public static void main(String[] args)
 	{
-		/*
 		boolean auto = true;
 		Menu m = new Menu();
 
@@ -31,7 +30,7 @@ public class Controleur
 					return;
 			}
 		}
-		*/
+		
 		LireFichier lf = new LireFichier("../src/fichiers/file.txt");
 		Vue         v  = new Vue();
 	}

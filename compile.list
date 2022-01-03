@@ -3,3 +3,4 @@
 ./src/metier/LireFichier.java -encoding UTF-8 -d ./bin
 
 ./src/ihm/Vue.java            -encoding UTF-8 -d ./bin
+./src/ihm/Menu.java           -encoding UTF-8 -d ./bin
