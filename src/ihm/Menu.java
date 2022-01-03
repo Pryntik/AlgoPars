@@ -1,4 +1,4 @@
-package metier;
+package ihm;
 
 import java.util.ArrayList;
 
