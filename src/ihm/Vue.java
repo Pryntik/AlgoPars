@@ -1,6 +1,7 @@
 package ihm;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.lang.ProcessBuilder;
 
 public class Vue
@@ -20,6 +21,7 @@ public class Vue
 		for (int y = 0; y < alLignes.size(); y++)
 		{
 			// *** DESSIN DE L'EN TETE DE BASE *** //
+			System.out.print(coul.surligner('0'));
 
 			saut(3);
 
@@ -50,22 +52,20 @@ public class Vue
 
 			for(int i = 0; i<alLignes.size(); i++)
 			{
-<<<<<<< Updated upstream
+				if(i == y)
+					System.out.print(coul.surligner('R'));
+
 				sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 				dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
-=======
-				System.out.print(coul.ecrire('B'));
-				dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
->>>>>>> Stashed changes
 				saut(1);
-				System.out.print(coul.ecrire('0'));
+				System.out.print(coul.surligner('0'));
 			}
 
 			dessinerTrema(iNbColonnes);
 			espace(1);
 			dessinerTrema(79);
 
-			pause(type);
+			pause(true);
 			ClearConsole();
 		}
 	}
@@ -92,14 +92,16 @@ public class Vue
         }catch(Exception e){System.out.println(e);}
     }
 
-	public static void pause(int delay)
+	public static void pause(boolean start)
 	{
-		if(delay == 0)
+		Scanner sc = new Scanner(System.in);
+		if(start)
 		{
-			try
-			{
-				System.in.read();
-			} catch(Exception e) {System.out.print(e);}
+			sc.nextLine();
+		}
+		else
+		{
+			sc.close();
 		}
 	}
 
