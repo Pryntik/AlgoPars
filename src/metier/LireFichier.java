@@ -27,8 +27,6 @@ public class LireFichier
 			{
 				// Ajoute la ligne a l'arraylist
 				sList.add(line);
-				System.out.println(sList.get(i));
-				pause(delay);
 				i++;
 			}
 			isr.close();
@@ -51,24 +49,5 @@ public class LireFichier
 				
 		return listFichiers;
 
-	}
-
-	public static void pause(int delay)
-	{
-		if(delay == 1)
-		{
-			try
-			{
-				System.in.read();
-			} catch(Exception e) {System.out.print(e);}
-		}
-		
-		else
-		{
-			try
-			{
-				Thread.sleep(delay);
-			} catch (Exception e) {System.out.print(e);}
-		}
 	}
 }

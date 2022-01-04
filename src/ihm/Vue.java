@@ -53,6 +53,25 @@ public class Vue
 		saut(1);*/
 	}
 
+	public static void pause(int delay)
+	{
+		if(delay == 1)
+		{
+			try
+			{
+				System.in.read();
+			} catch(Exception e) {System.out.print(e);}
+		}
+		
+		else
+		{
+			try
+			{
+				Thread.sleep(delay);
+			} catch (Exception e) {System.out.print(e);}
+		}
+	}
+
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
 	public static void dessinerLigne(int inbColonnes)
 	{
