@@ -10,42 +10,46 @@ public class Vue
 
 	public Vue(ArrayList<String> alLignes, int type)
 	{
-
-		// *** DESSIN DE L'EN TETE DE BASE *** //
-
-		saut(3);
-
-		dessinerTrema(11);
-		espace(iNbColonnes-11);
-		dessinerTrema(11);
-		saut(1);
-
-		dessinerLigne(iNbColonnes + 80);
-		saut(1);
-
-		dessinerCase("CODE", 2, 3,true);
-		dessinerCase("", 1, iNbColonnes-12,false);
-		dessinerCase("DONNEES", 1, 1,false);
-		saut(1);
-
-		dessinerLigne(iNbColonnes + 80);
-		saut(1);
-		dessinerTrema(iNbColonnes);
-
-		espace(1);
-		dessinerTrema(79);
-		saut(1);
-
-		// *** DESSIN DU FICHIER *** //
+		Couleur coul = new Couleur();
 
 		for (int y = 0; y < alLignes.size(); y++)
 		{
+			// *** DESSIN DE L'EN TETE DE BASE *** //
+
+			saut(3);
+
+			dessinerTrema(11);
+			espace(iNbColonnes-11);
+			dessinerTrema(11);
+			saut(1);
+
+			dessinerLigne(iNbColonnes + 80);
+			saut(1);
+
+			dessinerCase("CODE", 2, 3,true);
+			dessinerCase("", 1, iNbColonnes-12,false);
+			dessinerCase("DONNEES", 1, 1,false);
+			saut(1);
+
+			dessinerLigne(iNbColonnes + 80);
+			saut(1);
+			dessinerTrema(iNbColonnes);
+
+			espace(1);
+			dessinerTrema(79);
+			saut(1);
+
+			// *** DESSIN DU FICHIER *** //
 			for(int i = 0; i<alLignes.size(); i++)
 			{
-				dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
+				dessinerCase(String.format("%3d",i) + coul.ecrire('B') + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
 				saut(1);
 			}
-			pause(3000);
+			dessinerTrema(iNbColonnes);
+			espace(1);
+			dessinerTrema(79);
+
+			pause(type);
 			ClearConsole();
 		}
 		
@@ -90,14 +94,6 @@ public class Vue
 			{
 				System.in.read();
 			} catch(Exception e) {System.out.print(e);}
-		}
-		
-		else
-		{
-			try
-			{
-				Thread.sleep(delay);
-			} catch (Exception e) {System.out.print(e);}
 		}
 	}
 
