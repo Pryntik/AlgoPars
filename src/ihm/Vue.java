@@ -6,11 +6,16 @@ import java.lang.ProcessBuilder;
 public class Vue
 {
 	private final static int iNbColonnes = 80;
-	private static String sNomAlgo = "NomAlgo";
+	private final static int iEspacesParTab =  3;
 
 	public Vue(ArrayList<String> alLignes, int type)
 	{
 		Couleur coul = new Couleur();
+
+		String sTabs = "";
+		for(int i = 0; i<iEspacesParTab; i++){
+			sTabs += " ";
+		}
 
 		for (int y = 0; y < alLignes.size(); y++)
 		{
@@ -40,11 +45,16 @@ public class Vue
 			saut(1);
 
 			// *** DESSIN DU FICHIER *** //
+
+			String sLigne = "";
+
 			for(int i = 0; i<alLignes.size(); i++)
 			{
-				dessinerCase(String.format("%3d",i) + coul.ecrire('B') + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
+				sLigne = alLignes.get(i).replaceAll("\t", sTabs);
+				dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
 				saut(1);
 			}
+
 			dessinerTrema(iNbColonnes);
 			espace(1);
 			dessinerTrema(79);
@@ -52,16 +62,6 @@ public class Vue
 			pause(type);
 			ClearConsole();
 		}
-		
-
-		/*dessinerCase(String.format("%3d",0)   + " ALGORITHME " + sNomAlgo, 1, 56,true);
-		saut(1);
-
-		dessinerCase(String.format("%3d",1)  + " consante(s)", 1, 63,true);
-		saut(1);
-
-		dessinerCase(String.format("%3d",2) + " variable(s)", 1, 63,true);
-		saut(1);*/
 	}
 
 	public static void ClearConsole()
