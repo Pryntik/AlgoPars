@@ -19,8 +19,7 @@ public class LireFichier
 			StringBuffer      sb   = new StringBuffer();    
 			String line;
 			ArrayList<String> sList = new ArrayList<String>();
-			sList.add("");                                                                  // Premiere ligne erreur fichier
-			int      i = 1;
+			int      i = 0;
 
 			String[] split = fichier.split("/");
 			System.out.println("Contenu du fichier " + split[split.length-1] + " : ");

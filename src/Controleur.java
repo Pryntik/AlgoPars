@@ -30,8 +30,6 @@ public class Controleur
 					return;
 			}
 		}
-
-		Vue v  = new Vue();
 	}
 
 	public static void menu1()

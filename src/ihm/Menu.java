@@ -8,6 +8,7 @@ public class Menu
 {
     private String file;
     private LireFichier lf;
+    private Vue v;
     private int type;
     
 
@@ -28,7 +29,7 @@ public class Menu
         }
 
         this.file = "../src/fichiers/" + choixFichier();
-        this.lf.LireFichier(file, type);
+        this.v = new Vue(this.lf.LireFichier(file, type));
     }
 
     public String choixFichier()

@@ -7,7 +7,8 @@ public class Vue{
 	private final static int iNbColonnes = 80;
 	private static String sNomAlgo = "NomAlgo";
 
-	public Vue(ArrayList<String> alLignes){
+	public Vue(ArrayList<String> alLignes)
+	{
 
 		// *** DESSIN DE L'EN TETE DE BASE *** //
 
