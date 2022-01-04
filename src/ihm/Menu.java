@@ -104,6 +104,6 @@ public class Menu
 
                 startProcess.waitFor();
             } 
-        }catch(Exception e){System.out.println(e);}
+        }catch(Exception e){e.printStackTrace();}
     }
 }

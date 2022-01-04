@@ -92,7 +92,7 @@ public class Vue
 
                 startProcess.waitFor();
             } 
-        }catch(Exception e){System.out.println(e);}
+        }catch(Exception e){e.printStackTrace();}
     }
 
 	public static void pause(boolean start)
