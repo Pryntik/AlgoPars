@@ -33,6 +33,8 @@ public class LireFichier
 			}
 			isr.close();
 
+			Algo algo = new Algo(sList);
+
 			return sList;
 		}
 		catch(IOException e){System.out.println(e); return null;}

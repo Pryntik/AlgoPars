@@ -1,4 +1,4 @@
-Algo Test
+ALGORITHME Test
 variables:
   choix : caractère
   val, nbAction : entier
