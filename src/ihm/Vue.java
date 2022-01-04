@@ -50,9 +50,15 @@ public class Vue
 
 			for(int i = 0; i<alLignes.size(); i++)
 			{
+<<<<<<< Updated upstream
 				sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 				dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
+=======
+				System.out.print(coul.ecrire('B'));
+				dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
+>>>>>>> Stashed changes
 				saut(1);
+				System.out.print(coul.ecrire('0'));
 			}
 
 			dessinerTrema(iNbColonnes);
