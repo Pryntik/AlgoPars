@@ -2,8 +2,8 @@ package ihm;
 
 import java.util.ArrayList;
 
-public class Vue{
-
+public class Vue
+{
 	private final static int iNbColonnes = 80;
 	private static String sNomAlgo = "NomAlgo";
 
@@ -37,7 +37,8 @@ public class Vue{
 
 		// *** DESSIN DU FICHIER *** //
 
-		for(int i = 0; i<alLignes.size(); i++){
+		for(int i = 0; i<alLignes.size(); i++)
+		{
 			dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
 			saut(1);
 		}
@@ -53,19 +54,16 @@ public class Vue{
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
-	public static void dessinerLigne(int inbColonnes){
-
-		for(int i=0; i<inbColonnes; i++){
+	public static void dessinerLigne(int inbColonnes)
+	{
+		for(int i=0; i<inbColonnes; i++)
 			System.out.print("-");
-		}
-
 	}
 
-	public static void dessinerTrema(int inbPoints){
-
-		for(int i=0; i<inbPoints; i++){
+	public static void dessinerTrema(int inbPoints)
+	{
+		for(int i=0; i<inbPoints; i++)
 			System.out.print("¨");
-		}
 
 	}
 
@@ -73,29 +71,24 @@ public class Vue{
 
 		String sPrintTexte;
 
-		if(bLeftBar){
+		if(bLeftBar)
 			sPrintTexte = String.format("|%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		}
-		else{
+		else
 			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		}
+
 		System.out.print(sPrintTexte);
 
 	}
 
-	public static void saut(int iNbSauts){
-
-		for(int i=0; i<iNbSauts; i++){
+	public static void saut(int iNbSauts)
+	{
+		for(int i=0; i<iNbSauts; i++)
 			System.out.print("\n");
-		}
-
 	}
 
-	public static void espace(int iNbEspaces){
-
-		for(int i=0; i<iNbEspaces; i++){
+	public static void espace(int iNbEspaces)
+	{
+		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
-		}
-
 	}
 }
