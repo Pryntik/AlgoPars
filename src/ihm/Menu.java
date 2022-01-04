@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 public class Menu
 {
-    private int type;
+    private String file;
     private LireFichier lf;
+    private int type;
+    
 
     public Menu(boolean auto)
     {
@@ -25,15 +27,14 @@ public class Menu
             this.type = 1;
         }
 
-        choixFichier();
-
-        String file = "../src/fichiers/file.algo";
+        this.file = "../src/fichiers/" + choixFichier();
         this.lf.LireFichier(file, type);
     }
 
     public String choixFichier()
     {
         String sRes;
+        int    i;
         ArrayList<String> arrayFichiers = new ArrayList<String>();
         arrayFichiers = lf.recupFichiers();
         if (arrayFichiers.size() == 0)
@@ -65,8 +66,17 @@ public class Menu
             }
             sRes += "+----------------------------------------------+\n";
             System.out.println(sRes);
+
             Scanner sc = new Scanner(System.in);
-            return sc.nextLine();
+            i = Integer.parseInt(sc.nextLine());
+            while(i <= 0 || i > arrayFichiers.size())
+            {
+                System.out.print("Le fichier n'est pas dans la liste\n" +
+                                   "Nouveau choix : ");
+                i = Integer.parseInt(sc.nextLine());
+            }
+            
+            return arrayFichiers.get(i-1);
         }
     }
 }
