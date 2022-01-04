@@ -1,33 +1,41 @@
 package ihm;
 
+import metier.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Menu
 {
+    private int type;
+    private LireFichier lf;
 
-    public void demande()
+    public Menu(boolean auto)
     {
-        System.out.print("+----------------------------------------------+\n" + 
-                           "|                                              |\n" +
-                           "| Quel mode souhaitez vous ?                   |\n" +
-                           "|                                              |\n" + 
-                           "| [A]utomatique ?                              |\n" +
-                           "| [P]as à pas ?                                |\n" + 
-                           "| [Q]uitter ?                                  |\n" +
-                           "+----------------------------------------------+\n");
+        this.lf = new LireFichier();
 
-    }
-    public void modeAutomatique(boolean auto)
-    {
         if (auto)
+        {
             System.out.println("Mode Automatique activé !");
+            this.type = 0;
+        }
+
         else
+        {
             System.out.println ("Mode pas à pas activé !");
+            this.type = 1;
+        }
+
+        choixFichier();
+
+        String file = "../src/fichiers/file.algo";
+        this.lf.LireFichier(file, type);
     }
 
-    public void choixFichier(ArrayList<String> arrayFichiers)
+    public String choixFichier()
     {
         String sRes;
+        ArrayList<String> arrayFichiers = new ArrayList<String>();
+        arrayFichiers = lf.recupFichiers();
         if (arrayFichiers.size() == 0)
         {
             sRes =         "+----------------------------------------------+\n" +
@@ -35,25 +43,30 @@ public class Menu
                            "| à lire dans le dossiers \"fichiers\"         |\n" +
                            "+----------------------------------------------+\n" ;
             System.out.println(sRes);
-            return;    
+            return null;
         }
-        int cpt = 1;
-        sRes =   "+----------------------------------------------+\n" + 
-                 "|                                              |\n" +
-                 "| Quel fichier souhaitez vous lire ?           |\n";
-        for (String s : arrayFichiers)
+        else
         {
-            if (cpt<10)
+            int cpt = 1;
+            sRes =  "+----------------------------------------------+\n" + 
+                    "|                                              |\n" +
+                    "| Quel fichier souhaitez vous lire ?           |\n";
+            for (String s : arrayFichiers)
             {
-                sRes +="| ("+cpt+") " + String.format("%-41s", s) + "|\n";
+                if (cpt<10)
+                {
+                    sRes +="| ["+cpt+"] " + String.format("%-41s", s) + "|\n";
+                }
+                else
+                {
+                    sRes +="| ["+cpt+"] " + String.format("%-40s", s) + "|\n";
+                }
+                cpt++;
             }
-            else
-            {
-                sRes +="| ("+cpt+") " + String.format("%-40s", s) + "|\n";
-            }
-            cpt++;
-        }           
-        sRes += "+----------------------------------------------+\n";
-        System.out.println(sRes);        
+            sRes += "+----------------------------------------------+\n";
+            System.out.println(sRes);
+            Scanner sc = new Scanner(System.in);
+            return sc.nextLine();
+        }
     }
 }

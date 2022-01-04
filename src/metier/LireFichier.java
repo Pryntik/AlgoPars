@@ -2,39 +2,72 @@ package metier;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class LireFichier
 {
-	public LireFichier(String fichier)
-	{
-		System.out.println(LireFichier(fichier));
-	}
+	public LireFichier() {}
 
-	public String LireFichier(String fichier)
+	public ArrayList<String> LireFichier(String fichier, int delay)
 	{
 		try
 		{
-			// Creation d'objet pour la lecture de fichier.txt
+			// Creation d'objet pour la lecture de fichier.algo
 			FileInputStream   fis  = new FileInputStream(fichier);							// Fichier d'entree
 			InputStreamReader isr  = new InputStreamReader(fis, StandardCharsets.UTF_8);	// File Reader
 			BufferedReader    br   = new BufferedReader(isr);								// BufferedReader
 			StringBuffer      sb   = new StringBuffer();    
 			String line;
-			String sRet = "";
-
-			while((line = br.readLine()) != null)
-			{
-				// Ajoute la ligne au buffer
-				sRet += line + "\n";
-			}
-			isr.close();
+			ArrayList<String> sList = new ArrayList<String>();
+			sList.add("");                                                                  // Premiere ligne erreur fichier
+			int      i = 1;
 
 			String[] split = fichier.split("/");
 			System.out.println("Contenu du fichier " + split[split.length-1] + " : ");
-			System.out.println(sb.toString());
+			while((line = br.readLine()) != null)
+			{
+				// Ajoute la ligne a l'arraylist
+				sList.add(line);
+				System.out.println(sList.get(i));
+				pause(delay);
+				i++;
+			}
+			isr.close();
 
-			return sRet;
+			return sList;
 		}
-		catch(IOException e){System.out.println(e); return "\nErreur fichier introuvable\n";}
+		catch(IOException e){System.out.println(e); return null;}
+	}
+
+	public ArrayList<String> recupFichiers()
+	{
+		ArrayList<String> listFichiers = new ArrayList<>();
+		File f = new File("../src/fichiers/");
+		for (File file : f.listFiles())
+			if (!file.isDirectory())
+				if (file.getName().contains(".algo"))
+					listFichiers.add(file.getName());
+				
+		return listFichiers;
+
+	}
+
+	public static void pause(int delay)
+	{
+		if(delay == 1)
+		{
+			try
+			{
+				System.in.read();
+			} catch(Exception e) {System.out.print(e);}
+		}
+		
+		else
+		{
+			try
+			{
+				Thread.sleep(delay);
+			} catch (Exception e) {System.out.print(e);}
+		}
 	}
 }
