@@ -6,10 +6,11 @@ import java.lang.ProcessBuilder;
 
 public class Vue
 {
-	private final static int iNbColonnes = 80;
+	private final static int iNbColonnes    = 80;
 	private final static int iEspacesParTab =  3;
+	private              char cCouleur      = '0';
 
-	public Vue(ArrayList<String> alLignes, int type)
+	public Vue(ArrayList<String> alLignes, char cCouleur)
 	{
 		Couleur coul = new Couleur();
 
@@ -53,7 +54,7 @@ public class Vue
 			for(int i = 0; i<alLignes.size(); i++)
 			{
 				if(i == y)
-					System.out.print(coul.surligner('R'));
+					System.out.print(coul.surligner(cCouleur));
 
 				sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 				dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);

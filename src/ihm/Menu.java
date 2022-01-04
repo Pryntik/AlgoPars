@@ -9,7 +9,7 @@ public class Menu
     private LireFichier lf;
     private Vue v;
     private String sFile;
-    private int iType;
+    private char iType;
     
 
     public Menu(boolean auto)
@@ -19,13 +19,13 @@ public class Menu
         if (auto)
         {
             System.out.println("Mode Automatique activé !");
-            this.iType = 0;
+            this.iType = '0';
         }
 
         else
         {
             System.out.println ("Mode pas à pas activé !");
-            this.iType = 1;
+            this.iType = 'R';
         }
 
         this.sFile = "../src/fichiers/" + choixFichier();
