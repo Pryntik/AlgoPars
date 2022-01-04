@@ -7,36 +7,31 @@ public class Algo
 
 	private String sNom;
 	private ArrayList<String> alLignes = new ArrayList<String>();
-	private ArrayList<String> alConstantes = new ArrayList<String>();
+	private ArrayList<Variable> alVariables = new ArrayList<Variable>();
 
 	public Algo(ArrayList<String> alLignes)
 	{
-
 		this.alLignes = alLignes;
 		setNom();
 
+		// A FINIR CREER LES VARIABLES ET LES AJOUTER A L'ARRAYLIST (utiliser while pas for)//
+		for(String ligne: alLignes){
+			if(ligne.contains("variable")){
+				while(!ligne.contains("DEBUT") && !ligne.contains("constante")){
+
+				}
+			}
+		}
 	}
 
-	public void ajouterConstante(String sType, String sNom)
+	public void ajouterVariable(String sNom, String sValeur)
 	{
-		alConstantes.add(sType + sNom);
+		alVariables.add(new Variable(sNom, sValeur));
 	}
 
 	public void ajouterLigne(String ligne)
 	{
 		alLignes.add(ligne);
-	}
-
-	public String toString()
-	{
-		String sRet = "";
-
-		for( String sLigne : alLignes)
-		{
-			sRet += alLignes.indexOf(sLigne) +  "\n";
-		}
-
-		return sRet;
 	}
 
 	public void setNom()
