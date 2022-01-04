@@ -70,6 +70,8 @@ public class Vue
 		}
 	}
 
+	// Methode pour effacer la console //
+
 	public static void ClearConsole()
 	{
         try
@@ -96,13 +98,10 @@ public class Vue
 	{
 		Scanner sc = new Scanner(System.in);
 		if(start)
-		{
 			sc.nextLine();
-		}
+
 		else
-		{
 			sc.close();
-		}
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
@@ -112,6 +111,7 @@ public class Vue
 			System.out.print("-");
 	}
 
+	// Permet de dessiner une ligne avec des '¨' avec un nombre de points donné //
 	public static void dessinerTrema(int inbPoints)
 	{
 		for(int i=0; i<inbPoints; i++)

@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 public class Menu
 {
-    private String file;
     private LireFichier lf;
     private Vue v;
-    private int type;
+    private String sFile;
+    private int iType;
     
 
     public Menu(boolean auto)
@@ -19,27 +19,29 @@ public class Menu
         if (auto)
         {
             System.out.println("Mode Automatique activé !");
-            this.type = 0;
+            this.iType = 0;
         }
 
         else
         {
             System.out.println ("Mode pas à pas activé !");
-            this.type = 1;
+            this.iType = 1;
         }
 
-        this.file = "../src/fichiers/" + choixFichier();
+        this.sFile = "../src/fichiers/" + choixFichier();
         ClearConsole();
-        this.v = new Vue(this.lf.LireFichier(file), type);
+        this.v = new Vue(this.lf.LireFichier(sFile), iType);
     }
+
+    // *** SELECTION DU FICHIER *** //
 
     public String choixFichier()
     {
         String sRes;
         int    i;
-        ArrayList<String> arrayFichiers = new ArrayList<String>();
-        arrayFichiers = lf.recupFichiers();
-        if (arrayFichiers.size() == 0)
+        ArrayList<String> alFichiers = new ArrayList<String>();
+        alFichiers = lf.recupFichiers();
+        if (alFichiers.size() == 0)
         {
             sRes =         "+----------------------------------------------+\n" +
                            "| Il n'y a pas de fichiers .algo               |\n" +
@@ -54,7 +56,7 @@ public class Menu
             sRes =  "+----------------------------------------------+\n" + 
                     "|                                              |\n" +
                     "| Quel fichier souhaitez vous lire ?           |\n";
-            for (String s : arrayFichiers)
+            for (String s : alFichiers)
             {
                 if (cpt<10)
                 {
@@ -71,16 +73,18 @@ public class Menu
 
             Scanner sc = new Scanner(System.in);
             i = Integer.parseInt(sc.nextLine());
-            while(i <= 0 || i > arrayFichiers.size())
+            while(i <= 0 || i > alFichiers.size())
             {
                 System.out.print("Le fichier n'est pas dans la liste\n" +
                                    "Nouveau choix : ");
                 i = Integer.parseInt(sc.nextLine());
             }
             
-            return arrayFichiers.get(i-1);
+            return alFichiers.get(i-1);
         }
     }
+
+    // *** METHODE POUR EFFACER LA CONSOLE *** //
 
     public static void ClearConsole()
 	{

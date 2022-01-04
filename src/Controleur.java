@@ -2,12 +2,11 @@ import metier.*;
 import ihm.*;
 import java.util.Scanner;
 
-
 public class Controleur
 {
 	public static void main(String[] args)
 	{
-		boolean auto = true;
+		boolean bAuto = true;
 		Menu    m;
 
 		int i = 1;
@@ -18,12 +17,12 @@ public class Controleur
 			switch (sc.nextLine())
 			{
 				case "A":
-					m = new Menu(auto);
+					m = new Menu(bAuto);
 					i = 2;
 					break;
 				case "P":
-					auto = false;
-					m = new Menu(auto);
+					bAuto = false;
+					m = new Menu(bAuto);
 					i = 2;
 					break;
 				case "Q":
