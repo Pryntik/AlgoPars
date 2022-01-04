@@ -1,13 +1,14 @@
 package ihm;
 
 import java.util.ArrayList;
+import java.lang.ProcessBuilder;
 
 public class Vue
 {
 	private final static int iNbColonnes = 80;
 	private static String sNomAlgo = "NomAlgo";
 
-	public Vue(ArrayList<String> alLignes)
+	public Vue(ArrayList<String> alLignes, int type)
 	{
 
 		// *** DESSIN DE L'EN TETE DE BASE *** //
@@ -37,11 +38,17 @@ public class Vue
 
 		// *** DESSIN DU FICHIER *** //
 
-		for(int i = 0; i<alLignes.size(); i++)
+		for (int y = 0; y < alLignes.size(); y++)
 		{
-			dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
-			saut(1);
+			for(int i = 0; i<alLignes.size(); i++)
+			{
+				dessinerCase(String.format("%3d",i) + " " + alLignes.get(i), 1, iNbColonnes-6-alLignes.get(i).length(),true);
+				saut(1);
+			}
+			pause(3000);
+			ClearConsole();
 		}
+		
 
 		/*dessinerCase(String.format("%3d",0)   + " ALGORITHME " + sNomAlgo, 1, 56,true);
 		saut(1);
@@ -53,9 +60,31 @@ public class Vue
 		saut(1);*/
 	}
 
+	public static void ClearConsole()
+	{
+        try
+		{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+              
+            if(operatingSystem.contains("Windows"))
+			{        
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            }
+			else
+			{
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            } 
+        }catch(Exception e){System.out.println(e);}
+    }
+
 	public static void pause(int delay)
 	{
-		if(delay == 1)
+		if(delay == 0)
 		{
 			try
 			{

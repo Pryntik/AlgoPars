@@ -29,7 +29,8 @@ public class Menu
         }
 
         this.file = "../src/fichiers/" + choixFichier();
-        this.v = new Vue(this.lf.LireFichier(file, type));
+        ClearConsole();
+        this.v = new Vue(this.lf.LireFichier(file), type);
     }
 
     public String choixFichier()
@@ -79,5 +80,26 @@ public class Menu
             
             return arrayFichiers.get(i-1);
         }
+    }
+
+    public static void ClearConsole()
+	{
+        try
+		{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+              
+            if(operatingSystem.contains("Windows"))
+			{        
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            } else
+			{
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            } 
+        }catch(Exception e){System.out.println(e);}
     }
 }

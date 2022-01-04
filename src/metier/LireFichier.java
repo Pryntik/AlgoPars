@@ -8,7 +8,7 @@ public class LireFichier
 {
 	public LireFichier() {}
 
-	public ArrayList<String> LireFichier(String fichier, int delay)
+	public ArrayList<String> LireFichier(String fichier)
 	{
 		try
 		{
