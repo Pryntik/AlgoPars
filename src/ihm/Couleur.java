@@ -1,5 +1,8 @@
 package ihm;
 
+import com.sun.jna.*;
+import com.sun.jna.win32.*;
+
 public class Couleur
 {
 	public static final String RESET  = "\u001B[0m";

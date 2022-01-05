@@ -4,6 +4,9 @@ import metier.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.sun.jna.*;
+import com.sun.jna.win32.*;
+
 public class Menu
 {
     private LireFichier lf;
@@ -51,19 +54,17 @@ public class Menu
         System.out.println("|                                                                             |");
         System.out.println("| Quel configuration souhaitez vous utiliser ?                                |");
         System.out.println("|                                                                             |");
-        System.out.println("+-----------------------------------------------------------------------------+|");
+        System.out.print("+-----------------------------------------------------------------------------+\n|");
         for (int i = 1; i <= 3; i++)
         {
             System.out.print(" ["+i+"] " + String.format("%-20s", "config" + i) + "|");
         }
         System.out.print("\n+-------------------------+-------------------------+-------------------------+\n| ");
-        cool.ecrire('V');
-        System.out.println("Variables");
-        cool.ecrire('0');
-        sRes +=   "               | Variables               | Variables               |\n" +
+        System.out.print(cool.ecrire('V') + "Variables");
+        System.out.print("               | Variables               | Variables               |\n" +
                   "| Constantes              | Constantes              | Constantes              |\n" +
                   "| Chiffres                | Chiffres                | Chiffres                |\n" +
-                  "+-------------------------+-------------------------+-------------------------+\n";;
+                  "+-------------------------+-------------------------+-------------------------+\n");
 
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());
