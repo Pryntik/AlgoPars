@@ -1,6 +1,8 @@
 package metier;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Algo
 {
@@ -115,6 +117,25 @@ public class Algo
 		if(sLigne.contains("<--")){
 			parts = sLigne.split("<--");
 			getVariable(parts[0].trim()).setValeur(parts[1]);
+		}
+		if(sLigne.contains("écrire")){
+			if(sLigne.contains("\"")){
+				parts = sLigne.split("\"");
+				System.out.println(parts[1]);
+			}
+			else{
+				parts = sLigne.split(Pattern.quote("("));
+				parts = parts[1].split(Pattern.quote(")"));
+				System.out.println(getVariable(parts[0].trim()).getValeur());
+			}
+		}
+		if(sLigne.contains("lire")){
+			String sInput;
+			Scanner sc = new Scanner(System.in);
+			parts      = sLigne.split(Pattern.quote("("));
+			parts      = parts[1].split(Pattern.quote(")"));
+			sInput     = sc.nextLine();
+			getVariable(parts[0].trim()).setValeur(sInput);
 		}
 	}
 }
