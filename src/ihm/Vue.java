@@ -12,7 +12,7 @@ public class Vue
 
 	public Vue(ArrayList<String> alLignes, char cCouleur)
 	{
-		Couleur coul = new Couleur();
+		Couleur coul = new Couleur("","","");
 
 		String sTabs = "";
 		for(int i = 0; i<iEspacesParTab; i++)

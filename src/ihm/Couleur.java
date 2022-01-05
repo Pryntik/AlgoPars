@@ -2,7 +2,7 @@ package ihm;
 
 public class Couleur
 {
-	public Couleur() {}
+	public Couleur(String nom, String stylo, String feutre) {}
 
 	public String ecrire(char stylo)
 	{
