@@ -14,14 +14,16 @@ public class Algo
 		this.alLignes = alLignes;
 		setNom();
 
-		// *** RECUPERATION DES VARIABLES ET CONSTANTES *** //
 		String   ligne = "";
 		String[] parts;
 		String   type;
 
-		// Constantes //
+		// *** INTERPRETATION DU CODE *** //
 		for(int i = 0; i<alLignes.size(); i++){
+			// RECUPERATION DES VARIABLES ET CONSTANTES //
 			ligne = alLignes.get(i);
+
+			// Constantes //
 			if(ligne.contains("constante")){
 				i++;
 				ligne = alLignes.get(i);
@@ -62,6 +64,15 @@ public class Algo
 					ligne = alLignes.get(i);
 				}
 			}
+
+			// DEBUT DES INSTRUCTIONS //
+			if(ligne.contains("DEBUT")){
+				while(!ligne.contains("FIN")){
+					executeInstruction(ligne);
+					i++;
+					ligne = alLignes.get(i);
+				}
+			}
 		}
 
 		// Affichage des variables gardées en mémoire //
@@ -86,5 +97,24 @@ public class Algo
 		String[] parts;
 		parts = alLignes.get(0).split("ALGORITHME");
 		this.sNom = parts[1].trim();
+	}
+
+	public Variable getVariable(String sNomVar){
+		for(Variable var : alVariables){
+			if(sNomVar.equals(var.getNom())){
+				return var;
+			}
+		}
+		return null;
+	}
+
+	public void executeInstruction(String sLigne){
+		String[] parts;
+
+		// Affectation //
+		if(sLigne.contains("<--")){
+			parts = sLigne.split("<--");
+			getVariable(parts[0].trim()).setValeur(parts[1]);
+		}
 	}
 }

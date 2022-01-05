@@ -6,10 +6,10 @@ public class Variable {
 	private String   sType;
 	private boolean  bConstante;
 
-	private int     iValeur;
-	private char    cValeur;
-	private String  sValeur;
-	private boolean bValeur;
+	//private int     iValeur;
+	//private char    cValeur;
+	private String  sValeur = "";
+	//private boolean bValeur;
 
 	public Variable(String sNom, String sType, boolean bConstante){
 		this.sNom       = sNom.trim();
@@ -19,14 +19,16 @@ public class Variable {
 
 	public String getValeur(){
 
-		switch(sType){
+		/*switch(sType){
 
 			case "entier":      return String.valueOf(iValeur);
 			case "caractère":   return String.valueOf(cValeur);
 			case "chaine":      return String.valueOf(sValeur);
 			case "booléen":     return String.valueOf(bValeur);
 		}
-		return null;
+		return null;*/
+
+		return sValeur;
 	}
 
 	public String getNom(){ return sNom; }
@@ -34,7 +36,12 @@ public class Variable {
 	public String toString(){
 		return "Nom: "        + String.format("%-15s",sNom) 
 		+      " Type: "      + String.format("%-10s",sType) 
-		+      " Constante: " + bConstante;
+		+      " Constante: " + String.format("%-10s",bConstante)
+		+      " Valeur: "    + sValeur;
+	}
+
+	public void setValeur(String sValeur){
+		this.sValeur = sValeur;
 	}
 	
 }
