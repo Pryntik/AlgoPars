@@ -26,5 +26,5 @@ DEBUT
 
   ftq
 
-  écrire ( val, nbAction)
+  écrire ( val )
 FIN

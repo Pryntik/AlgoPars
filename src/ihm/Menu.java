@@ -7,14 +7,17 @@ import java.util.Scanner;
 public class Menu
 {
     private LireFichier lf;
+    private Couleur cool;
     private Vue v;
     private String sFile;
+    private String sFileXML;
     private char iType;
     
 
     public Menu(boolean auto)
     {
-        this.lf = new LireFichier();
+        this.lf   = new LireFichier();
+        this.cool = new Couleur("", "", "");
 
         if (auto)
         {
@@ -28,7 +31,8 @@ public class Menu
             this.iType = 'R';
         }
 
-        this.lf.LireFichierXML("../src/metier/configuration.xml");
+        this.sFileXML = "../src/metier/configuration.xml";
+        this.lf.LireFichierXML(sFileXML);
         choixConfig();
 
         this.sFile = "../src/fichiers/" + choixFichier();
@@ -38,18 +42,28 @@ public class Menu
 
     public String choixConfig()
     {
-        String sRes;
         int    choix;
+        String sRes = "";
+        ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
+        alCouleur = lf.LireFichierXML(this.sFileXML);
 
-        sRes =  "+----------------------------------------------+\n" + 
-                "|                                              |\n" +
-                "| Quel configuration souhaitez vous utiliser ? |\n";
+        System.out.println("+-----------------------------------------------------------------------------+");
+        System.out.println("|                                                                             |");
+        System.out.println("| Quel configuration souhaitez vous utiliser ?                                |");
+        System.out.println("|                                                                             |");
+        System.out.println("+-----------------------------------------------------------------------------+|");
         for (int i = 1; i <= 3; i++)
         {
-            sRes +="| ["+i+"] " + String.format("%-41s", "config" + i) + "|\n";
+            System.out.print(" ["+i+"] " + String.format("%-20s", "config" + i) + "|");
         }
-        sRes += "+----------------------------------------------+\n";
-        System.out.println(sRes);
+        System.out.print("\n+-------------------------+-------------------------+-------------------------+\n| ");
+        cool.ecrire('V');
+        System.out.println("Variables");
+        cool.ecrire('0');
+        sRes +=   "               | Variables               | Variables               |\n" +
+                  "| Constantes              | Constantes              | Constantes              |\n" +
+                  "| Chiffres                | Chiffres                | Chiffres                |\n" +
+                  "+-------------------------+-------------------------+-------------------------+\n";;
 
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());
