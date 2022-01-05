@@ -35,7 +35,7 @@ public class LireFichier
 
 			return sList;
 		}
-		catch(IOException e){e.printStackTrace(); return null;}
+		catch(IOException e){System.out.println(e); return null;}
 	}
 
 	public ArrayList<String> recupFichiers()

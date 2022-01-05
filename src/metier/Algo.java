@@ -14,21 +14,27 @@ public class Algo
 		this.alLignes = alLignes;
 		setNom();
 
-		/*
-		// A FINIR CREER LES VARIABLES ET LES AJOUTER A L'ARRAYLIST (utiliser while pas for)//
-		for(String ligne: alLignes){
+		//  val, nbAction : entier
+		String   ligne = "";
+		String[] parts;
+		for(int i = 0; i<alLignes.size() ;i++){
+			ligne = alLignes.get(i);
 			if(ligne.contains("variable")){
+				i++;
+				ligne = alLignes.get(i);
 				while(!ligne.contains("DEBUT") && !ligne.contains("constante")){
-
+					parts = ligne.split(":");
+					this.ajouterVariable(String.valueOf(parts[0]), String.valueOf(parts[1]));
+					i++;
+					ligne = alLignes.get(i);
 				}
 			}
 		}
-		*/
 	}
 
-	public void ajouterVariable(String sNom, String sValeur)
+	public void ajouterVariable(String sNom, String sType)
 	{
-		alVariables.add(new Variable(sNom, sValeur));
+		alVariables.add(new Variable(sNom, sType));
 	}
 
 	public void ajouterLigne(String ligne)
