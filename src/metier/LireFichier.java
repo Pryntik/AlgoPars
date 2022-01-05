@@ -3,18 +3,10 @@ package metier;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 
 public class LireFichier
 {
 	public LireFichier() {}
-
-	// *** LECTURE DU FICHIER ALGO *** //
 
 	public ArrayList<String> LireFichier(String fichier)
 	{
@@ -43,26 +35,7 @@ public class LireFichier
 
 			return sList;
 		}
-		catch(IOException e){e.printStackTrace(); return null;}
-	}
-
-	// *** LECTURE DU FICHIER XML *** //
-
-	public void LireFichierXML(String fichier)
-	{
-		try
-		{
-			SAXBuilder sax    = new SAXBuilder();
-			Document   doc    = sax.build(new File(fichier));
-			Element    racine = doc.getRootElement();
-			List<Element> listVariable = racine.getChildren("variable");
-			for (Element var : listVariable)
-			{
-				String nomVar = var.getAttributeValue("nom");
-				List<Element> listPiece = var.getChildren("piece");
-			}
-		}
-		catch(Exception e){e.printStackTrace();}
+		catch(IOException e){System.out.println(e); return null;}
 	}
 
 	public ArrayList<String> recupFichiers()
