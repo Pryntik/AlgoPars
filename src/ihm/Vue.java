@@ -6,72 +6,82 @@ import java.lang.ProcessBuilder;
 
 public class Vue
 {
-	private final static int iNbColonnes    = 80;
-	private final static int iEspacesParTab =  3;
-	private              char cCouleur      = '0';
+	private final static int  iNbColonnes    = 80;
+	private final static int  iEspacesParTab =  3;
+	private int               y;
+	private char              cCouleur;
+	private ArrayList<String> alLignes;
+	private Couleur           coul;
+	private String            sTabs;
 
 	public Vue(ArrayList<String> alLignes, char cCouleur)
 	{
-		Couleur coul = new Couleur("","","");
+		this.coul = new Couleur("","","");
+		this.cCouleur = cCouleur;
+		this.alLignes = alLignes;
+		this.y = 0;
 
-		String sTabs = "";
+		this.sTabs = "";
 		for(int i = 0; i<iEspacesParTab; i++)
-			sTabs += " ";
+			this.sTabs += " ";
 
-		for (int y = 0; y < alLignes.size(); y++)
+		if(cCouleur != '0')
 		{
-			// *** DESSIN DE L'EN TETE DE BASE *** //
-			System.out.print(coul.surligner('0'));
-
-			saut(3);
-
-			dessinerTrema(11);
-			espace(iNbColonnes-11);
-			dessinerTrema(11);
-			saut(1);
-
-			dessinerLigne(iNbColonnes + 80);
-			saut(1);
-
-			dessinerCase("CODE", 2, 3,true);
-			dessinerCase("", 1, iNbColonnes-12,false);
-			dessinerCase("DONNEES", 1, 1,false);
-			saut(1);
-
-			dessinerLigne(iNbColonnes + 80);
-			saut(1);
-			dessinerTrema(iNbColonnes);
-
-			espace(1);
-			dessinerTrema(79);
-			saut(1);
-
-			// *** DESSIN DU FICHIER *** //
-
-			String sLigne;
-
-			for(int i = 0; i<alLignes.size(); i++)
+			while(this.y < this.alLignes.size())
 			{
-				if(i == y)
-					System.out.print(coul.surligner(cCouleur));
-
-				sLigne = alLignes.get(i).replaceAll("\t", sTabs);
-				dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
-				saut(1);
-				System.out.print(coul.surligner('0'));
+				BaseTableau();
+				this.y++;
 			}
+		}
+		else
+		{
+			BaseTableau();
+		}
+	}
 
-			dessinerTrema(iNbColonnes);
-			espace(1);
-			dessinerTrema(79);
-
+	public void BaseTableau()
+	{
+		// *** DESSIN DE L'EN TETE DE BASE *** //
+		System.out.print(coul.surligner('0'));
+		saut(3);
+		dessinerTrema(11);
+		espace(iNbColonnes-11);
+		dessinerTrema(11);
+		saut(1);
+		dessinerLigne(iNbColonnes + 80);
+		saut(1);
+		dessinerCase("CODE", 2, 3,true);
+		dessinerCase("", 1, iNbColonnes-12,false);
+		dessinerCase("DONNEES", 1, 1,false);
+		saut(1);
+		dessinerLigne(iNbColonnes + 80);
+		saut(1);
+		dessinerTrema(iNbColonnes);
+		espace(1);
+		dessinerTrema(79);
+		saut(1);
+		// *** DESSIN DU FICHIER *** //
+		String sLigne;
+		for(int i = 0; i < this.alLignes.size(); i++)
+		{
+			if(i == this.y)
+				System.out.print(this.coul.surligner(this.cCouleur));
+			sLigne = this.alLignes.get(i).replaceAll("\t", this.sTabs);
+			dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
+			saut(1);
+			System.out.print(this.coul.surligner('0'));
+		}
+		dessinerTrema(iNbColonnes);
+		espace(1);
+		dessinerTrema(79);
+		if(this.cCouleur != '0')
+		{
 			pause(true);
 			ClearConsole();
 		}
 	}
 
 	// Methode pour effacer la console //
-
 	public static void ClearConsole()
 	{
         try

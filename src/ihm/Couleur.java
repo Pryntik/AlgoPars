@@ -41,9 +41,10 @@ public class Couleur
 		switch(stylo)
 		{
 			case 'R' : return RED;
-			case 'V' : return GREEN;
+			case 'G' : return GREEN;
 			case 'B' : return BLUE;
-			case 'N' : return BLACK;
+			case '0' : return BLACK;
+			case 'Y' : return YELLOW;
 			default  : return RESET;
 		}
 	}
@@ -53,8 +54,9 @@ public class Couleur
 		switch(feutre)
 		{
 			case 'R' : return RED_BACKGROUND;
-			case 'V' : return GREEN_BACKGROUND;
+			case 'G' : return GREEN_BACKGROUND;
 			case 'B' : return BLUE_BACKGROUND;
+			case 'Y' : return YELLOW_BACKGROUND;
 			default  : return BLACK_BACKGROUND;
 		}
 	}

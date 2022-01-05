@@ -46,6 +46,18 @@ public class Menu
 
     public String choixConfig()
     {
+        coul.start();
+
+        String c1Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
+        String c2Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
+        String c3Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
+        String c1Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
+        String c2Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
+        String c3Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
+        String c1Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
+        String c2Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
+        String c3Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
+
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
@@ -61,10 +73,7 @@ public class Menu
             System.out.print(" ["+i+"] " + String.format("%-20s", "config" + i) + "|");
         }
         System.out.print("\n+-------------------------+-------------------------+-------------------------+\n| ");
-        coul.start();
-        System.out.println(coul.ecrire('V'));
-        System.out.print("Variables");
-        System.out.println(coul.ecrire('0'));
+
         System.out.print("               | Variables               | Variables               |\n" +
                   "| Constantes              | Constantes              | Constantes              |\n" +
                   "| Chiffres                | Chiffres                | Chiffres                |\n" +
