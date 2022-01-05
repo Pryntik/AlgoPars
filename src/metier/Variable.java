@@ -2,17 +2,19 @@ package metier;
 
 public class Variable {
 
-	private String  sNom;
-	private String  sType;
+	private String   sNom;
+	private String   sType;
+	private boolean  bConstante;
 
 	private int     iValeur;
 	private char    cValeur;
 	private String  sValeur;
 	private boolean bValeur;
 
-	public Variable(String sNom, String sType){
-		this.sNom    = sNom;
-		this.sType   = sType;
+	public Variable(String sNom, String sType, boolean bConstante){
+		this.sNom       = sNom.trim();
+		this.sType      = sType.trim();
+		this.bConstante = bConstante;
 	}
 
 	public String getValeur(){
@@ -30,7 +32,9 @@ public class Variable {
 	public String getNom(){ return sNom; }
 
 	public String toString(){
-		return "Type: " + sType + " Nom: " + sNom;
+		return "Nom: "        + String.format("%-15s",sNom) 
+		+      " Type: "      + String.format("%-10s",sType) 
+		+      " Constante: " + bConstante;
 	}
 	
 }
