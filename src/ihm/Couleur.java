@@ -6,15 +6,18 @@ import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 public class Couleur
 {
-	public static final String RESET  = "\u001B[0m";
-	public static final String BLACK  = "\u001B[30m";
-	public static final String RED    = "\u001B[31m";
-	public static final String GREEN  = "\u001B[32m";
-	public static final String YELLOW = "\u001B[33m";
-	public static final String BLUE   = "\u001B[34m";
-	public static final String PURPLE = "\u001B[35m";
-	public static final String CYAN   = "\u001B[36m";
-	public static final String WHITE  = "\u001B[37m";
+	public static final String RED_UNDERLINED = "\033[4;31m";
+
+	public static final String RESET   = "\u001B[0m";
+	public static final String BLACK   = "\u001B[30m";
+	public static final String RED     = "\u001B[31m";
+	public static final String MAGENTA = "\u001B[35m";
+	public static final String GREEN   = "\u001B[32m";
+	public static final String YELLOW  = "\u001B[33m";
+	public static final String BLUE    = "\u001B[34m";
+	public static final String PURPLE  = "\u001B[35m";
+	public static final String CYAN    = "\u001B[36m";
+	public static final String WHITE   = "\u001B[37m";
 
 	public static final String BLACK_BACKGROUND  = "\u001B[40m";
 	public static final String RED_BACKGROUND    = "\u001B[41m";
@@ -43,8 +46,10 @@ public class Couleur
 			case 'R' : return RED;
 			case 'G' : return GREEN;
 			case 'B' : return BLUE;
-			case '0' : return BLACK;
 			case 'Y' : return YELLOW;
+			case 'P' : return PURPLE;
+			case 'C' : return CYAN;
+			case 'M' : return MAGENTA;
 			default  : return RESET;
 		}
 	}
@@ -57,6 +62,8 @@ public class Couleur
 			case 'G' : return GREEN_BACKGROUND;
 			case 'B' : return BLUE_BACKGROUND;
 			case 'Y' : return YELLOW_BACKGROUND;
+			case 'P' : return PURPLE_BACKGROUND;
+			case 'C' : return CYAN_BACKGROUND;
 			default  : return BLACK_BACKGROUND;
 		}
 	}

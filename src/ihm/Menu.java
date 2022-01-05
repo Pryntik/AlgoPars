@@ -49,35 +49,37 @@ public class Menu
         coul.start();
 
         String c1Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
-        String c2Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
+        String c2Vari = coul.ecrire('P') + "Variables"  + coul.ecrire('0');
         String c3Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
-        String c1Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
-        String c2Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
-        String c3Cons = coul.ecrire('G') + "Constantes" + coul.ecrire('0');
-        String c1Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
-        String c2Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
-        String c3Chif = coul.ecrire('G') + "Chiffres"   + coul.ecrire('0');
+        String c1Cons = coul.ecrire('Y') + "Constantes" + coul.ecrire('0');
+        String c2Cons = coul.ecrire('M') + "Constantes" + coul.ecrire('0');
+        String c3Cons = coul.ecrire('C') + "Constantes" + coul.ecrire('0');
+        String c1Chif = coul.ecrire('B') + "Chiffres"   + coul.ecrire('0');
+        String c2Chif = coul.ecrire('R') + "Chiffres"   + coul.ecrire('0');
+        String c3Chif = coul.ecrire('Y') + "Chiffres"   + coul.ecrire('0');
 
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
         alCouleur = lf.LireFichierXML(this.sFileXML);
 
-        System.out.println("+-----------------------------------------------------------------------------+");
-        System.out.println("|                                                                             |");
-        System.out.println("| Quel configuration souhaitez vous utiliser ?                                |");
-        System.out.println("|                                                                             |");
-        System.out.print("+-----------------------------------------------------------------------------+\n|");
+        sRes += "+-----------------------------------------------------------------------------+\n" +
+                "|                                                                             |\n" +
+                "| Quel configuration souhaitez vous utiliser ?                                |\n" +
+                "|                                                                             |\n" +
+                "+-----------------------------------------------------------------------------+\n|";
         for (int i = 1; i <= 3; i++)
         {
-            System.out.print(" ["+i+"] " + String.format("%-20s", "config" + i) + "|");
+            sRes += " ["+i+"] " + String.format("%-20s", "config" + i) + "|";
         }
-        System.out.print("\n+-------------------------+-------------------------+-------------------------+\n| ");
+        sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
 
-        System.out.print("               | Variables               | Variables               |\n" +
-                  "| Constantes              | Constantes              | Constantes              |\n" +
-                  "| Chiffres                | Chiffres                | Chiffres                |\n" +
-                  "+-------------------------+-------------------------+-------------------------+\n");
+                  "| " + c1Vari + "               | " + c2Vari + "               | " + c3Vari + "               |\n" +
+                  "| " + c1Cons + "              | " + c2Cons + "              | " + c3Cons + "              |\n"   +
+                  "| " + c1Chif + "                | " + c2Chif + "                | " + c3Chif + "                |\n"   +
+                  "+-------------------------+-------------------------+-------------------------+\n";
+
+        System.out.println(sRes);
 
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());

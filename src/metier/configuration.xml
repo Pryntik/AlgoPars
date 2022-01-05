@@ -21,7 +21,7 @@
    </configuration>
 
    <configuration nom="config3">
-      <variable  couleur="orange" poids="1"></variable>
+      <variable  couleur="vert" poids="1"></variable>
       <constante couleur="cyan"   poids="1"></constante>
       <chiffre   couleur="jaune"  poids="0"></chiffre>
       <generale  couleur="blanc"  poids="0"></generale>
