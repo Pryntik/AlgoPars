@@ -2,11 +2,36 @@
 
 <configurations>
 
-   <!-- ***************************** -->
-   <!-- **   Liste des couleurs    ** -->
-   <!-- ***************************** -->   
-   <forme id_couleur="c1" stylo="cube"               feutre="cube.gif"      />
-   <forme id_couleur="c2" stylo="prismes hexagonaux" feutre="prismeHex.gif" />
-   <forme id_couleur="c3" stylo="tetraedres"         feutre="tetraedre.gif" />
+   <!-- ****************************** -->
+   <!-- ** Liste des configurations ** -->
+   <!-- ****************************** -->
+   
+   <configuration nom="config1">
+      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
+      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
+      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
+      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+   </configuration>
 
+   <configuration nom="config2">
+      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
+      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
+      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
+      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+   </configuration>
+
+   <configuration nom="config3">
+      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
+      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
+      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
+      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+   </configuration>
+
+   <configuration nom="config4">
+      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
+      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
+      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
+      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+   </configuration>
+   
 </configurations>
