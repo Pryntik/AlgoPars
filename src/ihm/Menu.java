@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.sun.jna.*;
-import com.sun.jna.win32.*;
+import com.sun.jna.platform.win32. WinDef.*;
+import com.sun.jna.platform.win32.WinNT.HANDLE;
 
 public class Menu
 {
     private LireFichier lf;
-    private Couleur cool;
+    private Couleur coul;
     private Vue v;
     private String sFile;
     private String sFileXML;
@@ -20,7 +21,7 @@ public class Menu
     public Menu(boolean auto)
     {
         this.lf   = new LireFichier();
-        this.cool = new Couleur("", "", "");
+        this.coul = new Couleur("", "", "");
 
         if (auto)
         {
@@ -60,7 +61,10 @@ public class Menu
             System.out.print(" ["+i+"] " + String.format("%-20s", "config" + i) + "|");
         }
         System.out.print("\n+-------------------------+-------------------------+-------------------------+\n| ");
-        System.out.print(cool.ecrire('V') + "Variables");
+        coul.start();
+        System.out.println(coul.ecrire('V'));
+        System.out.print("Variables");
+        System.out.println(coul.ecrire('0'));
         System.out.print("               | Variables               | Variables               |\n" +
                   "| Constantes              | Constantes              | Constantes              |\n" +
                   "| Chiffres                | Chiffres                | Chiffres                |\n" +
