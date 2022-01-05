@@ -15,9 +15,8 @@ public class Vue
 		Couleur coul = new Couleur();
 
 		String sTabs = "";
-		for(int i = 0; i<iEspacesParTab; i++){
+		for(int i = 0; i<iEspacesParTab; i++)
 			sTabs += " ";
-		}
 
 		for (int y = 0; y < alLignes.size(); y++)
 		{
@@ -49,7 +48,7 @@ public class Vue
 
 			// *** DESSIN DU FICHIER *** //
 
-			String sLigne = "";
+			String sLigne;
 
 			for(int i = 0; i<alLignes.size(); i++)
 			{

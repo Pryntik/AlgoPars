@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configurations>
+
+   <!-- ***************************** -->
+   <!-- **   Liste des couleurs    ** -->
+   <!-- ***************************** -->   
+   <forme id_couleur="c1" stylo="cube"               feutre="cube.gif"      />
+   <forme id_couleur="c2" stylo="prismes hexagonaux" feutre="prismeHex.gif" />
+   <forme id_couleur="c3" stylo="tetraedres"         feutre="tetraedre.gif" />
+
+</configurations>

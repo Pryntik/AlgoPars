@@ -14,6 +14,7 @@ public class Algo
 		this.alLignes = alLignes;
 		setNom();
 
+		/*
 		// A FINIR CREER LES VARIABLES ET LES AJOUTER A L'ARRAYLIST (utiliser while pas for)//
 		for(String ligne: alLignes){
 			if(ligne.contains("variable")){
@@ -22,6 +23,7 @@ public class Algo
 				}
 			}
 		}
+		*/
 	}
 
 	public void ajouterVariable(String sNom, String sValeur)
