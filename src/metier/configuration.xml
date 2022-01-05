@@ -7,31 +7,24 @@
    <!-- ****************************** -->
    
    <configuration nom="config1">
-      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
-      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
-      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
-      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+      <variable  couleur="vert"  poids="1"></variable>
+      <constante couleur="jaune" poids="1"></constante>
+      <chiffre   couleur="bleu"  poids="0"></chiffre>
+      <generale  couleur="blanc" poids="0"></generale>
    </configuration>
 
    <configuration nom="config2">
-      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
-      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
-      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
-      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+      <variable  couleur="violet" poids="1"></variable>
+      <constante couleur="rose"   poids="1"></constante>
+      <chiffre   couleur="rouge"  poids="0"></chiffre>
+      <generale  couleur="blanc"  poids="0"></generale>
    </configuration>
 
    <configuration nom="config3">
-      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
-      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
-      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
-      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
-   </configuration>
-
-   <configuration nom="config4">
-      <variable  couleur="vert"   poids="1" liste='listeVar'></variable>
-      <constante couleur="rouge"  poids="1" liste='listeCons'></constante>
-      <chiffre   couleur="violet" poids="0" liste='listeChif'></chiffre>
-      <generale  couleur="blanc"  poids="0" liste='listeGene'></generale>
+      <variable  couleur="orange" poids="1"></variable>
+      <constante couleur="cyan"   poids="1"></constante>
+      <chiffre   couleur="jaune"  poids="0"></chiffre>
+      <generale  couleur="blanc"  poids="0"></generale>
    </configuration>
    
 </configurations>

@@ -2,7 +2,16 @@ package ihm;
 
 public class Couleur
 {
-	public Couleur(String nom, String stylo, String feutre) {}
+	private String nom;
+	private String stylo;
+	private String gras;
+
+	public Couleur(String nom, String stylo, String gras)
+	{
+		this.nom   = nom;
+		this.stylo = stylo;
+		this.gras  = gras;
+	}
 
 	public String ecrire(char stylo)
 	{

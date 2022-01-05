@@ -1,5 +1,7 @@
 package metier;
 
+import ihm.Couleur;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+
+
 
 public class LireFichier
 {
@@ -48,21 +52,57 @@ public class LireFichier
 
 	// *** LECTURE DU FICHIER XML *** //
 
-	public void LireFichierXML(String fichier)
+	public ArrayList<Couleur> LireFichierXML(String fichier)
 	{
+		String coulVari  = "a";
+		String poidsVari = "b";
+		String coulCons  = "c";
+		String poidsCons = "d";
+		String coulChif  = "e";
+		String poidsChif = "f";
+		String coulGene  = "g";
+		String poidsGene = "h";
+		ArrayList<Couleur> listCouleur = new ArrayList<Couleur>();
+
 		try
 		{
 			SAXBuilder sax    = new SAXBuilder();
 			Document   doc    = sax.build(new File(fichier));
 			Element    racine = doc.getRootElement();
-			List<Element> listVariable = racine.getChildren("variable");
-			for (Element var : listVariable)
+			List<Element> listConfig = racine.getChildren("configuration");
+			for (Element config : listConfig)
 			{
-				String nomVar = var.getAttributeValue("nom");
-				List<Element> listPiece = var.getChildren("piece");
+				String        nomConfig = config.getAttributeValue("nom");
+				List<Element> listVar   = config.getChildren("variable");
+				List<Element> listCons  = config.getChildren("constante");
+				List<Element> listChif  = config.getChildren("chiffre");
+				List<Element> listGene  = config.getChildren("generale");
+
+				for (Element vari : listVar)
+				{
+					coulVari  = vari.getAttributeValue("couleur");
+					poidsVari = vari.getAttributeValue("poids");
+				}
+				for (Element cons : listCons)
+				{
+					coulCons  = cons.getAttributeValue("couleur");
+					poidsCons = cons.getAttributeValue("poids");
+				}
+				for (Element chif : listChif)
+				{
+					coulChif  = chif.getAttributeValue("couleur");
+					poidsChif = chif.getAttributeValue("poids");
+				}
+				for (Element gene : listGene)
+				{
+					coulGene  = gene.getAttributeValue("couleur");
+					poidsGene = gene.getAttributeValue("poids");
+				}
+				listCouleur.add(new Couleur(nomConfig, coulVari, poidsVari));
 			}
+			return listCouleur;
 		}
-		catch(Exception e){e.printStackTrace();}
+		catch(Exception e){e.printStackTrace(); return null;}
 	}
 
 	public ArrayList<String> recupFichiers()
