@@ -1,4 +1,7 @@
-package metier;
+package src.metier;
+
+import src.*;
+import src.ihm.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,7 +14,7 @@ public class Algo
 	private ArrayList<String> alLignes = new ArrayList<String>();
 	private ArrayList<Variable> alVariables = new ArrayList<Variable>();
 
-	public Algo(ArrayList<String> alLignes)
+	public Algo(ArrayList<String> alLignes, ArrayList<String> alVarsTracer)
 	{
 		this.alLignes = alLignes;
 		setNom();

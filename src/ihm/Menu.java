@@ -1,25 +1,63 @@
-package ihm;
+package src.ihm;
 
-import metier.*;
+import src.*;
+import src.metier.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu
 {
-    private LireFichier lf;
+    private Controleur ctrl;
     private Couleur coul;
     private Vue v;
     private String sFile;
+    private String sFileVar;
     private String sFileXML;
     private char iType;
     
 
-    public Menu(boolean auto)
+    public Menu(Controleur ctrl)
     {
-        this.lf   = new LireFichier();
-        this.coul = new Couleur(" ", ' ', ' ');
+        this.ctrl   = ctrl;
+        creerMenus();
+        this.coul   = new Couleur(" ", ' ', ' ');
+    }
 
-        if (auto)
+    public void creerMenus()
+    {
+
+        boolean bAuto = true;
+
+        System.out.print("+----------------------------------------------+\n" + 
+                         "|                                              |\n" +
+                         "| Quel mode souhaitez vous ?                   |\n" +
+                         "|                                              |\n" + 
+                         "| [A]utomatique ?                              |\n" +
+                         "| [P]as à pas ?                                |\n" + 
+                         "| [Q]uitter ?                                  |\n" +
+                         "+----------------------------------------------+\n");
+
+        boolean bSelection = true;
+		while (bSelection)
+		{
+			Scanner sc = new Scanner(System.in);
+			switch (sc.nextLine())
+			{
+				case "A":
+                    bAuto = true;
+                    bSelection = false;
+					break;
+				case "P":
+					bAuto = false;
+                    bSelection = false;
+					break;
+				case "Q":
+					return;
+			}
+		}
+
+        if (bAuto)
         {
             System.out.println("Mode Automatique activé !");
             this.iType = '0';
@@ -32,12 +70,16 @@ public class Menu
         }
 
         this.sFileXML = "../src/metier/configuration.xml";
-        this.lf.LireFichierXML(sFileXML);
-        choixConfig();
+        this.ctrl.LireFichierXML(sFileXML);
+
+        String   choix = choixFichier();
+        String[] parts = choix.split(".");
 
         this.sFile = "../src/fichiers/" + choixFichier();
+        this.sFileVar = "../src/fichiers/" + parts[0] + ".var";
         ClearConsole();
-        this.v = new Vue(this.lf.LireFichier(sFile), iType);
+        ctrl.algo = new Algo(this.ctrl.LireFichier(sFile), this.ctrl.LireFichier(sFileVar));
+        ctrl.vue = new Vue(this.ctrl.LireFichier(sFile), iType);
     }
 
     public String choixConfig()
@@ -45,7 +87,7 @@ public class Menu
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
-        alCouleur = lf.LireFichierXML(this.sFileXML);
+        alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
         coul.start();
         String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
@@ -69,9 +111,9 @@ public class Menu
         }
         sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
 
-                  "| " + c1Vari + "               |"  + c2Vari + "                |"  + c3Vari  + "                |" + "\n" +
-                  "| " + c1Cons + "              |"   + c2Cons + "               |"   + c3Cons  + "               |"  + "\n" +
-                  "| " + c1Chif + "                |" + c2Chif + "                 |" + c3Chif  + "                 |"+ "\n" +
+                  "| " + c1Vari + "                |"  + c2Vari + "                |"  + c3Vari  + "                |" + "\n" +
+                  "| " + c1Cons + "               |"   + c2Cons + "               |"   + c3Cons  + "               |"  + "\n" +
+                  "| " + c1Chif + "                 |" + c2Chif + "                 |" + c3Chif  + "                 |"+ "\n" +
                   "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);
@@ -95,7 +137,7 @@ public class Menu
         String sRes;
         int    choix;
         ArrayList<String> alFichiers = new ArrayList<String>();
-        alFichiers = lf.recupFichiers();
+        alFichiers = ctrl.recupFichiers();
         if (alFichiers.size() == 0)
         {
             sRes =         "+----------------------------------------------+\n" +

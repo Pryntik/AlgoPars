@@ -1,8 +1,11 @@
-package ihm;
+package src.ihm;
 
-import com.sun.jna.*;
+import src.*;
+import src.metier.*;
+
+/*import com.sun.jna.*;
 import com.sun.jna.platform.win32. WinDef.*;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
+import com.sun.jna.platform.win32.WinNT.HANDLE;*/
 
 public class Couleur
 {
@@ -97,7 +100,7 @@ public class Couleur
 
 	public void start()
 	{
-		if(System.getProperty("os.name").startsWith("Windows"))
+		/*if(System.getProperty("os.name").startsWith("Windows"))
 		{
 			// Set output mode to handle virtual terminal sequences
 			Function GetStdHandleFunc = Function.getFunction("kernel32", "GetStdHandle");
@@ -113,7 +116,7 @@ public class Couleur
 			dwMode.setValue(dwMode.intValue() | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 			Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleMode");
 			SetConsoleModeFunc.invoke(BOOL.class, new Object[]{hOut, dwMode});
-		}
+		}*/
 	}
 
 	public String toSring()

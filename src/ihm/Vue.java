@@ -1,4 +1,7 @@
-package ihm;
+package src.ihm;
+
+import src.*;
+import src.metier.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;

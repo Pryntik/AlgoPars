@@ -1,4 +1,7 @@
-package metier;
+package src.metier;
+
+import src.*;
+import src.ihm.*;
 
 public class Variable {
 
