@@ -48,30 +48,30 @@ public class Menu
         alCouleur = lf.LireFichierXML(this.sFileXML);
 
         coul.start();
-        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables" + coul.ecrire('0'); // Vert
+        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
         String c1Cons = coul.ecrire(alCouleur.get(1).getStylo()) + "Constantes" + coul.ecrire('0'); // Jaune
-        String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres" + coul.ecrire('0'); // Bleu
-        String c2Vari = coul.ecrire(alCouleur.get(3).getStylo()) + "Variables" + coul.ecrire('0'); // Violet
+        String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Bleu
+        String c2Vari = coul.ecrire(alCouleur.get(3).getStylo()) + "Variables"  + coul.ecrire('0'); // Violet
         String c2Cons = coul.ecrire(alCouleur.get(4).getStylo()) + "Constantes" + coul.ecrire('0'); // Magenta
-        String c2Chif = coul.ecrire(alCouleur.get(5).getStylo()) + "Chiffres" + coul.ecrire('0'); // Rouge
-        String c3Vari = coul.ecrire(alCouleur.get(6).getStylo()) + "Variables" + coul.ecrire('0'); // Vert
+        String c2Chif = coul.ecrire(alCouleur.get(5).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Rouge
+        String c3Vari = coul.ecrire(alCouleur.get(6).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
         String c3Cons = coul.ecrire(alCouleur.get(7).getStylo()) + "Constantes" + coul.ecrire('0'); // Cyan
-        String c3Chif = coul.ecrire(alCouleur.get(8).getStylo()) + "Chiffres" + coul.ecrire('0'); // Jaune
+        String c3Chif = coul.ecrire(alCouleur.get(8).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Jaune
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
-                "| Quel configuration souhaitez vous utiliser ?                                |\n" +
+                "| Quel theme souhaitez vous utiliser ?                                        |\n" +
                 "|                                                                             |\n" +
                 "+-----------------------------------------------------------------------------+\n|";
         for (int i = 1; i <= 3; i++)
         {
-            sRes += " ["+i+"] " + String.format("%-20s", "config" + i) + "|";
+            sRes += " ["+i+"] " + String.format("%-20s", "theme") + "|";
         }
         sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
 
-                  "| " + c1Vari + "               | " + c2Vari + "               | "   + c3Vari + "               |\n"  +
-                  "| " + c1Cons + "              | "  + c2Cons + "              | "    + c3Cons + "              |\n"   +
-                  "| " + c1Chif + "                | " + c2Chif + "                | " + c3Chif + "                |\n" +
+                  "|" + c1Vari + "                |"  + c2Vari + "                |"  + c3Vari  + "                |" + "\n" +
+                  "|" + c1Cons + "               |"   + c2Cons + "               |"   + c3Cons  + "               |"  + "\n" +
+                  "|" + c1Chif + "                 |" + c2Chif + "                 |" + c3Chif  + "                 |"+ "\n" +
                   "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);

@@ -69,10 +69,10 @@ public class LireFichier
 			SAXBuilder sax    = new SAXBuilder();
 			Document   doc    = sax.build(new File(fichier));
 			Element    racine = doc.getRootElement();
-			List<Element> listConfig = racine.getChildren("configuration");
+			List<Element> listConfig = racine.getChildren("theme");
 			for (Element config : listConfig)
 			{
-				String        nomConfig = config.getAttributeValue("nom");
+				String        nomTheme  = config.getAttributeValue("nom");
 				List<Element> listVar   = config.getChildren("variable");
 				List<Element> listCons  = config.getChildren("constante");
 				List<Element> listChif  = config.getChildren("chiffre");
@@ -98,9 +98,9 @@ public class LireFichier
 					coulGene  = gene.getAttributeValue("couleur").charAt(0);
 					poidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
-				listCouleur.add(new Couleur(nomConfig, coulVari, poidsVari));
-				listCouleur.add(new Couleur(nomConfig, coulCons, poidsCons));
-				listCouleur.add(new Couleur(nomConfig, coulChif, poidsChif));
+				listCouleur.add(new Couleur(nomTheme, coulVari, poidsVari));
+				listCouleur.add(new Couleur(nomTheme, coulCons, poidsCons));
+				listCouleur.add(new Couleur(nomTheme, coulChif, poidsChif));
 			}
 			return listCouleur;
 		}

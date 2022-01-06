@@ -6,25 +6,25 @@
    <!-- ** Liste des configurations ** -->
    <!-- ****************************** -->
    
-   <configuration nom="config1">
+   <theme nom="theme1">
       <variable  couleur='G' poids='1'></variable>
       <constante couleur='Y' poids='1'></constante>
       <chiffre   couleur='B' poids='0'></chiffre>
       <generale  couleur='0' poids='0'></generale>
-   </configuration>
+   </theme>
 
-   <configuration nom="config2">
+   <theme nom="theme2">
       <variable  couleur='P' poids='1'></variable>
       <constante couleur='B' poids='1'></constante>
       <chiffre   couleur='R' poids='0'></chiffre>
       <generale  couleur='0' poids='0'></generale>
-   </configuration>
+   </theme>
 
-   <configuration nom="config3">
+   <theme nom="theme3">
       <variable  couleur='G' poids='1'></variable>
       <constante couleur='C' poids='1'></constante>
       <chiffre   couleur='Y' poids='0'></chiffre>
       <generale  couleur='0' poids='0'></generale>
-   </configuration>
+   </theme>
    
 </configurations>
