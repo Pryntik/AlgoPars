@@ -78,14 +78,16 @@ public class Menu
         this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
 
         this.ctrl.LireFichierXML(sFileXML);
-        choixConfig();
+        String theme =  choixTheme();
+
+        
 
         ClearConsole();
         this.ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar));
         this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
     }
 
-    public String choixConfig()
+    public String choixTheme()
     {
         int    choix;
         String sRes = "";
@@ -130,7 +132,7 @@ public class Menu
             choix = Integer.parseInt(sc.nextLine());
         }
             
-        return "config" + choix;
+        return "theme" + choix;
     }
 
     // *** SELECTION DU FICHIER *** //
