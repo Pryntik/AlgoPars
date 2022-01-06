@@ -43,17 +43,17 @@ public class Couleur
 
 	public String getNom()
 	{
-		return nom;
+		return this.nom;
 	}
 
-	public void setStylo()
+	public char getStylo()
 	{
-		this.ecrire(this.stylo);
+		return this.stylo;
 	}
 
-	public void setGras()
+	public char getGras()
 	{
-
+		return this.gras;
 	}
 
 	public String ecrire(char stylo)

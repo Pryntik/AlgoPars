@@ -99,6 +99,8 @@ public class LireFichier
 					poidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
 				listCouleur.add(new Couleur(nomConfig, coulVari, poidsVari));
+				listCouleur.add(new Couleur(nomConfig, coulVari, poidsVari));
+				listCouleur.add(new Couleur(nomConfig, coulVari, poidsVari));
 			}
 			return listCouleur;
 		}

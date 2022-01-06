@@ -52,7 +52,7 @@ public class Menu
         {
             System.out.println(coolXML.toSring());
         }
-        String c1Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
+        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables" + coul.ecrire('0');
         String c2Vari = coul.ecrire('P') + "Variables"  + coul.ecrire('0');
         String c3Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
         String c1Cons = coul.ecrire('Y') + "Constantes" + coul.ecrire('0');
