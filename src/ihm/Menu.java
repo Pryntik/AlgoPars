@@ -5,13 +5,14 @@ import src.metier.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Menu
 {
     private Controleur ctrl;
     private Couleur coul;
     private Vue v;
-    private String sFile;
+    private String sFileAlgo;
     private String sFileVar;
     private String sFileXML;
     private char iType;
@@ -20,8 +21,8 @@ public class Menu
     public Menu(Controleur ctrl)
     {
         this.ctrl   = ctrl;
-        creerMenus();
         this.coul   = new Couleur(" ", ' ', ' ');
+        creerMenus();
     }
 
     public void creerMenus()
@@ -69,17 +70,19 @@ public class Menu
             this.iType = 'R';
         }
 
-        this.sFileXML = "../src/metier/configuration.xml";
+        String   sAlgo = choixFichier();
+        String[] parts = sAlgo.split(Pattern.quote("."));
+
+        this.sFileAlgo = "../src/fichiers/" + sAlgo;
+        this.sFileXML  = "../src/metier/configuration.xml";
+        this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
+
         this.ctrl.LireFichierXML(sFileXML);
+        choixConfig();
 
-        String   choix = choixFichier();
-        String[] parts = choix.split(".");
-
-        this.sFile = "../src/fichiers/" + choixFichier();
-        this.sFileVar = "../src/fichiers/" + parts[0] + ".var";
         ClearConsole();
-        ctrl.algo = new Algo(this.ctrl.LireFichier(sFile), this.ctrl.LireFichier(sFileVar));
-        ctrl.vue = new Vue(this.ctrl.LireFichier(sFile), iType);
+        this.ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar));
+        this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
     }
 
     public String choixConfig()
@@ -89,7 +92,7 @@ public class Menu
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
         alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
-        coul.start();
+        this.coul.start();
         String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
         String c1Cons = coul.ecrire(alCouleur.get(1).getStylo()) + "Constantes" + coul.ecrire('0'); // Jaune
         String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Bleu
