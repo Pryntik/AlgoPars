@@ -15,7 +15,7 @@
 
    <configuration nom="config2">
       <variable  couleur='P' poids='1'></variable>
-      <constante couleur='M' poids='1'></constante>
+      <constante couleur='B' poids='1'></constante>
       <chiffre   couleur='R' poids='0'></chiffre>
       <generale  couleur='0' poids='0'></generale>
    </configuration>

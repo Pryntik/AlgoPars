@@ -48,19 +48,15 @@ public class Menu
         alCouleur = lf.LireFichierXML(this.sFileXML);
 
         coul.start();
-        for (Couleur coolXML : alCouleur)
-        {
-            System.out.println(coolXML.toSring());
-        }
-        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables" + coul.ecrire('0');
-        String c2Vari = coul.ecrire('P') + "Variables"  + coul.ecrire('0');
-        String c3Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
-        String c1Cons = coul.ecrire('Y') + "Constantes" + coul.ecrire('0');
-        String c2Cons = coul.ecrire('M') + "Constantes" + coul.ecrire('0');
-        String c3Cons = coul.ecrire('C') + "Constantes" + coul.ecrire('0');
-        String c1Chif = coul.ecrire('B') + "Chiffres"   + coul.ecrire('0');
-        String c2Chif = coul.ecrire('R') + "Chiffres"   + coul.ecrire('0');
-        String c3Chif = coul.ecrire('Y') + "Chiffres"   + coul.ecrire('0');
+        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables" + coul.ecrire('0'); // Vert
+        String c1Cons = coul.ecrire(alCouleur.get(1).getStylo()) + "Constantes" + coul.ecrire('0'); // Jaune
+        String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres" + coul.ecrire('0'); // Bleu
+        String c2Vari = coul.ecrire(alCouleur.get(3).getStylo()) + "Variables" + coul.ecrire('0'); // Violet
+        String c2Cons = coul.ecrire(alCouleur.get(4).getStylo()) + "Constantes" + coul.ecrire('0'); // Magenta
+        String c2Chif = coul.ecrire(alCouleur.get(5).getStylo()) + "Chiffres" + coul.ecrire('0'); // Rouge
+        String c3Vari = coul.ecrire(alCouleur.get(6).getStylo()) + "Variables" + coul.ecrire('0'); // Vert
+        String c3Cons = coul.ecrire(alCouleur.get(7).getStylo()) + "Constantes" + coul.ecrire('0'); // Cyan
+        String c3Chif = coul.ecrire(alCouleur.get(8).getStylo()) + "Chiffres" + coul.ecrire('0'); // Jaune
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
