@@ -4,10 +4,6 @@ import metier.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.sun.jna.*;
-import com.sun.jna.platform.win32. WinDef.*;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-
 public class Menu
 {
     private LireFichier lf;
@@ -21,7 +17,7 @@ public class Menu
     public Menu(boolean auto)
     {
         this.lf   = new LireFichier();
-        this.coul = new Couleur("", "", "");
+        this.coul = new Couleur(" ", ' ', ' ');
 
         if (auto)
         {
@@ -46,8 +42,16 @@ public class Menu
 
     public String choixConfig()
     {
-        coul.start();
+        int    choix;
+        String sRes = "";
+        ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
+        alCouleur = lf.LireFichierXML(this.sFileXML);
 
+        coul.start();
+        for (Couleur coolXML : alCouleur)
+        {
+            System.out.println(coolXML.toSring());
+        }
         String c1Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
         String c2Vari = coul.ecrire('P') + "Variables"  + coul.ecrire('0');
         String c3Vari = coul.ecrire('G') + "Variables"  + coul.ecrire('0');
@@ -57,11 +61,6 @@ public class Menu
         String c1Chif = coul.ecrire('B') + "Chiffres"   + coul.ecrire('0');
         String c2Chif = coul.ecrire('R') + "Chiffres"   + coul.ecrire('0');
         String c3Chif = coul.ecrire('Y') + "Chiffres"   + coul.ecrire('0');
-
-        int    choix;
-        String sRes = "";
-        ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
-        alCouleur = lf.LireFichierXML(this.sFileXML);
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +

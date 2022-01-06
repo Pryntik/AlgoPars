@@ -28,15 +28,32 @@ public class Couleur
 	public static final String CYAN_BACKGROUND   = "\u001B[46m";
 	public static final String WHITE_BACKGROUND  = "\u001B[47m";
 
-	private String nom;
-	private String stylo;
-	private String gras;
+	public static final String GRAS = "\u001B[1m";
 
-	public Couleur(String nom, String stylo, String gras)
+	private String nom;
+	private char   stylo;
+	private char   gras;
+
+	public Couleur(String nom, char stylo, char gras)
 	{
 		this.nom   = nom;
 		this.stylo = stylo;
 		this.gras  = gras;
+	}
+
+	public String getNom()
+	{
+		return nom;
+	}
+
+	public void setStylo()
+	{
+		this.ecrire(this.stylo);
+	}
+
+	public void setGras()
+	{
+
 	}
 
 	public String ecrire(char stylo)
@@ -68,6 +85,18 @@ public class Couleur
 		}
 	}
 
+	public String front(char gras)
+	{
+		if(gras == '0')
+		{
+			return "";
+		}
+		else
+		{
+			return GRAS;
+		}
+	}
+
 	public void start()
 	{
 		if(System.getProperty("os.name").startsWith("Windows"))
@@ -87,5 +116,14 @@ public class Couleur
 			Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleMode");
 			SetConsoleModeFunc.invoke(BOOL.class, new Object[]{hOut, dwMode});
 		}
+	}
+
+	public String toSring()
+	{
+		String sRet = "";
+
+		sRet += "Couleur : nom_" + this.nom + " stylo_" + this.stylo + " gras_" + this.gras;
+
+		return sRet;
 	}
 }

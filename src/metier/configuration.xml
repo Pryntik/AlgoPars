@@ -7,24 +7,24 @@
    <!-- ****************************** -->
    
    <configuration nom="config1">
-      <variable  couleur="vert"  poids="1"></variable>
-      <constante couleur="jaune" poids="1"></constante>
-      <chiffre   couleur="bleu"  poids="0"></chiffre>
-      <generale  couleur="blanc" poids="0"></generale>
+      <variable  couleur='G'  poids='1'></variable>
+      <constante couleur='Y' poids='1'></constante>
+      <chiffre   couleur='B'  poids='0'></chiffre>
+      <generale  couleur='0' poids='0'></generale>
    </configuration>
 
    <configuration nom="config2">
-      <variable  couleur="violet" poids="1"></variable>
-      <constante couleur="rose"   poids="1"></constante>
-      <chiffre   couleur="rouge"  poids="0"></chiffre>
-      <generale  couleur="blanc"  poids="0"></generale>
+      <variable  couleur='P' poids='1'></variable>
+      <constante couleur='M'   poids='1'></constante>
+      <chiffre   couleur='R'  poids='0'></chiffre>
+      <generale  couleur='0'  poids='0'></generale>
    </configuration>
 
    <configuration nom="config3">
-      <variable  couleur="vert" poids="1"></variable>
-      <constante couleur="cyan"   poids="1"></constante>
-      <chiffre   couleur="jaune"  poids="0"></chiffre>
-      <generale  couleur="blanc"  poids="0"></generale>
+      <variable  couleur='G' poids='1'></variable>
+      <constante couleur='C'   poids='1'></constante>
+      <chiffre   couleur='Y'  poids='0'></chiffre>
+      <generale  couleur='0'  poids='0'></generale>
    </configuration>
    
 </configurations>
