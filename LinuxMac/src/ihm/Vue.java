@@ -16,6 +16,7 @@ public class Vue
 	private ArrayList<String> alLignes;
 	private Couleur           coul;
 	private String            sTabs;
+	private String            choix = "";
 
 	public Vue(ArrayList<String> alLignes, char cCouleur)
 	{
@@ -32,9 +33,22 @@ public class Vue
 		{
 			while(this.y < this.alLignes.size())
 			{
+				Scanner sc = new Scanner(System.in);
+				BaseTableau();
+				if(choix.equals("r") && this.y > 0)
+					this.y--;
+				else
+					this.y++;
+
+				this.choix = sc.nextLine();
+				ClearConsole();
+			}
+			while(this.y < this.alLignes.size())
+			{
 				BaseTableau();
 				this.y++;
 			}
+			
 		}
 		else
 		{
@@ -77,11 +91,11 @@ public class Vue
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
-		if(this.cCouleur != '0')
-		{
-			pause(true);
-			ClearConsole();
-		}
+		//if(this.cCouleur != '0')
+		//{
+		//	pause(true);
+		//	ClearConsole();
+		//}
 	}
 
 	// Methode pour effacer la console //

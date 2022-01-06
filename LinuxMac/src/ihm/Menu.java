@@ -78,20 +78,23 @@ public class Menu
         this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
 
         this.ctrl.LireFichierXML(sFileXML);
-        choixConfig();
+        String theme =  choixTheme();
+
+        
 
         ClearConsole();
         this.ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar));
         this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
     }
 
-    public String choixConfig()
+    public String choixTheme()
     {
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
         alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
+        this.coul.start();
         String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
         String c1Cons = coul.ecrire(alCouleur.get(1).getStylo()) + "Constantes" + coul.ecrire('0'); // Jaune
         String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Bleu
@@ -129,7 +132,7 @@ public class Menu
             choix = Integer.parseInt(sc.nextLine());
         }
             
-        return "config" + choix;
+        return "theme" + choix;
     }
 
     // *** SELECTION DU FICHIER *** //
