@@ -1,24 +1,39 @@
-package metier;
+package src;
 
-import ihm.Couleur;
+import src.metier.*;
+import src.ihm.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-
-
-public class LireFichier
+public class Controleur
 {
-	public LireFichier() {}
 
-	// *** LECTURE DU FICHIER ALGO *** //
+	public Algo algo;
+	public Menu menu;
+	public Vue vue;
+
+	public static void main(String[] args)
+	{
+		Controleur ctrl = new Controleur();
+	}
+
+	public Controleur()
+	{
+		menu = new Menu(this);
+	}
 
 	public ArrayList<String> LireFichier(String fichier)
 	{
@@ -42,8 +57,6 @@ public class LireFichier
 				i++;
 			}
 			isr.close();
-
-			Algo algo = new Algo(sList);
 
 			return sList;
 		}

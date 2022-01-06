@@ -11,5 +11,5 @@ CSCRIPT //nologo "%TempVBSFile%"
 
 javac @compile.list
 cd bin
-java Controleur
+java src.Controleur
 pause
