@@ -28,30 +28,27 @@ public class Couleur
 
 	public static final String GRAS = "\u001B[1m";
 
+	private String theme;
 	private String nom;
 	private char   stylo;
 	private char   gras;
 
-	public Couleur(String nom, char stylo, char gras)
+	public Couleur(String theme, String nom, char stylo, char gras)
 	{
+		this.theme = theme;
 		this.nom   = nom;
 		this.stylo = stylo;
 		this.gras  = gras;
 	}
 
-	public String getNom()
-	{
-		return this.nom;
-	}
+	public String getTheme() { return this.theme; }
+	public String getNom()   { return this.nom;   }
+	public char   getStylo() { return this.stylo; }
+	public char   getGras()  { return this.gras;  }
 
-	public char getStylo()
+	public String getNomColore()
 	{
-		return this.stylo;
-	}
-
-	public char getGras()
-	{
-		return this.gras;
+		return ecrire(getStylo()) + getNom() + ecrire('0');
 	}
 
 	public String ecrire(char stylo)
@@ -98,7 +95,7 @@ public class Couleur
 	{
 		String sRet = "";
 
-		sRet += "Couleur : nom_" + this.nom + " stylo_" + this.stylo + " gras_" + this.gras;
+		sRet += "Couleur : theme_" + this.theme + "nom_" + this.nom + " stylo_" + this.stylo + " gras_" + this.gras;
 
 		return sRet;
 	}
