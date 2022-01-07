@@ -94,6 +94,7 @@ public class Menu
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
         alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
+        alCouleur.get(0).start();
         for (int i = 0; i <= 2; i++)
             alTheme1.add(alCouleur.get(i)); // Vert + Jaune + Bleu
 

@@ -46,7 +46,8 @@ public class Algo
 
 		// Affichage des variables gardées en mémoire //
 		System.out.println("--- Variables et Constantes --- ");
-		for(Variable var : alVariables){
+		for(Variable var : alVariables)
+		{
 			System.out.println(var);
 		}
 	}
