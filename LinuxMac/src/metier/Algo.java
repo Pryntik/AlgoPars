@@ -24,24 +24,30 @@ public class Algo
 		String   type;
 
 		// *** INTERPRETATION DU CODE *** //
-		for(int i = 0; i<alLignes.size(); i++){
+		for(int i = 0; i<alLignes.size(); i++)
+		{
 			// RECUPERATION DES VARIABLES ET CONSTANTES //
 			ligne = alLignes.get(i);
 
 			// Constantes //
-			if(ligne.contains("constante")){
+			if(ligne.contains("constante"))
+			{
 				i++;
 				ligne = alLignes.get(i);
-				while(!ligne.contains("DEBUT") && !ligne.contains("variable")){
+				while(!ligne.contains("DEBUT") && !ligne.contains("variable"))
+				{
 					parts = ligne.split(":");
 					type   = String.valueOf(parts[1]);
-					if(parts[0].contains(",")){
+					if(parts[0].contains(","))
+					{
 						parts  = parts[0].split(",");
-						for(int j = 0; j<parts.length; j++){
+						for(int j = 0; j<parts.length; j++)
+						{
 							this.ajouterVariable(parts[j], type, true);
 						}
 					}
-					else{
+					else
+					{
 						this.ajouterVariable(parts[0], type, true);
 					}
 					i++;
@@ -50,19 +56,24 @@ public class Algo
 			}
 
 			// Variables //
-			if(ligne.contains("variable")){
+			if(ligne.contains("variable"))
+			{
 				i++;
 				ligne = alLignes.get(i);
-				while(!ligne.contains("DEBUT")){
+				while(!ligne.contains("DEBUT"))
+				{
 					parts = ligne.split(":");
 					type   = String.valueOf(parts[1]);
-					if(parts[0].contains(",")){
+					if(parts[0].contains(","))
+					{
 						parts  = parts[0].split(",");
-						for(int j = 0; j<parts.length; j++){
+						for(int j = 0; j<parts.length; j++)
+						{
 							this.ajouterVariable(parts[j], type, false);
 						}
 					}
-					else{
+					else
+					{
 						this.ajouterVariable(parts[0], type, false);
 					}
 					i++;
@@ -72,7 +83,8 @@ public class Algo
 
 			// DEBUT DES INSTRUCTIONS //
 			if(ligne.contains("DEBUT")){
-				while(!ligne.contains("FIN")){
+				while(!ligne.contains("FIN"))
+				{
 					executeInstruction(ligne);
 					i++;
 					ligne = alLignes.get(i);
@@ -104,25 +116,31 @@ public class Algo
 		this.sNom = parts[1].trim();
 	}
 
-	public Variable getVariable(String sNomVar){
+	public Variable getVariable(String sNomVar)
+	{
 		for(Variable var : alVariables){
-			if(sNomVar.equals(var.getNom())){
+			if(sNomVar.equals(var.getNom()))
+			{
 				return var;
 			}
 		}
 		return null;
 	}
 
-	public void executeInstruction(String sLigne){
+	public void executeInstruction(String sLigne)
+	{
 		String[] parts;
 
 		// Affectation //
-		if(sLigne.contains("<--")){
+		if(sLigne.contains("<--"))
+		{
 			parts = sLigne.split("<--");
 			getVariable(parts[0].trim()).setValeur(parts[1]);
 		}
-		if(sLigne.contains("écrire")){
-			if(sLigne.contains("\"")){
+		if(sLigne.contains("écrire"))
+		{
+			if(sLigne.contains("\""))
+			{
 				parts = sLigne.split("\"");
 				System.out.println(parts[1]);
 			}
@@ -132,7 +150,8 @@ public class Algo
 				System.out.println(getVariable(parts[0].trim()).getValeur());
 			}
 		}
-		if(sLigne.contains("lire")){
+		if(sLigne.contains("lire"))
+		{
 			String sInput;
 			Scanner sc = new Scanner(System.in);
 			parts      = sLigne.split(Pattern.quote("("));
