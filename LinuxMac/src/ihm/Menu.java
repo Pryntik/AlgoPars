@@ -76,7 +76,7 @@ public class Menu
         this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
 
         this.ctrl.LireFichierXML(sFileXML);
-        ArrayList<String> alTheme  = new ArrayList<String>();
+        ArrayList<Couleur> alTheme  = new ArrayList<Couleur>();
         alTheme =  choixTheme();
 
         ClearConsole();
@@ -84,24 +84,24 @@ public class Menu
         this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
     }
 
-    public ArrayList<String> choixTheme()
+    public ArrayList<Couleur> choixTheme()
     {
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
-        ArrayList<String> alTheme1  = new ArrayList<String>();
-        ArrayList<String> alTheme2  = new ArrayList<String>();
-        ArrayList<String> alTheme3  = new ArrayList<String>();
+        ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
+        ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
+        ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
         alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
         for (int i = 0; i <= 2; i++)
-            alTheme1.add(alCouleur.get(i).getNomColore()); // Vert + Jaune + Bleu
+            alTheme1.add(alCouleur.get(i)); // Vert + Jaune + Bleu
 
         for (int i = 3; i <= 5; i++)
-            alTheme2.add(alCouleur.get(i).getNomColore());// Violet + Magenta + Rouge
+            alTheme2.add(alCouleur.get(i));// Violet + Magenta + Rouge
 
         for (int i = 6; i <= 8; i++)
-            alTheme3.add(alCouleur.get(i).getNomColore()); // Vert + Cyan + Jaune
+            alTheme3.add(alCouleur.get(i)); // Vert + Cyan + Jaune
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
@@ -114,13 +114,13 @@ public class Menu
         }
         sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
 
-                  "| " + alTheme1.get(0) + "                | "  + alTheme2.get(0) + "                | "  + alTheme3.get(0)  + "                |" + "\n" +
-                  "| " + alTheme1.get(1) + "               | "   + alTheme2.get(1) + "               | "   + alTheme3.get(1)  + "               |"  + "\n" +
-                  "| " + alTheme1.get(2) + "                 | " + alTheme2.get(2) + "                 | " + alTheme3.get(2)  + "                 |"+ "\n" +
+                  "| " + alTheme1.get(0).getNomColore() + "                | "  + alTheme2.get(0).getNomColore() + "                | "  + alTheme3.get(0).getNomColore()  + "                |" + "\n" +
+                  "| " + alTheme1.get(1).getNomColore() + "               | "   + alTheme2.get(1).getNomColore() + "               | "   + alTheme3.get(1).getNomColore()  + "               |"  + "\n" +
+                  "| " + alTheme1.get(2).getNomColore() + "                 | " + alTheme2.get(2).getNomColore() + "                 | " + alTheme3.get(2).getNomColore()  + "                 |"+ "\n" +
                   "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);
-
+        System.out.println(alCouleur.get(0).front('1'));
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());
         while(choix <= 0 || choix > 3)

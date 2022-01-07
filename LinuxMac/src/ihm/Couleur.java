@@ -82,13 +82,9 @@ public class Couleur
 	public String front(char gras)
 	{
 		if(gras == '0')
-		{
 			return "";
-		}
 		else
-		{
 			return GRAS;
-		}
 	}
 
 	public String toSring()
