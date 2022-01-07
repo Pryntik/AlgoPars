@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class Menu
 {
     private Controleur ctrl;
+    private Couleur coul;
     private Vue v;
     private String sFileAlgo;
     private String sFileVar;
@@ -20,6 +21,7 @@ public class Menu
     public Menu(Controleur ctrl)
     {
         this.ctrl   = ctrl;
+        this.coul   = new Couleur(" ", ' ', ' ');
         creerMenus();
     }
 
@@ -76,33 +78,31 @@ public class Menu
         this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
 
         this.ctrl.LireFichierXML(sFileXML);
-        ArrayList<Couleur> alTheme  = new ArrayList<Couleur>();
-        alTheme =  choixTheme();
+        String theme =  choixTheme();
+
+        
 
         ClearConsole();
-        this.ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar));
-        this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
+        ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar), this.ctrl);
+        ctrl.creerVue(this.ctrl.LireFichier(sFileAlgo), iType);
     }
 
-    public ArrayList<Couleur> choixTheme()
+    public String choixTheme()
     {
         int    choix;
         String sRes = "";
         ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
-        ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
-        ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
-        ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
         alCouleur = ctrl.LireFichierXML(this.sFileXML);
 
-        alCouleur.get(0).start();
-        for (int i = 0; i <= 2; i++)
-            alTheme1.add(alCouleur.get(i)); // Vert + Jaune + Bleu
-
-        for (int i = 3; i <= 5; i++)
-            alTheme2.add(alCouleur.get(i));// Violet + Magenta + Rouge
-
-        for (int i = 6; i <= 8; i++)
-            alTheme3.add(alCouleur.get(i)); // Vert + Cyan + Jaune
+        String c1Vari = coul.ecrire(alCouleur.get(0).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
+        String c1Cons = coul.ecrire(alCouleur.get(1).getStylo()) + "Constantes" + coul.ecrire('0'); // Jaune
+        String c1Chif = coul.ecrire(alCouleur.get(2).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Bleu
+        String c2Vari = coul.ecrire(alCouleur.get(3).getStylo()) + "Variables"  + coul.ecrire('0'); // Violet
+        String c2Cons = coul.ecrire(alCouleur.get(4).getStylo()) + "Constantes" + coul.ecrire('0'); // Magenta
+        String c2Chif = coul.ecrire(alCouleur.get(5).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Rouge
+        String c3Vari = coul.ecrire(alCouleur.get(6).getStylo()) + "Variables"  + coul.ecrire('0'); // Vert
+        String c3Cons = coul.ecrire(alCouleur.get(7).getStylo()) + "Constantes" + coul.ecrire('0'); // Cyan
+        String c3Chif = coul.ecrire(alCouleur.get(8).getStylo()) + "Chiffres"   + coul.ecrire('0'); // Jaune
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
@@ -115,13 +115,13 @@ public class Menu
         }
         sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
 
-                  "| " + alTheme1.get(0).getNomColore() + "                | "  + alTheme2.get(0).getNomColore() + "                | "  + alTheme3.get(0).getNomColore()  + "                |" + "\n" +
-                  "| " + alTheme1.get(1).getNomColore() + "               | "   + alTheme2.get(1).getNomColore() + "               | "   + alTheme3.get(1).getNomColore()  + "               |"  + "\n" +
-                  "| " + alTheme1.get(2).getNomColore() + "                 | " + alTheme2.get(2).getNomColore() + "                 | " + alTheme3.get(2).getNomColore()  + "                 |"+ "\n" +
+                  "| " + c1Vari + "               |"  + c2Vari + "                |"  + c3Vari  + "                |" + "\n" +
+                  "| " + c1Cons + "              |"   + c2Cons + "               |"   + c3Cons  + "               |"  + "\n" +
+                  "| " + c1Chif + "                |" + c2Chif + "                 |" + c3Chif  + "                 |"+ "\n" +
                   "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);
-        System.out.println(alCouleur.get(0).front('1'));
+
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());
         while(choix <= 0 || choix > 3)
@@ -130,14 +130,8 @@ public class Menu
                              "Nouveau choix : ");
             choix = Integer.parseInt(sc.nextLine());
         }
-
-        switch(choix)
-        {
-            case 1  : return alTheme1;
-            case 2  : return alTheme2;
-            case 3  : return alTheme3;
-            default : return null;
-        }
+            
+        return "theme" + choix;
     }
 
     // *** SELECTION DU FICHIER *** //

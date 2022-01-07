@@ -20,8 +20,7 @@ public class Vue
 
 	public Vue(ArrayList<String> alLignes, char cCouleur)
 	{
-		this.coul = new Couleur(" ", "", ' ',' ');
-		this.coul.start();
+		this.coul = new Couleur(" ",' ',' ');
 		this.cCouleur = cCouleur;
 		this.alLignes = alLignes;
 		this.y = 0;

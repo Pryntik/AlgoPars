@@ -17,11 +17,12 @@ public class Vue
 	private Couleur           coul;
 	private String            sTabs;
 	private String            choix = "";
+	private Controleur        ctrl;
 
-	public Vue(ArrayList<String> alLignes, char cCouleur)
+	public Vue(ArrayList<String> alLignes, char cCouleur, Controleur ctrl)
 	{
-		this.coul = new Couleur(" ", "", ' ',' ');
-		this.coul.start();
+		this.ctrl = ctrl;
+		this.coul = new Couleur(" ",' ',' ');
 		this.cCouleur = cCouleur;
 		this.alLignes = alLignes;
 		this.y = 0;
@@ -78,25 +79,55 @@ public class Vue
 		espace(1);
 		dessinerTrema(79);
 		saut(1);
-		// *** DESSIN DU FICHIER *** //
+		// *** DESSIN DU FICHIER ET DONNEES *** //
 		String sLigne;
+		boolean bEnTete = true;
+		ArrayList<String> alVarTracer;
+		ArrayList<Variable> alVariables;
+		alVarTracer = this.ctrl.algo.getVarTracer();
+		alVariables = this.ctrl.algo.getVariables();
 		for(int i = 0; i < this.alLignes.size(); i++)
 		{
 			if(i == this.y)
 				System.out.print(this.coul.surligner(this.cCouleur));
 			sLigne = this.alLignes.get(i).replaceAll("\t", this.sTabs);
 			dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
+			if(!alVarTracer.isEmpty()){
+				if(bEnTete){
+					dessinerCase("NOM", 5, 5,false);
+					dessinerCase("VALEUR", 5, 5,false);
+					bEnTete = false;
+				}
+				else if((i-1) < alVarTracer.size()){
+					for(Variable var : alVariables){
+						if(var.getNom().equals(alVarTracer.get(i-1))){
+							dessinerCase(alVarTracer.get(i-1), 5, 10-alVarTracer.get(i-1).length(),false);
+							dessinerCase(alVariables.get(i-1).getValeur(), 5, 10,false);
+						}
+					}
+				}
+			}
 			saut(1);
 			System.out.print(this.coul.surligner('0'));
 		}
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
-		//if(this.cCouleur != '0')
-		//{
-		//	pause(true);
-		//	ClearConsole();
-		//}
+		saut(1);
+
+		dessinerCase("CONSOLE",1,1,true);
+        saut(1);
+        dessinerTrema(79);
+        saut(1);
+
+
+		ctrl.algo.debutInterpretation(this);
+
+		dessinerTrema(79);
+        saut(1);
+
+        /*saut(1);
+        dessinerTrema(79);*/
 	}
 
 	// Methode pour effacer la console //
@@ -170,5 +201,11 @@ public class Vue
 	{
 		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
+	}
+
+	public void caseInstruction(String sLigne){
+
+        dessinerCase(sLigne,0,79-sLigne.length(),true);
+        saut(1);
 	}
 }

@@ -3,10 +3,6 @@ package src.ihm;
 import src.*;
 import src.metier.*;
 
-import com.sun.jna.*;
-import com.sun.jna.platform.win32. WinDef.*;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-
 public class Couleur
 {
 	public static final String RED_UNDERLINED = "\033[4;31m";
@@ -32,27 +28,30 @@ public class Couleur
 
 	public static final String GRAS = "\u001B[1m";
 
-	private String theme;
 	private String nom;
 	private char   stylo;
 	private char   gras;
 
-	public Couleur(String theme, String nom, char stylo, char gras)
+	public Couleur(String nom, char stylo, char gras)
 	{
-		this.theme = theme;
 		this.nom   = nom;
 		this.stylo = stylo;
 		this.gras  = gras;
 	}
 
-	public String getTheme() { return this.theme; }
-	public String getNom()   { return this.nom;   }
-	public char   getStylo() { return this.stylo; }
-	public char   getGras()  { return this.gras;  }
-
-	public String getNomColore()
+	public String getNom()
 	{
-		return ecrire(getStylo()) + getNom() + ecrire('0');
+		return this.nom;
+	}
+
+	public char getStylo()
+	{
+		return this.stylo;
+	}
+
+	public char getGras()
+	{
+		return this.gras;
 	}
 
 	public String ecrire(char stylo)
@@ -86,29 +85,12 @@ public class Couleur
 	public String front(char gras)
 	{
 		if(gras == '0')
-			return "";
-		else
-			return GRAS;
-	}
-
-	public void start()
-	{
-		if(System.getProperty("os.name").startsWith("Windows"))
 		{
-			// Set output mode to handle virtual terminal sequences
-			Function GetStdHandleFunc = Function.getFunction("kernel32", "GetStdHandle");
-			DWORD STD_OUTPUT_HANDLE = new DWORD(-11);
-			HANDLE hOut = (HANDLE)GetStdHandleFunc.invoke(HANDLE.class, new Object[]{STD_OUTPUT_HANDLE});
-
-			DWORDByReference p_dwMode = new DWORDByReference(new DWORD(0));
-			Function GetConsoleModeFunc = Function.getFunction("kernel32", "GetConsoleMode");
-			GetConsoleModeFunc.invoke(BOOL.class, new Object[]{hOut, p_dwMode});
-
-			int ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4;
-			DWORD dwMode = p_dwMode.getValue();
-			dwMode.setValue(dwMode.intValue() | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-			Function SetConsoleModeFunc = Function.getFunction("kernel32", "SetConsoleMode");
-			SetConsoleModeFunc.invoke(BOOL.class, new Object[]{hOut, dwMode});
+			return "";
+		}
+		else
+		{
+			return GRAS;
 		}
 	}
 
@@ -116,7 +98,7 @@ public class Couleur
 	{
 		String sRet = "";
 
-		sRet += "Couleur : theme_" + this.theme + "nom_" + this.nom + " stylo_" + this.stylo + " gras_" + this.gras;
+		sRet += "Couleur : nom_" + this.nom + " stylo_" + this.stylo + " gras_" + this.gras;
 
 		return sRet;
 	}

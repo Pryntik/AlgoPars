@@ -10,78 +10,19 @@ import java.util.regex.Pattern;
 public class Algo
 {
 
+	private Controleur ctrl;
 	private String sNom;
 	private ArrayList<String> alLignes = new ArrayList<String>();
 	private ArrayList<Variable> alVariables = new ArrayList<Variable>();
-	private String   ligne = "";
-	private String[] parts;
-	private String   type;
-	private int      i = 0;
+	private ArrayList<String> alVarsTracer = new ArrayList<String>();
 
-	public Algo(ArrayList<String> alLignes, ArrayList<String> alVarsTracer)
+	public Algo(ArrayList<String> alLignes, ArrayList<String> alVarsTracer, Controleur ctrl)
 	{
+		this.ctrl = ctrl;
 		this.alLignes = alLignes;
+		this.alVarsTracer = alVarsTracer;
+
 		setNom();
-
-		// *** INTERPRETATION DU CODE *** //
-		while(this.i<alLignes.size())
-		{
-			// RECUPERATION DES VARIABLES ET CONSTANTES //
-			this.ligne = alLignes.get(this.i);
-			recupVariable("constante");
-			recupVariable("variable");
-
-			// DEBUT DES INSTRUCTIONS //
-			if(this.ligne.contains("DEBUT"))
-			{
-				while(!this.ligne.contains("FIN"))
-				{
-					executeInstruction(this.ligne);
-					this.i++;
-					this.ligne = alLignes.get(this.i);
-				}
-			}
-			this.i++;
-		}
-
-		// Affichage des variables gardées en mémoire //
-		System.out.println("--- Variables et Constantes --- ");
-		for(Variable var : alVariables)
-		{
-			System.out.println(var);
-		}
-	}
-
-	public void recupVariable(String sVar)
-	{
-		String sVardiff = "constante";
-		if(sVar.contains("constante"))
-			sVardiff = "variable";
-
-		if(this.ligne.contains(sVar))
-		{
-			this.i++;
-			this.ligne = alLignes.get(this.i);
-			while(!this.ligne.contains("DEBUT") && !this.ligne.contains(sVardiff))
-			{
-				this.parts = this.ligne.split(":");
-				type  = String.valueOf(this.parts[1]);
-				if(this.parts[0].contains(","))
-				{
-					this.parts  = this.parts[0].split(",");
-					for(int j = 0; j<this.parts.length; j++)
-					{
-						this.ajouterVariable(this.parts[j], type, true);
-					}
-				}
-				else
-				{
-					this.ajouterVariable(this.parts[0], type, true);
-				}
-				this.i++;
-				this.ligne = alLignes.get(this.i);
-			}
-		}
 	}
 
 	public void ajouterVariable(String sNom, String sType, boolean bConstante)
@@ -101,33 +42,27 @@ public class Algo
 		this.sNom = parts[1].trim();
 	}
 
-	public Variable getVariable(String sNomVar)
-	{
+	public Variable getVariable(String sNomVar){
 		for(Variable var : alVariables){
-			if(sNomVar.equals(var.getNom()))
-			{
+			if(sNomVar.equals(var.getNom())){
 				return var;
 			}
 		}
 		return null;
 	}
 
-	public void executeInstruction(String sLigne)
-	{
+	public void executeInstruction(String sLigne, Vue vue){
 		String[] parts;
 
 		// Affectation //
-		if(sLigne.contains("<--"))
-		{
+		if(sLigne.contains("<--")){
 			parts = sLigne.split("<--");
 			getVariable(parts[0].trim()).setValeur(parts[1]);
 		}
-		if(sLigne.contains("écrire"))
-		{
-			if(sLigne.contains("\""))
-			{
+		if(sLigne.contains("écrire")){
+			if(sLigne.contains("\"")){
 				parts = sLigne.split("\"");
-				System.out.println(parts[1]);
+				vue.caseInstruction(parts[1]);
 			}
 			else{
 				parts = sLigne.split(Pattern.quote("("));
@@ -135,14 +70,78 @@ public class Algo
 				System.out.println(getVariable(parts[0].trim()).getValeur());
 			}
 		}
-		if(sLigne.contains("lire"))
-		{
+		if(sLigne.contains("lire")){
 			String sInput;
 			Scanner sc = new Scanner(System.in);
 			parts      = sLigne.split(Pattern.quote("("));
 			parts      = parts[1].split(Pattern.quote(")"));
 			sInput     = sc.nextLine();
 			getVariable(parts[0].trim()).setValeur(sInput);
+		}
+	}
+
+	public String getNom(){ return this.sNom; }
+	public ArrayList<String> getVarTracer(){ return this.alVarsTracer; }
+	public ArrayList<Variable> getVariables(){ return this.alVariables; }
+
+	public void debutInterpretation(Vue vue){
+		// DEBUT DES INSTRUCTIONS //
+		String[] parts;
+		String   type;
+		String   ligne = "";
+		for(int i = 0; i<alLignes.size(); i++){
+			// RECUPERATION DES VARIABLES ET CONSTANTES //
+			ligne = alLignes.get(i);
+
+			// Constantes //
+			if(ligne.contains("constante")){
+				i++;
+				ligne = alLignes.get(i);
+				while(!ligne.contains("DEBUT") && !ligne.contains("variable")){
+					parts = ligne.split(":");
+					type   = String.valueOf(parts[1]);
+					if(parts[0].contains(",")){
+						parts  = parts[0].split(",");
+						for(int j = 0; j<parts.length; j++){
+							this.ajouterVariable(parts[j], type, true);
+						}
+					}
+					else{
+						this.ajouterVariable(parts[0], type, true);
+					}
+					i++;
+					ligne = alLignes.get(i);
+				}
+			}
+
+			// Variables //
+			if(ligne.contains("variable")){
+				i++;
+				ligne = alLignes.get(i);
+				while(!ligne.contains("DEBUT")){
+					parts = ligne.split(":");
+					type   = String.valueOf(parts[1]);
+					if(parts[0].contains(",")){
+						parts  = parts[0].split(",");
+						for(int j = 0; j<parts.length; j++){
+							this.ajouterVariable(parts[j], type, false);
+						}
+					}
+					else{
+						this.ajouterVariable(parts[0], type, false);
+					}
+					i++;
+					ligne = alLignes.get(i);
+				}
+			}
+
+			if(ligne.contains("DEBUT")){
+				while(!ligne.contains("FIN")){
+					executeInstruction(ligne, vue);
+					i++;
+					ligne = alLignes.get(i);
+				}
+			}
 		}
 	}
 }

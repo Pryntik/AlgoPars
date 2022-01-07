@@ -67,10 +67,6 @@ public class Controleur
 
 	public ArrayList<Couleur> LireFichierXML(String fichier)
 	{
-		String nomVari = "";
-		String nomCons = "";
-		String nomChif = "";
-		String nomGene = "";
 		char coulVari  = ' ';
 		char poidsVari = ' ';
 		char coulCons  = ' ';
@@ -89,7 +85,7 @@ public class Controleur
 			List<Element> listConfig = racine.getChildren("theme");
 			for (Element config : listConfig)
 			{
-				String        theme     = config.getAttributeValue("num");
+				String        nomTheme  = config.getAttributeValue("nom");
 				List<Element> listVar   = config.getChildren("variable");
 				List<Element> listCons  = config.getChildren("constante");
 				List<Element> listChif  = config.getChildren("chiffre");
@@ -97,31 +93,27 @@ public class Controleur
 
 				for (Element vari : listVar)
 				{
-					nomVari   = vari.getAttributeValue("nom");
 					coulVari  = vari.getAttributeValue("couleur").charAt(0);
 					poidsVari = vari.getAttributeValue("poids").charAt(0);
 				}
 				for (Element cons : listCons)
 				{
-					nomCons   = cons.getAttributeValue("nom");
 					coulCons  = cons.getAttributeValue("couleur").charAt(0);
 					poidsCons = cons.getAttributeValue("poids").charAt(0);
 				}
 				for (Element chif : listChif)
 				{
-					nomChif   = chif.getAttributeValue("nom");
 					coulChif  = chif.getAttributeValue("couleur").charAt(0);
 					poidsChif = chif.getAttributeValue("poids").charAt(0);
 				}
 				for (Element gene : listGene)
 				{
-					nomGene   = gene.getAttributeValue("nom");
 					coulGene  = gene.getAttributeValue("couleur").charAt(0);
 					poidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
-				listCouleur.add(new Couleur(theme, nomVari, coulVari, poidsVari));
-				listCouleur.add(new Couleur(theme, nomCons, coulCons, poidsCons));
-				listCouleur.add(new Couleur(theme, nomChif, coulChif, poidsChif));
+				listCouleur.add(new Couleur(nomTheme, coulVari, poidsVari));
+				listCouleur.add(new Couleur(nomTheme, coulCons, poidsCons));
+				listCouleur.add(new Couleur(nomTheme, coulChif, poidsChif));
 			}
 			return listCouleur;
 		}
@@ -139,5 +131,9 @@ public class Controleur
 				
 		return listFichiers;
 
+	}
+
+	public void creerVue(ArrayList<String> al, char cType){
+		this.vue = new Vue(al, cType, this);
 	}
 }

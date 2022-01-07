@@ -3,8 +3,7 @@ package src.metier;
 import src.*;
 import src.ihm.*;
 
-public class Variable
-{
+public class Variable {
 
 	private String   sNom;
 	private String   sType;
@@ -15,15 +14,13 @@ public class Variable
 	private String  sValeur = "";
 	//private boolean bValeur;
 
-	public Variable(String sNom, String sType, boolean bConstante)
-	{
+	public Variable(String sNom, String sType, boolean bConstante){
 		this.sNom       = sNom.trim();
 		this.sType      = sType.trim();
 		this.bConstante = bConstante;
 	}
 
-	public String getValeur()
-	{
+	public String getValeur(){
 
 		/*switch(sType){
 
@@ -39,16 +36,14 @@ public class Variable
 
 	public String getNom(){ return sNom; }
 
-	public String toString()
-	{
+	public String toString(){
 		return "Nom: "        + String.format("%-15s",sNom) 
 		+      " Type: "      + String.format("%-10s",sType) 
 		+      " Constante: " + String.format("%-10s",bConstante)
 		+      " Valeur: "    + sValeur;
 	}
 
-	public void setValeur(String sValeur)
-	{
+	public void setValeur(String sValeur){
 		this.sValeur = sValeur;
 	}
 	
