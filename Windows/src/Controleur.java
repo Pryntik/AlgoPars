@@ -20,10 +20,16 @@ import org.jdom2.input.SAXBuilder;
 
 public class Controleur
 {
+	public Menu    menu;
+	public Algo    algo;
+	public Vue     vue;
 
-	public Algo algo;
-	public Menu menu;
-	public Vue vue;
+	public  ArrayList<Couleur> alTheme;
+	public  char               cMode;
+	private ArrayList<String>  sAllFile;
+	private ArrayList<String>  sLigneAlgo;
+	private ArrayList<String>  sLigneVar;
+	private ArrayList<String>  sLigneXML;
 
 	public static void main(String[] args)
 	{
@@ -32,7 +38,20 @@ public class Controleur
 
 	public Controleur()
 	{
-		menu = new Menu(this);
+		menu     = new Menu(this);
+		cMode    = menu.choixMode();
+		sAllFile = menu.recupFichier();
+
+		sLigneAlgo = LireFichier(sAllFile.get(0));
+		sLigneVar  = LireFichier(sAllFile.get(1));
+		sLigneXML  = LireFichier(sAllFile.get(2));
+
+		alTheme = new ArrayList<Couleur>();
+		alTheme = menu.choixTheme();
+
+		algo = new Algo(sLigneAlgo, sLigneVar);
+		ClearConsole();
+		vue  = new Vue(this, sLigneAlgo);
 	}
 
 	public ArrayList<String> LireFichier(String fichier)
@@ -48,8 +67,6 @@ public class Controleur
 			ArrayList<String> sList = new ArrayList<String>();
 			int      i = 0;
 
-			String[] split = fichier.split("/");
-			System.out.println("Contenu du fichier " + split[split.length-1] + " : ");
 			while((line = br.readLine()) != null)
 			{
 				// Ajoute la ligne a l'arraylist
@@ -139,5 +156,27 @@ public class Controleur
 				
 		return listFichiers;
 
+	}
+
+    // *** METHODE POUR EFFACER LA CONSOLE *** //
+	public static void ClearConsole()
+	{
+		try
+		{
+			String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+			  
+			if(operatingSystem.contains("Windows"))
+			{        
+				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+				Process startProcess = pb.inheritIO().start();
+				startProcess.waitFor();
+			} else
+			{
+				ProcessBuilder pb = new ProcessBuilder("clear");
+				Process startProcess = pb.inheritIO().start();
+
+				startProcess.waitFor();
+			} 
+		}catch(Exception e){e.printStackTrace();}
 	}
 }

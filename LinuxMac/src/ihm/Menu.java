@@ -9,23 +9,39 @@ import java.util.regex.Pattern;
 
 public class Menu
 {
-    private Controleur ctrl;
-    private Vue v;
-    private String sFileAlgo;
-    private String sFileVar;
-    private String sFileXML;
-    private char iType;
+    private Controleur        ctrl;
+    private Vue               v;
+    
+    private ArrayList<String> sAllFile;
+    private String            sFileAlgo;
+    private String            sFileVar;
+    private String            sFileXML;
+    private char              cMode;
     
 
     public Menu(Controleur ctrl)
     {
-        this.ctrl   = ctrl;
-        creerMenus();
+        this.ctrl = ctrl;
     }
 
-    public void creerMenus()
+    public ArrayList<String> recupFichier()
     {
+        String   sAlgo = choixFichier();
+        String[] parts = sAlgo.split(Pattern.quote("."));
 
+        sFileAlgo = "../src/fichiers/" + sAlgo;
+        sFileVar  = "../src/fichiers/" + parts[0] + ".var";
+        sFileXML  = "../src/metier/configuration.xml";
+
+        sAllFile = new ArrayList<String>();
+        sAllFile.add(sFileAlgo);
+        sAllFile.add(sFileVar);
+        sAllFile.add(sFileXML);
+        return sAllFile;
+    }
+
+    public char choixMode()
+    {
         boolean bAuto = true;
 
         System.out.print("+----------------------------------------------+\n" + 
@@ -51,38 +67,26 @@ public class Menu
 					bAuto = false;
                     bSelection = false;
 					break;
-				case "Q":
-					return;
+				case "Q": System.exit(1);
 			}
 		}
 
         if (bAuto)
         {
             System.out.println("Mode Automatique activé !");
-            this.iType = '0';
+            cMode = 'A';
         }
 
         else
         {
             System.out.println ("Mode pas à pas activé !");
-            this.iType = 'R';
+            cMode = 'P';
         }
 
-        String   sAlgo = choixFichier();
-        String[] parts = sAlgo.split(Pattern.quote("."));
-
-        this.sFileAlgo = "../src/fichiers/" + sAlgo;
-        this.sFileXML  = "../src/metier/configuration.xml";
-        this.sFileVar  = "../src/fichiers/" + parts[0] + ".var";
-
-        this.ctrl.LireFichierXML(sFileXML);
-        ArrayList<Couleur> alTheme  = new ArrayList<Couleur>();
-        alTheme =  choixTheme();
-
-        ClearConsole();
-        this.ctrl.algo = new Algo(this.ctrl.LireFichier(sFileAlgo), this.ctrl.LireFichier(sFileVar));
-        this.ctrl.vue  = new Vue(this.ctrl.LireFichier(sFileAlgo), iType);
+        return cMode;
     }
+
+    // *** SELECTION DU THEME DE COULEUR *** //
 
     public ArrayList<Couleur> choixTheme()
     {
@@ -92,9 +96,8 @@ public class Menu
         ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
-        alCouleur = ctrl.LireFichierXML(this.sFileXML);
+        alCouleur = ctrl.LireFichierXML(sFileXML);
 
-        alCouleur.get(0).start();
         for (int i = 0; i <= 2; i++)
             alTheme1.add(alCouleur.get(i)); // Vert + Jaune + Bleu
 
@@ -106,7 +109,7 @@ public class Menu
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
-                "| Quel theme souhaitez vous utiliser ?                                        |\n" +
+                "| Quel theme de couleur souhaitez vous utiliser ?                             |\n" +
                 "|                                                                             |\n" +
                 "+-----------------------------------------------------------------------------+\n|";
         for (int i = 1; i <= 3; i++)
@@ -189,28 +192,5 @@ public class Menu
             
             return alFichiers.get(choix-1);
         }
-    }
-
-    // *** METHODE POUR EFFACER LA CONSOLE *** //
-
-    public static void ClearConsole()
-	{
-        try
-		{
-            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
-              
-            if(operatingSystem.contains("Windows"))
-			{        
-                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
-                Process startProcess = pb.inheritIO().start();
-                startProcess.waitFor();
-            } else
-			{
-                ProcessBuilder pb = new ProcessBuilder("clear");
-                Process startProcess = pb.inheritIO().start();
-
-                startProcess.waitFor();
-            } 
-        }catch(Exception e){e.printStackTrace();}
     }
 }

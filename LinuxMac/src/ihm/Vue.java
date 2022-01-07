@@ -11,43 +11,41 @@ public class Vue
 {
 	private final static int  iNbColonnes    = 80;
 	private final static int  iEspacesParTab =  3;
+	private Controleur        ctrl;
 	private int               y;
-	private char              cCouleur;
 	private ArrayList<String> alLignes;
-	private Couleur           coul;
 	private String            sTabs;
 	private String            choix = "";
 
-	public Vue(ArrayList<String> alLignes, char cCouleur)
+	public Vue(Controleur ctrl, ArrayList<String> alLignes)
 	{
-		this.coul = new Couleur(" ", "", ' ',' ');
-		this.coul.start();
-		this.cCouleur = cCouleur;
+		this.ctrl  = ctrl;
 		this.alLignes = alLignes;
-		this.y = 0;
+		
+		y = 0;
 
-		this.sTabs = "";
+		sTabs = "";
 		for(int i = 0; i<iEspacesParTab; i++)
-			this.sTabs += " ";
+			sTabs += " ";
 
-		if(cCouleur != '0')
+		if(ctrl.cMode != 'A')
 		{
-			while(this.y < this.alLignes.size())
+			while(y < alLignes.size())
 			{
 				Scanner sc = new Scanner(System.in);
 				BaseTableau();
-				if(choix.equals("r") && this.y > 0)
-					this.y--;
+				if(choix.equals("r") && y > 0)
+					y--;
 				else
-					this.y++;
+					y++;
 
-				this.choix = sc.nextLine();
-				ClearConsole();
+				choix = sc.nextLine();
+				ctrl.ClearConsole();
 			}
-			while(this.y < this.alLignes.size())
+			while(y < alLignes.size())
 			{
 				BaseTableau();
-				this.y++;
+				y++;
 			}
 			
 		}
@@ -60,7 +58,7 @@ public class Vue
 	public void BaseTableau()
 	{
 		// *** DESSIN DE L'EN TETE DE BASE *** //
-		System.out.print(coul.surligner('0'));
+		System.out.print(ctrl.alTheme.get(0).surligner('0'));
 		saut(3);
 		dessinerTrema(11);
 		espace(iNbColonnes-11);
@@ -80,56 +78,18 @@ public class Vue
 		saut(1);
 		// *** DESSIN DU FICHIER *** //
 		String sLigne;
-		for(int i = 0; i < this.alLignes.size(); i++)
+		for(int i = 0; i < alLignes.size(); i++)
 		{
-			if(i == this.y)
-				System.out.print(this.coul.surligner(this.cCouleur));
-			sLigne = this.alLignes.get(i).replaceAll("\t", this.sTabs);
+			if(i == y)
+				System.out.print(ctrl.alTheme.get(0).surligner('R'));
+			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 			dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
 			saut(1);
-			System.out.print(this.coul.surligner('0'));
+			System.out.print(ctrl.alTheme.get(0).surligner('0'));
 		}
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
-		//if(this.cCouleur != '0')
-		//{
-		//	pause(true);
-		//	ClearConsole();
-		//}
-	}
-
-	// Methode pour effacer la console //
-	public static void ClearConsole()
-	{
-        try
-		{
-            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
-              
-            if(operatingSystem.contains("Windows"))
-			{        
-                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
-                Process startProcess = pb.inheritIO().start();
-                startProcess.waitFor();
-            }
-			else
-			{
-                ProcessBuilder pb = new ProcessBuilder("clear");
-                Process startProcess = pb.inheritIO().start();
-
-                startProcess.waitFor();
-            } 
-        }catch(Exception e){e.printStackTrace();}
-    }
-
-	public static void pause(boolean start)
-	{
-		Scanner sc = new Scanner(System.in);
-		if(start)
-			sc.nextLine();
-
-		else
-			sc.close();
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
