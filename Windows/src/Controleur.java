@@ -20,16 +20,18 @@ import org.jdom2.input.SAXBuilder;
 
 public class Controleur
 {
-	public Menu    menu;
-	public Algo    algo;
-	public Vue     vue;
+	public Menu     menu;
+	public Algo     algo;
+	public Vue      vue;
 
-	public  ArrayList<Couleur> alTheme;
-	public  char               cMode;
-	private ArrayList<String>  sAllFile;
-	private ArrayList<String>  sLigneAlgo;
-	private ArrayList<String>  sLigneVar;
-	private ArrayList<String>  sLigneXML;
+	public  char                cMode;
+	public  ArrayList<Couleur>  listCouleur;
+	public  ArrayList<Variable> alVariables;
+
+	private ArrayList<Couleur>  alTheme;
+	private ArrayList<String>   sAllFile;
+	private ArrayList<String>   sLigneAlgo;
+	private ArrayList<String>   sLigneVar;
 
 	public static void main(String[] args)
 	{
@@ -42,19 +44,22 @@ public class Controleur
 		cMode    = menu.choixMode();
 		sAllFile = menu.recupFichier();
 
-		sLigneAlgo = LireFichier(sAllFile.get(0));
-		sLigneVar  = LireFichier(sAllFile.get(1));
-		sLigneXML  = LireFichier(sAllFile.get(2));
+		sLigneAlgo  = LireFichierALGO(sAllFile.get(0));
+		sLigneVar   = LireFichierALGO(sAllFile.get(1));
+		listCouleur = LireFichierXML(sAllFile.get(2));
 
 		alTheme = new ArrayList<Couleur>();
 		alTheme = menu.choixTheme();
 
-		algo = new Algo(sLigneAlgo, sLigneVar);
+		algo = new Algo(this, sLigneAlgo, sLigneVar);
+		alVariables  = algo.getVariables();
+
 		ClearConsole();
+
 		vue  = new Vue(this, sLigneAlgo);
 	}
 
-	public ArrayList<String> LireFichier(String fichier)
+	public ArrayList<String> LireFichierALGO(String fichier)
 	{
 		try
 		{
@@ -96,7 +101,7 @@ public class Controleur
 		char poidsChif = ' ';
 		char coulGene  = ' ';
 		char poidsGene = ' ';
-		ArrayList<Couleur> listCouleur = new ArrayList<Couleur>();
+		listCouleur = new ArrayList<Couleur>();
 
 		try
 		{

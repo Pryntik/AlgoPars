@@ -92,21 +92,19 @@ public class Menu
     {
         int    choix;
         String sRes = "";
-        ArrayList<Couleur> alCouleur = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
-        alCouleur = ctrl.LireFichierXML(sFileXML);
 
-        alCouleur.get(0).start();
+        ctrl.listCouleur.get(0).start();
         for (int i = 0; i <= 2; i++)
-            alTheme1.add(alCouleur.get(i)); // Vert + Jaune + Bleu
+            alTheme1.add(ctrl.listCouleur.get(i)); // Vert + Jaune + Bleu
 
         for (int i = 3; i <= 5; i++)
-            alTheme2.add(alCouleur.get(i));// Violet + Magenta + Rouge
+            alTheme2.add(ctrl.listCouleur.get(i));// Violet + Magenta + Rouge
 
         for (int i = 6; i <= 8; i++)
-            alTheme3.add(alCouleur.get(i)); // Vert + Cyan + Jaune
+            alTheme3.add(ctrl.listCouleur.get(i)); // Vert + Cyan + Jaune
 
         sRes += "+-----------------------------------------------------------------------------+\n" +
                 "|                                                                             |\n" +
@@ -125,7 +123,7 @@ public class Menu
                   "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);
-        System.out.println(alCouleur.get(0).front('1'));
+        System.out.println(ctrl.listCouleur.get(0).front('1'));
         Scanner sc = new Scanner(System.in);
         choix = Integer.parseInt(sc.nextLine());
         while(choix <= 0 || choix > 3)

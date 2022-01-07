@@ -33,6 +33,11 @@ public class Vue
 			while(y < alLignes.size())
 			{
 				Scanner sc = new Scanner(System.in);
+
+				for (Variable var : ctrl.alVariables)
+				{
+					System.out.println(var);
+				}
 				BaseTableau();
 				if(choix.equals("r") && y > 0)
 					y--;
@@ -58,7 +63,7 @@ public class Vue
 	public void BaseTableau()
 	{
 		// *** DESSIN DE L'EN TETE DE BASE *** //
-		System.out.print(ctrl.alTheme.get(0).surligner('0'));
+		System.out.print(ctrl.listCouleur.get(0).surligner('0'));
 		saut(3);
 		dessinerTrema(11);
 		espace(iNbColonnes-11);
@@ -81,11 +86,11 @@ public class Vue
 		for(int i = 0; i < alLignes.size(); i++)
 		{
 			if(i == y)
-				System.out.print(ctrl.alTheme.get(0).surligner('R'));
+				System.out.print(ctrl.listCouleur.get(0).surligner('R'));
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 			dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
 			saut(1);
-			System.out.print(ctrl.alTheme.get(0).surligner('0'));
+			System.out.print(ctrl.listCouleur.get(0).surligner('0'));
 		}
 		dessinerTrema(iNbColonnes);
 		espace(1);
@@ -130,5 +135,11 @@ public class Vue
 	{
 		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
+	}
+
+	public void caseInstruction(String sLigne)
+	{
+        dessinerCase(sLigne,0,79-sLigne.length(),true);
+        saut(1);
 	}
 }

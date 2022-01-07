@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configurations>
+
+   <!-- ****************************** -->
+   <!-- ** Liste des configurations ** -->
+   <!-- ****************************** -->
+   
+   <theme num="theme1">
+      <variable  nom="variable"  couleur='G' poids='1'></variable>
+      <constante nom="constante" couleur='Y' poids='1'></constante>
+      <chiffre   nom="chiffre"   couleur='B' poids='0'></chiffre>
+      <generale  nom="generale"  couleur='0' poids='0'></generale>
+   </theme>
+
+   <theme num="theme2">
+      <variable  nom="variable"  couleur='P' poids='1'></variable>
+      <constante nom="constante" couleur='B' poids='1'></constante>
+      <chiffre   nom="chiffre"   couleur='R' poids='0'></chiffre>
+      <generale  nom="generale"  couleur='0' poids='0'></generale>
+   </theme>
+
+   <theme num="theme3">
+      <variable  nom="variable"  couleur='G' poids='1'></variable>
+      <constante nom="constante" couleur='C' poids='1'></constante>
+      <chiffre   nom="chiffre"   couleur='Y' poids='0'></chiffre>
+      <generale  nom="generale"  couleur='0' poids='0'></generale>
+   </theme>
+   
+</configurations>
