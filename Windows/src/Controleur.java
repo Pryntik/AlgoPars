@@ -100,16 +100,18 @@ public class Controleur
 	public ArrayList<Couleur> LireFichierXML(String fichier)
 	{
 		String nomVari = "";
-		String nomCons = "";
-		String nomChif = "";
+		String nomFonc = "";
+		String nomCond = "";
 		String nomGene = "";
+
 		char coulVari  = ' ';
-		char poidsVari = ' ';
-		char coulCons  = ' ';
-		char poidsCons = ' ';
-		char coulChif  = ' ';
-		char poidsChif = ' ';
+		char coulFonc  = ' ';
+		char coulCond  = ' ';
 		char coulGene  = ' ';
+
+		char poidsVari = ' ';
+		char poidsFonc = ' ';
+		char poidsCond = ' ';
 		char poidsGene = ' ';
 		listCouleur = new ArrayList<Couleur>();
 
@@ -135,15 +137,15 @@ public class Controleur
 				}
 				for (Element cons : listCons)
 				{
-					nomCons   = cons.getAttributeValue("nom");
-					coulCons  = cons.getAttributeValue("couleur").charAt(0);
-					poidsCons = cons.getAttributeValue("poids").charAt(0);
+					nomFonc   = cons.getAttributeValue("nom");
+					coulFonc  = cons.getAttributeValue("couleur").charAt(0);
+					poidsFonc = cons.getAttributeValue("poids").charAt(0);
 				}
 				for (Element chif : listChif)
 				{
-					nomChif   = chif.getAttributeValue("nom");
-					coulChif  = chif.getAttributeValue("couleur").charAt(0);
-					poidsChif = chif.getAttributeValue("poids").charAt(0);
+					nomCond   = chif.getAttributeValue("nom");
+					coulCond  = chif.getAttributeValue("couleur").charAt(0);
+					poidsCond = chif.getAttributeValue("poids").charAt(0);
 				}
 				for (Element gene : listGene)
 				{
@@ -152,8 +154,8 @@ public class Controleur
 					poidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
 				listCouleur.add(new Couleur(theme, nomVari, coulVari, poidsVari));
-				listCouleur.add(new Couleur(theme, nomCons, coulCons, poidsCons));
-				listCouleur.add(new Couleur(theme, nomChif, coulChif, poidsChif));
+				listCouleur.add(new Couleur(theme, nomFonc, coulFonc, poidsFonc));
+				listCouleur.add(new Couleur(theme, nomCond, coulCond, poidsCond));
 			}
 			return listCouleur;
 		}

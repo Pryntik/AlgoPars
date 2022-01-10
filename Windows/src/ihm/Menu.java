@@ -120,7 +120,7 @@ public class Menu
         {
             sRes += String.format("| %-33s",alTheme1.get(i).getNomColore()) +
                     String.format("| %-33s",alTheme2.get(i).getNomColore()) +
-                    String.format("| %-33s|",alTheme3.get(i).getNomColore()) + "\n";
+                    String.format("| %-33s",alTheme3.get(i).getNomColore()) + "|\n";
         }
         sRes += "+-------------------------+-------------------------+-------------------------+\n";
 
