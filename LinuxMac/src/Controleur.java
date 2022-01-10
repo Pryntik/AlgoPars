@@ -57,6 +57,9 @@ public class Controleur
 		ClearConsole();
 
 		vue  = new Vue(this, sLigneAlgo);
+
+		vue.dessinnerEnTeteConsole();
+		algo.debutInterpretation();
 	}
 
 	public ArrayList<String> LireFichierALGO(String fichier)

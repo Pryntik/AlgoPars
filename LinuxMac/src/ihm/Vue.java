@@ -95,6 +95,7 @@ public class Vue
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
+		saut(1);
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
@@ -140,6 +141,13 @@ public class Vue
 	public void caseInstruction(String sLigne)
 	{
         dessinerCase(sLigne,0,79-sLigne.length(),true);
+        saut(1);
+	}
+
+	public void dessinnerEnTeteConsole(){
+		dessinerCase("CONSOLE",1,1,true);
+        saut(1);
+        dessinerTrema(79);
         saut(1);
 	}
 }
