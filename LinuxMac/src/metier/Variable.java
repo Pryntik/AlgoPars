@@ -22,16 +22,15 @@ public class Variable {
 
 	public String getValeur(){
 
-		/*switch(sType){
+		switch(sType){
 
-			case "entier":      return String.valueOf(iValeur);
-			case "caractère":   return String.valueOf(cValeur);
-			case "chaine":      return String.valueOf(sValeur);
-			case "booléen":     return String.valueOf(bValeur);
+			//case "entier":      return String.valueOf(iValeur);
+			//case "caractère":   return String.valueOf(cValeur);
+			case "chaine":      return String.valueOf(this.sValeur);
+			//case "booléen":     return String.valueOf(bValeur);
 		}
-		return null;*/
 
-		return sValeur;
+		return this.sValeur;
 	}
 
 	public String getNom(){ return sNom; }

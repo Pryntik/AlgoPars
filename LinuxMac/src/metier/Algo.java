@@ -25,7 +25,7 @@ public class Algo
 		setNom();
 	}
 
-	public void debutInterpretation()
+	public void debutInterpretationAuto()
 	{
 		// DEBUT DES INSTRUCTIONS //
 		String ligne = "";
@@ -35,6 +35,26 @@ public class Algo
 		ligne = alLignes.get(0);
 
 		for(int i = 1; i<alLignes.size(); i++){
+
+			ligne = alLignes.get(i);
+
+			if(ligne.contains("DEBUT")){
+				while(!ligne.contains("FIN")){
+					executeInstruction(ligne);
+					i++;
+					ligne = alLignes.get(i);
+				}
+			}
+		}
+	}
+
+	public void debutInterpretationPAP()
+	{
+		String ligne = "";
+
+		ligne = alLignes.get(0);
+
+		for(int i = 0; i<alLignes.size(); i++){
 
 			ligne = alLignes.get(i);
 
@@ -167,8 +187,9 @@ public class Algo
 		}
 		if(sLigne.contains("lire"))
 		{
-			String sInput;
+			String sInput, ligne = "";
 			Scanner sc = new Scanner(System.in);
+			recupVar(ligne);
 			parts      = sLigne.split(Pattern.quote("("));
 			parts      = parts[1].split(Pattern.quote(")"));
 			sInput     = sc.nextLine();

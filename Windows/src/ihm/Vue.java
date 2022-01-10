@@ -20,44 +20,8 @@ public class Vue
 	public Vue(Controleur ctrl, ArrayList<String> alLignes)
 	{
 		this.ctrl  = ctrl;
-		this.alLignes = alLignes;
-		
-		y = 0;
-
-		sTabs = "";
-		for(int i = 0; i<iEspacesParTab; i++)
-			sTabs += " ";
-
-		if(ctrl.cMode != 'A')
-		{
-			while(y < alLignes.size())
-			{
-				Scanner sc = new Scanner(System.in);
-
-				for (Variable var : ctrl.alVariables)
-				{
-					System.out.println(var);
-				}
-				BaseTableau();
-				if(choix.equals("r") && y > 0)
-					y--;
-				else
-					y++;
-
-				choix = sc.nextLine();
-				ctrl.ClearConsole();
-			}
-			while(y < alLignes.size())
-			{
-				BaseTableau();
-				y++;
-			}
-			
-		}
-		else
-		{
-			BaseTableau();
-		}
+        this.alLignes = alLignes;
+        this.y = 0;
 	}
 
 	public void BaseTableau()
@@ -95,6 +59,7 @@ public class Vue
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
+		saut(1);
 	}
 
 	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
@@ -141,5 +106,45 @@ public class Vue
 	{
         dessinerCase(sLigne,0,79-sLigne.length(),true);
         saut(1);
+	}
+
+	public void dessinnerEnTeteConsole(){
+		dessinerCase("CONSOLE",1,1,true);
+        saut(1);
+        dessinerTrema(79);
+        saut(1);
+	}
+
+	public void defilementPAP()
+	{
+		sTabs = "";
+        for(int i = 0; i<iEspacesParTab; i++)
+            sTabs += " ";
+
+        
+		BaseTableau();
+		while(this.y < this.alLignes.size())
+		{
+			Scanner sc = new Scanner(System.in);
+			this.choix = sc.nextLine();
+			ctrl.ClearConsole();
+			if(choix.equals("B") && this.y > 0)
+				this.y--;
+			else if(choix.isEmpty())
+				this.y++;
+			BaseTableau();
+			dessinnerEnTeteConsole();
+			ctrl.algo.executeInstruction(this.alLignes.get(y));
+		}
+	}
+
+	public void defilementAuto()
+	{
+		BaseTableau();
+	}
+
+	public int getCompteur()
+	{
+		return this.y;
 	}
 }

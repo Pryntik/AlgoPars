@@ -57,6 +57,16 @@ public class Controleur
 		ClearConsole();
 
 		vue  = new Vue(this, sLigneAlgo);
+		if (cMode == 'A')
+		{
+			vue.defilementAuto();
+			vue.dessinnerEnTeteConsole();
+			algo.debutInterpretationAuto();
+		}
+		else
+		{
+			vue.defilementPAP();
+		}
 	}
 
 	public ArrayList<String> LireFichierALGO(String fichier)
