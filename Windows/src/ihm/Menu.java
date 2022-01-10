@@ -95,6 +95,7 @@ public class Menu
         ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
+        ctrl.listCouleur.get(0).start();
 
         for (int i = 0; i <= 2; i++)
             alTheme1.add(ctrl.listCouleur.get(i)); // Vert + Jaune + Bleu
@@ -114,12 +115,14 @@ public class Menu
         {
             sRes += " ["+i+"] " + String.format("%-20s", "theme") + "|";
         }
-        sRes += "\n+-------------------------+-------------------------+-------------------------+\n" +
-
-                  "| " + alTheme1.get(0).getNomColore() + "                | "  + alTheme2.get(0).getNomColore() + "                | "  + alTheme3.get(0).getNomColore()  + "                |" + "\n" +
-                  "| " + alTheme1.get(1).getNomColore() + "               | "   + alTheme2.get(1).getNomColore() + "               | "   + alTheme3.get(1).getNomColore()  + "               |"  + "\n" +
-                  "| " + alTheme1.get(2).getNomColore() + "                 | " + alTheme2.get(2).getNomColore() + "                 | " + alTheme3.get(2).getNomColore()  + "                 |"+ "\n" +
-                  "+-------------------------+-------------------------+-------------------------+\n";
+        sRes += "\n+-------------------------+-------------------------+-------------------------+\n";
+        for (int i = 0; i <= 2; i++)
+        {
+            sRes += String.format("| %-33s",alTheme1.get(i).getNomColore()) +
+                    String.format("| %-33s",alTheme2.get(i).getNomColore()) +
+                    String.format("| %-33s|",alTheme3.get(i).getNomColore()) + "\n";
+        }
+        sRes += "+-------------------------+-------------------------+-------------------------+\n";
 
         System.out.println(sRes);
         System.out.println(ctrl.listCouleur.get(0).front('1'));

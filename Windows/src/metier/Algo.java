@@ -134,7 +134,7 @@ public class Algo
 
 	public void ajouterVariable(String sNom, String sType, boolean bConstante)
 	{
-		alVariables.add(new Variable(sNom, sType, bConstante));
+		alVariables.add(new Variable(ctrl, sNom, sType, bConstante));
 	}
 
 	public void ajouterLigne(String ligne)
