@@ -26,6 +26,8 @@ public class Controleur
 
 	public  char   cMode;
 	public  String coulRest;
+	public  String coulVari;
+	public  String coulFonc;
 
 	public  ArrayList<Couleur>  listCouleur;
 	public  ArrayList<Variable> alVariables;
@@ -53,11 +55,13 @@ public class Controleur
 		alTheme  = new ArrayList<Couleur>();
 		alTheme  = menu.choixTheme();
 		coulRest = alTheme.get(0).ecrire('0');
+		coulVari = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
+		coulFonc = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
 
 		algo = new Algo(this, sLigneAlgo, sLigneVar);
 		alVariables  = algo.recupVar();
 		
-		ClearConsole();
+		clearConsole();
 		
 		vue  = new Vue(this, sLigneAlgo);
 		if (cMode == 'A')
@@ -179,7 +183,7 @@ public class Controleur
 	}
 
     // *** METHODE POUR EFFACER LA CONSOLE *** //
-	public static void ClearConsole()
+	public static void clearConsole()
 	{
 		try
 		{

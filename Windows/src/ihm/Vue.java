@@ -26,8 +26,17 @@ public class Vue
 
 	public void baseTableau(String sCoul)
 	{
-		// *** DESSIN DE L'EN TETE DE BASE *** //
-		System.out.print(ctrl.listCouleur.get(0).surligner('0'));
+		// *** DESSIN DU FICHIER *** //
+		baseTableauTete();
+		selectVar(sCoul, 0);
+		baseTableauFin();
+	}
+	
+
+	public void baseTableauTete()
+	{
+		// *** DESSIN DE L'EN TETE DU TABLEAU *** //
+		System.out.print(ctrl.coulRest);
 		saut(3);
 		dessinerTrema(11);
 		espace(iNbColonnes-11);
@@ -45,30 +54,65 @@ public class Vue
 		espace(1);
 		dessinerTrema(79);
 		saut(1);
+	}
 
-		// *** DESSIN DU FICHIER *** //
+	public void selectVar(String sCoul, int iSelect)
+	{
+		String  sLigne    = "";
+		ArrayList<String> sStock       = new ArrayList<String>();
+		ArrayList<String> alVari       = new ArrayList<String>();
 
-		String sLigne;
-		String sVari     = ctrl.alVariables.get(3).getNom();
-		String sVariCoul = ctrl.alVariables.get(3).getNomColore();
 		for(int i = 0; i < alLignes.size(); i++)
 		{
-			if(i == y)
-				System.out.print(sCoul);
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 
-			if(sLigne.contains(sVari))
+			for(int j = 0; j < ctrl.alVariables.size(); j++)
 			{
-				dessinerCase(String.format("%3d ",i) + coloreVar(sLigne, sVari, sVariCoul),
-				             1, iNbColonnes-6-sLigne.length(),true);
+				alVari.add(ctrl.alVariables.get(j).getNom());
+
+				if(sLigne.contains(" " + alVari.get(j)))
+				{
+					if(i == y)
+					{
+						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), sCoul),
+										 1, iNbColonnes-6-sLigne.length(),true));
+					}
+					else
+						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
+										 1, iNbColonnes-6-sLigne.length(),true));
+				}
 			}
+
+			if(!sLigne.contains(alVari.get(i)))
+				sStock.add(stockCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true));
 			
+			if(i == y)
+				System.out.print(sCoul + sStock.get(0));
 			else
-				dessinerCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
-			
-			saut(1);
-			System.out.print(ctrl.listCouleur.get(0).surligner('0'));
+				System.out.print(sStock.get(0));
+
+			System.out.print(ctrl.coulRest);
+			sStock.clear();
 		}
+	}
+
+	public String coloreThis(String sLigne, String sVari, String sCoul)
+	{
+		String   sRet  = "";
+		String[] parts = sLigne.split(sVari);
+		
+		for (int i = 0; i < parts.length; i++)
+		{
+			sRet += sCoul + parts[i];
+			if(i != parts.length - 1)
+				sRet +=  ctrl.coulVari + sVari + ctrl.coulRest;
+		}
+		return " " + sRet;
+	}
+
+	public void baseTableauFin()
+	{
+		// *** DESSIN DU PIED DU TABLEAU *** //
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
@@ -90,8 +134,8 @@ public class Vue
 
 	}
 
-	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar){
-
+	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
+	{
 		String sPrintTexte;
 
 		if(bLeftBar)
@@ -100,7 +144,18 @@ public class Vue
 			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
 
 		System.out.print(sPrintTexte);
+	}
 
+	public static String stockCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
+	{
+		String sPrintTexte;
+
+		if(bLeftBar)
+			sPrintTexte = String.format("|%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
+		else
+			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
+
+		return sPrintTexte + "\n";
 	}
 
 	public static void saut(int iNbSauts)
@@ -155,7 +210,7 @@ public class Vue
 		{
 			Scanner sc = new Scanner(System.in);
 			this.choix = sc.nextLine();
-			ctrl.ClearConsole();
+			ctrl.clearConsole();
 			if(choix.equals("B") && this.y > 0)
 				this.y--;
 			else if(choix.isEmpty())
@@ -181,20 +236,6 @@ public class Vue
 		baseTableau(sCoul);
 		ctrl.algo.debutInterpretationAuto();
 		baseConsole();
-	}
-
-	public String coloreVar(String sLigne, String sVari, String sVariCoul)
-	{
-		String   sRet  = "";
-		String[] parts = sLigne.split(sVari);
-		
-		for (int i = 0; i < parts.length; i++)
-		{
-			sRet += ctrl.coulRest + parts[i];
-			if(i != parts.length - 1)
-				sRet +=  sVariCoul;
-		}
-		return sRet;
 	}
 
 	public int getCompteur()
