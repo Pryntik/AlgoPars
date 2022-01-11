@@ -38,6 +38,7 @@ public class Vue
 		dessinerCase("CODE", 2, 3,true);
 		dessinerCase("", 1, iNbColonnes-12,false);
 		dessinerCase("DONNEES", 1, 1,false);
+		
 		saut(1);
 		dessinerLigne(iNbColonnes + 80);
 		saut(1);
@@ -108,11 +109,25 @@ public class Vue
         saut(1);
 	}
 
-	public void dessinnerEnTeteConsole(){
+	public void baseConsole()
+	{
 		dessinerCase("CONSOLE",1,1,true);
         saut(1);
-        dessinerTrema(79);
-        saut(1);
+        dessinerTrema(81);
+		for(int i=0; i < ctrl.algo.getAlConsole().size(); i++)
+		{
+			if (i == 0)
+			{
+				saut(1);
+				caseInstruction(ctrl.algo.getAlConsole().get(i));
+			}
+			else
+			{
+				caseInstruction(ctrl.algo.getAlConsole().get(i));
+			}
+		}
+		dessinerTrema(81);
+		saut(1);
 	}
 
 	public void defilementPAP()
@@ -133,14 +148,24 @@ public class Vue
 			else if(choix.isEmpty())
 				this.y++;
 			BaseTableau();
-			dessinnerEnTeteConsole();
-			ctrl.algo.executeInstruction(this.alLignes.get(y));
+			if(this.alLignes.get(y).contains("lire"))
+			{
+				ctrl.algo.executeInstruction(this.alLignes.get(y));
+				baseConsole();
+			}
+			else
+			{
+				ctrl.algo.executeInstruction(this.alLignes.get(y));
+				baseConsole();
+			}
 		}
 	}
 
 	public void defilementAuto()
 	{
 		BaseTableau();
+		ctrl.algo.debutInterpretationAuto();
+		baseConsole();
 	}
 
 	public int getCompteur()

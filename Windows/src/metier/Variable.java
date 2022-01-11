@@ -5,18 +5,16 @@ import src.ihm.*;
 
 public class Variable {
 
-	private Controleur ctrl;
-	private String     sNom;
-	private String     sType;
-	private boolean    bConstante;
+	private String   sNom;
+	private String   sType;
+	private boolean  bConstante;
 
 	//private int     iValeur;
 	//private char    cValeur;
 	private String  sValeur = "";
 	//private boolean bValeur;
 
-	public Variable(Controleur ctrl, String sNom, String sType, boolean bConstante){
-		this.ctrl       = ctrl;
+	public Variable(String sNom, String sType, boolean bConstante){
 		this.sNom       = sNom.trim();
 		this.sType      = sType.trim();
 		this.bConstante = bConstante;
@@ -37,23 +35,15 @@ public class Variable {
 
 	public String getNom(){ return sNom; }
 
-	public String getNomColore()
-    {
-        if(this.sType.equals("entier") && !this.bConstante)
-            return ctrl.listCouleur.get(2).ecrire(ctrl.listCouleur.get(2).getStylo()) + this.sNom + ctrl.listCouleur.get(2).ecrire('0');
-        else if(this.bConstante)
-            return ctrl.listCouleur.get(1).ecrire(ctrl.listCouleur.get(1).getStylo()) + this.sNom + ctrl.listCouleur.get(1).ecrire('0');
-        else
-            return ctrl.listCouleur.get(0).ecrire(ctrl.listCouleur.get(0).getStylo()) + this.sNom + ctrl.listCouleur.get(0).ecrire('0');
-    }
+	public String toString(){
+		return "Nom: "        + String.format("%-15s",sNom) 
+		+      " Type: "      + String.format("%-10s",sType) 
+		+      " Constante: " + String.format("%-10s",bConstante)
+		+      " Valeur: "    + sValeur;
+	}
 
-    public void setValeur(String sValeur) { this.sValeur = sValeur; }
-
-    public String toString()
-    {
-        return "Nom: "        + String.format("%-15s",this.getNomColore()) 
-        +      " Type: "      + String.format("%-10s",sType) 
-        +      " Constante: " + String.format("%-10s",bConstante)
-        +      " Valeur: "    + sValeur;
-    }
+	public void setValeur(String sValeur){
+		this.sValeur = sValeur;
+	}
+	
 }

@@ -15,19 +15,20 @@ DEBUT
   tq choix != 'Q' faire
 
       si choix = 'I' alors
-          val <- val + 1
+          val <-- val + 1
       sinon
           si choix = 'D' alors
-              val <- val - 1
+              val <-- val - 1
           fsi
       fsi
 
-      nbAction <- nbAction + 1
+      nbAction <-- nbAction + 1
 
       écrire ( "action (Q/I/D):")
       lire ( choix )
 
   ftq
 
+  écrire ( val )
   écrire ( nbAction )
 FIN

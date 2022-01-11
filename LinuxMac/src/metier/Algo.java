@@ -15,6 +15,7 @@ public class Algo
 	private ArrayList<String> alLignes = new ArrayList<String>();
 	private ArrayList<Variable> alVariables = new ArrayList<Variable>();
 	private ArrayList<String> alVarsTracer = new ArrayList<String>();
+	private ArrayList<String> alConsole = new ArrayList<String>();
 
 	public Algo(Controleur ctrl, ArrayList<String> alLignes, ArrayList<String> alVarsTracer)
 	{
@@ -54,7 +55,7 @@ public class Algo
 
 		ligne = alLignes.get(0);
 
-		for(int i = 0; i<alLignes.size(); i++){
+		for(int i = 1; i<alLignes.size(); i++){
 
 			ligne = alLignes.get(i);
 
@@ -176,23 +177,25 @@ public class Algo
 			if(sLigne.contains("\""))
 			{
 				parts = sLigne.split("\"");
-				ctrl.vue.caseInstruction(parts[1]);
+				this.alConsole.add(parts[1]);
 			}
 			else
 			{
 				parts = sLigne.split(Pattern.quote("("));
 				parts = parts[1].split(Pattern.quote(")"));
-				System.out.println(getVariable(parts[0].trim()).getValeur());
+				this.alConsole.add(getVariable(parts[0].trim()).getValeur());
 			}
 		}
 		if(sLigne.contains("lire"))
 		{
 			String sInput, ligne = "";
 			Scanner sc = new Scanner(System.in);
-			recupVar(ligne);
+			recupVar(ligne);	
 			parts      = sLigne.split(Pattern.quote("("));
 			parts      = parts[1].split(Pattern.quote(")"));
+			System.out.println("Lecture de la variable "+parts[0]+" au clavier");
 			sInput     = sc.nextLine();
+			this.alConsole.add(sInput);
 			getVariable(parts[0].trim()).setValeur(sInput);
 		}
 	}
@@ -200,4 +203,5 @@ public class Algo
 	public String getNom(){ return this.sNom; }
 	public ArrayList<String> getVarTracer(){ return this.alVarsTracer; }
 	public ArrayList<Variable> getVariables(){ return this.alVariables; }
+	public ArrayList<String> getAlConsole() { return this.alConsole;}
 }
