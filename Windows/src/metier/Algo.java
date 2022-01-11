@@ -9,18 +9,17 @@ import java.util.regex.Pattern;
 
 public class Algo
 {
-
 	private Controleur ctrl;
-	private String sNom;
-	private ArrayList<String> alLignes = new ArrayList<String>();
-	private ArrayList<Variable> alVariables = new ArrayList<Variable>();
-	private ArrayList<String> alVarsTracer = new ArrayList<String>();
-	private ArrayList<String> alConsole = new ArrayList<String>();
+	private String     sNom;
+	private ArrayList<String>   alLignes     = new ArrayList<String>();
+	private ArrayList<Variable> alVariables  = new ArrayList<Variable>();
+	private ArrayList<String>   alVarsTracer = new ArrayList<String>();
+	private ArrayList<String>   alConsole    = new ArrayList<String>();
 
 	public Algo(Controleur ctrl, ArrayList<String> alLignes, ArrayList<String> alVarsTracer)
 	{
-		this.ctrl = ctrl;
-		this.alLignes = alLignes;
+		this.ctrl         = ctrl;
+		this.alLignes     = alLignes;
 		this.alVarsTracer = alVarsTracer;
 
 		setNom();
@@ -31,16 +30,18 @@ public class Algo
 		// DEBUT DES INSTRUCTIONS //
 		String ligne = "";
 
-		recupVar(ligne);
+		recupVar();
 
 		ligne = alLignes.get(0);
 
-		for(int i = 1; i<alLignes.size(); i++){
-
+		for(int i = 1; i<alLignes.size(); i++)
+		{
 			ligne = alLignes.get(i);
 
-			if(ligne.contains("DEBUT")){
-				while(!ligne.contains("FIN")){
+			if(ligne.contains("DEBUT"))
+			{
+				while(!ligne.contains("FIN"))
+				{
 					executeInstruction(ligne);
 					i++;
 					ligne = alLignes.get(i);
@@ -55,12 +56,13 @@ public class Algo
 
 		ligne = alLignes.get(0);
 
-		for(int i = 1; i<alLignes.size(); i++){
-
+		for(int i = 1; i<alLignes.size(); i++)
+		{
 			ligne = alLignes.get(i);
-
-			if(ligne.contains("DEBUT")){
-				while(!ligne.contains("FIN")){
+			if(ligne.contains("DEBUT"))
+			{
+				while(!ligne.contains("FIN"))
+				{
 					executeInstruction(ligne);
 					i++;
 					ligne = alLignes.get(i);
@@ -69,8 +71,9 @@ public class Algo
 		}
 	}
 
-	public void recupVar(String ligne)
+	public ArrayList<Variable> recupVar()
 	{
+		String   ligne = "";
 		String[] parts;
 		String   type;
 
@@ -93,12 +96,12 @@ public class Algo
 						parts  = parts[0].split(",");
 						for(int j = 0; j<parts.length; j++)
 						{
-							this.ajouterVariable(parts[j], type, true);
+							this.alVariables.add(new Variable(ctrl, parts[j], type, true));
 						}
 					}
 					else
 					{
-						this.ajouterVariable(parts[0], type, true);
+						this.alVariables.add(new Variable(ctrl, parts[0], type, true));
 					}
 					i++;
 					ligne = alLignes.get(i);
@@ -119,23 +122,19 @@ public class Algo
 						parts  = parts[0].split(",");
 						for(int j = 0; j<parts.length; j++)
 						{
-							this.ajouterVariable(parts[j], type, false);
+							this.alVariables.add(new Variable(ctrl, parts[j], type, true));
 						}
 					}
 					else
 					{
-						this.ajouterVariable(parts[0], type, false);
+						this.alVariables.add(new Variable(ctrl, parts[0], type, true));
 					}
 					i++;
 					ligne = alLignes.get(i);
 				}
 			}
 		}
-	}
-
-	public void ajouterVariable(String sNom, String sType, boolean bConstante)
-	{
-		alVariables.add(new Variable(sNom, sType, bConstante));
+		return this.alVariables;
 	}
 
 	public void ajouterLigne(String ligne)
@@ -190,7 +189,7 @@ public class Algo
 		{
 			String sInput, ligne = "";
 			Scanner sc = new Scanner(System.in);
-			recupVar(ligne);	
+			recupVar();
 			parts      = sLigne.split(Pattern.quote("("));
 			parts      = parts[1].split(Pattern.quote(")"));
 			System.out.println("Lecture de la variable "+parts[0]+" au clavier");
@@ -201,7 +200,7 @@ public class Algo
 	}
 
 	public String getNom(){ return this.sNom; }
-	public ArrayList<String> getVarTracer(){ return this.alVarsTracer; }
-	public ArrayList<Variable> getVariables(){ return this.alVariables; }
-	public ArrayList<String> getAlConsole() { return this.alConsole;}
+	public ArrayList<String> getVarTracer()  { return this.alVarsTracer; }
+	public ArrayList<Variable> getVariables(){ return this.alVariables;  }
+	public ArrayList<String> getAlConsole()  { return this.alConsole;    }
 }
