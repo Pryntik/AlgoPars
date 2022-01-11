@@ -3,10 +3,6 @@ package src.ihm;
 import src.*;
 import src.metier.*;
 
-import com.sun.jna.*;
-import com.sun.jna.platform.win32. WinDef.*;
-import com.sun.jna.platform.win32.WinNT.HANDLE;
-
 public class Couleur
 {
 	public static final String RED_UNDERLINED = "\033[4;31m";
