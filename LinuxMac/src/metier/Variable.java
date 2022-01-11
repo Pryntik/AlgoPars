@@ -3,18 +3,21 @@ package src.metier;
 import src.*;
 import src.ihm.*;
 
-public class Variable {
-
-	private String   sNom;
-	private String   sType;
-	private boolean  bConstante;
+public class Variable
+{
+	private Controleur ctrl;
+	private String     sNom;
+	private String     sType;
+	private boolean    bConstante;
 
 	//private int     iValeur;
 	//private char    cValeur;
 	private String  sValeur = "";
 	//private boolean bValeur;
 
-	public Variable(String sNom, String sType, boolean bConstante){
+	public Variable(Controleur ctrl, String sNom, String sType, boolean bConstante)
+	{
+		this.ctrl       = ctrl;
 		this.sNom       = sNom.trim();
 		this.sType      = sType.trim();
 		this.bConstante = bConstante;
@@ -35,8 +38,13 @@ public class Variable {
 
 	public String getNom(){ return sNom; }
 
+	public String getNomColore()
+    {
+        return ctrl.alTheme.get(0).ecrire(ctrl.alTheme.get(0).getStylo()) + this.sNom + ctrl.alTheme.get(0).ecrire('0');
+    }
+
 	public String toString(){
-		return "Nom: "        + String.format("%-15s",sNom) 
+		return "Nom: "        + String.format("%-15s",getNomColore())
 		+      " Type: "      + String.format("%-10s",sType) 
 		+      " Constante: " + String.format("%-10s",bConstante)
 		+      " Valeur: "    + sValeur;

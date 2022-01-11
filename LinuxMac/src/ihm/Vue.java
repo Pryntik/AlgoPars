@@ -24,7 +24,7 @@ public class Vue
         this.y = 0;
 	}
 
-	public void BaseTableau()
+	public void baseTableau(String sCoul)
 	{
 		// *** DESSIN DE L'EN TETE DE BASE *** //
 		System.out.print(ctrl.listCouleur.get(0).surligner('0'));
@@ -38,7 +38,6 @@ public class Vue
 		dessinerCase("CODE", 2, 3,true);
 		dessinerCase("", 1, iNbColonnes-12,false);
 		dessinerCase("DONNEES", 1, 1,false);
-		
 		saut(1);
 		dessinerLigne(iNbColonnes + 80);
 		saut(1);
@@ -46,14 +45,27 @@ public class Vue
 		espace(1);
 		dessinerTrema(79);
 		saut(1);
+
 		// *** DESSIN DU FICHIER *** //
+
 		String sLigne;
+		String sVari     = ctrl.alVariables.get(3).getNom();
+		String sVariCoul = ctrl.alVariables.get(3).getNomColore();
 		for(int i = 0; i < alLignes.size(); i++)
 		{
 			if(i == y)
-				System.out.print(ctrl.listCouleur.get(0).surligner('R'));
+				System.out.print(sCoul);
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
-			dessinerCase(String.format("%3d",i) + " " + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
+
+			if(sLigne.contains(sVari))
+			{
+				dessinerCase(String.format("%3d ",i) + coloreVar(sLigne, sVari, sVariCoul),
+				             1, iNbColonnes-6-sLigne.length(),true);
+			}
+			
+			else
+				dessinerCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true);
+			
 			saut(1);
 			System.out.print(ctrl.listCouleur.get(0).surligner('0'));
 		}
@@ -132,12 +144,13 @@ public class Vue
 
 	public void defilementPAP()
 	{
+		String sCoul = ctrl.listCouleur.get(0).surligner('R');
 		sTabs = "";
         for(int i = 0; i<iEspacesParTab; i++)
             sTabs += " ";
 
         
-		BaseTableau();
+		baseTableau(sCoul);
 		while(this.y < this.alLignes.size())
 		{
 			Scanner sc = new Scanner(System.in);
@@ -147,7 +160,8 @@ public class Vue
 				this.y--;
 			else if(choix.isEmpty())
 				this.y++;
-			BaseTableau();
+
+			baseTableau(sCoul);
 			if(this.alLignes.get(y).contains("lire"))
 			{
 				ctrl.algo.executeInstruction(this.alLignes.get(y));
@@ -163,9 +177,24 @@ public class Vue
 
 	public void defilementAuto()
 	{
-		BaseTableau();
+		String sCoul = ctrl.listCouleur.get(0).surligner('0');
+		baseTableau(sCoul);
 		ctrl.algo.debutInterpretationAuto();
 		baseConsole();
+	}
+
+	public String coloreVar(String sLigne, String sVari, String sVariCoul)
+	{
+		String   sRet  = "";
+		String[] parts = sLigne.split(sVari);
+		
+		for (int i = 0; i < parts.length; i++)
+		{
+			sRet += ctrl.coulRest + parts[i];
+			if(i != parts.length - 1)
+				sRet +=  sVariCoul;
+		}
+		return sRet;
 	}
 
 	public int getCompteur()

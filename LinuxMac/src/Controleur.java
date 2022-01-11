@@ -24,11 +24,13 @@ public class Controleur
 	public Algo     algo;
 	public Vue      vue;
 
-	public  char                cMode;
+	public  char   cMode;
+	public  String coulRest;
+
 	public  ArrayList<Couleur>  listCouleur;
 	public  ArrayList<Variable> alVariables;
 
-	private ArrayList<Couleur>  alTheme;
+	public  ArrayList<Couleur>  alTheme;
 	private ArrayList<String>   sAllFile;
 	private ArrayList<String>   sLigneAlgo;
 	private ArrayList<String>   sLigneVar;
@@ -48,19 +50,21 @@ public class Controleur
 		sLigneVar   = LireFichierALGO(sAllFile.get(1));
 		listCouleur = LireFichierXML(sAllFile.get(2));
 
-		alTheme = new ArrayList<Couleur>();
-		alTheme = menu.choixTheme();
+		alTheme  = new ArrayList<Couleur>();
+		alTheme  = menu.choixTheme();
+		coulRest = alTheme.get(0).ecrire('0');
 
 		algo = new Algo(this, sLigneAlgo, sLigneVar);
-		alVariables  = algo.getVariables();
-
+		alVariables  = algo.recupVar();
+		
 		ClearConsole();
-
+		
 		vue  = new Vue(this, sLigneAlgo);
 		if (cMode == 'A')
 		{
-			//algo.debutInterpretationAuto();
 			vue.defilementAuto();
+			vue.baseConsole();
+			algo.debutInterpretationAuto();
 		}
 		else
 		{
@@ -99,16 +103,18 @@ public class Controleur
 	public ArrayList<Couleur> LireFichierXML(String fichier)
 	{
 		String nomVari = "";
-		String nomCons = "";
-		String nomChif = "";
+		String nomFonc = "";
+		String nomCond = "";
 		String nomGene = "";
+
 		char coulVari  = ' ';
-		char poidsVari = ' ';
-		char coulCons  = ' ';
-		char poidsCons = ' ';
-		char coulChif  = ' ';
-		char poidsChif = ' ';
+		char coulFonc  = ' ';
+		char coulCond  = ' ';
 		char coulGene  = ' ';
+
+		char poidsVari = ' ';
+		char poidsFonc = ' ';
+		char poidsCond = ' ';
 		char poidsGene = ' ';
 		listCouleur = new ArrayList<Couleur>();
 
@@ -121,28 +127,28 @@ public class Controleur
 			for (Element config : listConfig)
 			{
 				String        theme     = config.getAttributeValue("num");
-				List<Element> listVar   = config.getChildren("variable");
-				List<Element> listCons  = config.getChildren("constante");
-				List<Element> listChif  = config.getChildren("chiffre");
+				List<Element> listVari   = config.getChildren("variable");
+				List<Element> listFonc  = config.getChildren("constante");
+				List<Element> listCond  = config.getChildren("chiffre");
 				List<Element> listGene  = config.getChildren("generale");
 
-				for (Element vari : listVar)
+				for (Element vari : listVari)
 				{
 					nomVari   = vari.getAttributeValue("nom");
 					coulVari  = vari.getAttributeValue("couleur").charAt(0);
 					poidsVari = vari.getAttributeValue("poids").charAt(0);
 				}
-				for (Element cons : listCons)
+				for (Element cons : listFonc)
 				{
-					nomCons   = cons.getAttributeValue("nom");
-					coulCons  = cons.getAttributeValue("couleur").charAt(0);
-					poidsCons = cons.getAttributeValue("poids").charAt(0);
+					nomFonc   = cons.getAttributeValue("nom");
+					coulFonc  = cons.getAttributeValue("couleur").charAt(0);
+					poidsFonc = cons.getAttributeValue("poids").charAt(0);
 				}
-				for (Element chif : listChif)
+				for (Element chif : listCond)
 				{
-					nomChif   = chif.getAttributeValue("nom");
-					coulChif  = chif.getAttributeValue("couleur").charAt(0);
-					poidsChif = chif.getAttributeValue("poids").charAt(0);
+					nomCond   = chif.getAttributeValue("nom");
+					coulCond  = chif.getAttributeValue("couleur").charAt(0);
+					poidsCond = chif.getAttributeValue("poids").charAt(0);
 				}
 				for (Element gene : listGene)
 				{
@@ -151,8 +157,8 @@ public class Controleur
 					poidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
 				listCouleur.add(new Couleur(theme, nomVari, coulVari, poidsVari));
-				listCouleur.add(new Couleur(theme, nomCons, coulCons, poidsCons));
-				listCouleur.add(new Couleur(theme, nomChif, coulChif, poidsChif));
+				listCouleur.add(new Couleur(theme, nomFonc, coulFonc, poidsFonc));
+				listCouleur.add(new Couleur(theme, nomCond, coulCond, poidsCond));
 			}
 			return listCouleur;
 		}
