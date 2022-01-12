@@ -67,19 +67,14 @@ public class Vue
 		{
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 
-			if(sLigne.contains("écrire"))
+			if(sLigne.contains("si ") || sLigne.contains("tq ") || sLigne.contains("écrire") ||
+			   sLigne.contains("fsi") || sLigne.contains("ftq") || sLigne.contains("lire")   ||
+			   sLigne.contains("sinon"))
 			{
-				sLigne = sLigne.replaceAll("écrire", ctrl.coulFonc + "écrire" + ctrl.styloRest);
+				sLigne = coloreFoncCond(sLigne);
 				iSpace = 10;
 			}
-			if(sLigne.contains("lire"))
-			{
-				sLigne = sLigne.replaceAll("lire", ctrl.coulFonc + "lire" + ctrl.styloRest);
-				iSpace = 10;
-			}
-			if(sLigne.contains("si"))
-				sLigne = sLigne.replaceAll("lire", ctrl.coulCond + "si" + ctrl.styloRest);
-
+			
 			for(int j = 0; j < ctrl.alVariables.size(); j++)
 			{
 				alVari.add(ctrl.alVariables.get(j).getNom());
@@ -145,6 +140,26 @@ public class Vue
 			}
 			return " " + sRet;
 		}
+	}
+
+	public String coloreFoncCond(String sLigne)
+	{
+		if(sLigne.contains("si "))
+			sLigne = sLigne.replaceAll("si",     ctrl.coulCond + "si"     + ctrl.styloRest);
+		if(sLigne.contains("fsi"))
+			sLigne = sLigne.replaceAll("fsi",    ctrl.coulCond + "fsi"    + ctrl.styloRest);
+		if(sLigne.contains("sinon"))
+			sLigne = sLigne.replaceAll("sinon",  ctrl.coulCond + "sinon"  + ctrl.styloRest);
+		if(sLigne.contains("tq "))
+			sLigne = sLigne.replaceAll("tq",     ctrl.coulCond + "tq"     + ctrl.styloRest);
+		if(sLigne.contains("ftq"))
+			sLigne = sLigne.replaceAll("ftq",    ctrl.coulCond + "ftq"    + ctrl.styloRest);
+		if(sLigne.contains("écrire"))
+			sLigne = sLigne.replaceAll("écrire", ctrl.coulFonc + "écrire" + ctrl.styloRest);
+		if(sLigne.contains("lire"))
+			sLigne = sLigne.replaceAll("lire",   ctrl.coulFonc + "lire"   + ctrl.styloRest);
+
+		return sLigne;
 	}
 
 	public void baseTableauFin()
