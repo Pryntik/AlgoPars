@@ -66,6 +66,15 @@ public class Vue
 		{
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
 
+			if(sLigne.contains("écrire"))
+			{
+				sLigne = sLigne.replaceAll("écrire", ctrl.coulFonc + "écrire" + ctrl.styloRest);
+			}
+			if(sLigne.contains("lire"))
+			{
+				sLigne = sLigne.replaceAll("lire", ctrl.coulFonc + "lire" + ctrl.styloRest);
+			}
+
 			for(int j = 0; j < ctrl.alVariables.size(); j++)
 			{
 				alVari.add(ctrl.alVariables.get(j).getNom());
@@ -75,16 +84,22 @@ public class Vue
 					if(i == y)
 					{
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), sCoul),
-										 1, iNbColonnes-6-sLigne.length(),true));
+										    1, iNbColonnes-6-sLigne.length(),true) + "\n");
 					}
 					else
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
-										 1, iNbColonnes-6-sLigne.length(),true));
+										     1, iNbColonnes-6-sLigne.length(),true) + "\n");
 				}
+				if(sLigne.contains("écrire"))
+					sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
+									     1, iNbColonnes+4-sLigne.length(),true) + "\n");
+				if(sLigne.contains("lire"))
+					sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
+									    1, iNbColonnes+4-sLigne.length(),true) + "\n");
 			}
 
-			if(!sLigne.contains(alVari.get(i)))
-				sStock.add(stockCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true));
+			if(!sLigne.contains(" " + alVari.get(i)))
+				sStock.add(stockCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true) + "\n");
 			
 			if(i == y)
 				System.out.print(sCoul + sStock.get(0));
@@ -100,14 +115,36 @@ public class Vue
 	{
 		String   sRet  = "";
 		String[] parts = sLigne.split(sVari);
+		String[] parts2;
 		
-		for (int i = 0; i < parts.length; i++)
+		if(sLigne.contains(sVari + ","))
 		{
-			sRet += sCoul + parts[i];
-			if(i != parts.length - 1)
-				sRet +=  ctrl.coulVari + sVari + ctrl.coulRest;
+			parts = sLigne.split(",");
+			for (int i = 0; i < parts.length; i++)
+			{
+				if(i == parts.length - 1)
+				{
+					parts = parts[i].split(":");
+					sRet += sCoul + ctrl.coulVari + parts[0] + ctrl.styloRest + ":" + parts[1];
+					return " " + sRet;
+				}
+				else
+				{
+					sRet += sCoul + ctrl.coulVari + parts[i] + ctrl.styloRest + ",";
+				}
+			}
+			return sRet;
 		}
-		return " " + sRet;
+		else
+		{
+			for (int i = 0; i < parts.length; i++)
+			{
+				sRet += sCoul + parts[i];
+				if(i != parts.length - 1)
+					sRet +=  ctrl.coulVari + sVari + ctrl.styloRest;
+			}
+			return " " + sRet;
+		}
 	}
 
 	public void baseTableauFin()
@@ -155,7 +192,7 @@ public class Vue
 		else
 			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
 
-		return sPrintTexte + "\n";
+		return sPrintTexte;
 	}
 
 	public static void saut(int iNbSauts)

@@ -26,7 +26,9 @@ public class Controleur
 
 	public  char   cMode;
 	public  String coulRest;
+	public  String styloRest;
 	public  String coulVari;
+	public  String coulFonc;
 
 	public  ArrayList<Couleur>  listCouleur;
 	public  ArrayList<Variable> alVariables;
@@ -51,10 +53,12 @@ public class Controleur
 		sLigneVar   = LireFichierALGO(sAllFile.get(1));
 		listCouleur = LireFichierXML(sAllFile.get(2));
 
-		alTheme  = new ArrayList<Couleur>();
-		alTheme  = menu.choixTheme();
-		coulRest = alTheme.get(0).ecrire('0');
-		coulVari = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
+		alTheme   = new ArrayList<Couleur>();
+		alTheme   = menu.choixTheme();
+		coulRest  = alTheme.get(0).ecrire('r');
+		styloRest = alTheme.get(0).ecrire('0');
+		coulVari  = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
+		coulFonc  = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
 
 		algo = new Algo(this, sLigneAlgo, sLigneVar);
 		alVariables  = algo.recupVar();

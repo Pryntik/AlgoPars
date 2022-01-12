@@ -52,7 +52,7 @@ public class Couleur
 
 	public String getNomColore()
 	{
-		return ecrire(getStylo()) + getNom() + ecrire('0');
+		return ecrire(getStylo()) + getNom() + ecrire('r');
 	}
 
 	public String ecrire(char stylo)
@@ -65,6 +65,7 @@ public class Couleur
 			case 'Y' : return YELLOW;
 			case 'P' : return PURPLE;
 			case 'C' : return CYAN;
+			case '0' : return WHITE;
 			default  : return RESET;
 		}
 	}
