@@ -1,8 +1,0 @@
-{
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\iut\\TP\\Info2\\2UE3\\M3302_Projet3\\AlgoPars\\lib\\jdom-2.0.6.jar",
-        "c:\\iut\\TP\\Info2\\2UE3\\M3302_Projet3\\AlgoPars\\lib\\jna-5.10.0.jar",
-        "c:\\iut\\TP\\Info2\\2UE3\\M3302_Projet3\\AlgoPars\\lib\\jna-platform-5.10.0.jar"
-    ]
-}
