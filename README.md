@@ -4,8 +4,7 @@ Ce logiciel permettra de visualiser le déroulement d'un d’un algortihme afin 
 
 **Installation**
 Pour utiliser le logiciel, veuillez extraire le contenu de l'archive **AlgoPars.zip**
-
-Les différents répertoire de AlgoPars :
+Une fois extrait vous trouverez différents répertoire :
 
 \AlgoPars    			<= Répertoire racine
 	\lib				<= Fichier.jar necessaire au path
@@ -18,11 +17,18 @@ Les différents répertoire de AlgoPars :
 
 # Windows
 **Lancement**
+Si vous êtes sur Windows, pour lancer l'application, il vous suffit de double-clic sur le fichier **runWindows.bat**
+Voici son répertoire : ./AlgoPars/Windows/runWindows.bat
 
 **Utilisation**
 
 # Linux et MacOS
 **Lancement**
+Si vous êtes sur Linux ou MacOS, il faudra autorisé l'éxecution du fichier **runLinux.sh**
+Voici son répertoire : ./AlgoPars/Windows/runLinux.sh
+Faites un clic droit sur le fichier runLinuxMac et aller dans propriétés puis ensuite dans le menu permissions 
+et enfin cocher le bouton "Autoriser l'éxécution du fichier comme un programme".
+Maintenant lancer un terminal
 
 **Utilisation**
 
