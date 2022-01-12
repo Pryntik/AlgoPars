@@ -3,16 +3,18 @@ Utiliser par les professeur et destiner pour les élèves AlgoPars est un outil 
 Ce logiciel permettra de visualiser le déroulement d'un d’un algortihme afin d’expliquer les différentes notions aux élèves de première années de DUT informatique.
 
 **Installation**
+Pour utiliser le logiciel, veuillez extraire le contenu de l'archive
+# AlgoPars.zip
 Les différents répertoire de AlgoPars :
 
-\AlgoPars    		<= répertoire racine
-	\lib			<= fichier.jar necessaire au path
-	\LinuxMac		<= Application version Linux et MacOS
-	\Windows		<= Application version Windows
-		\src     	<= 
-		\bin     	<= 
-			\ihm    <= 
-			\metier <= 
+\AlgoPars    			<= Répertoire racine
+	\lib				<= Fichier.jar necessaire au path
+	\LinuxMac			<= Application version Linux et MacOS => Même contenu dans \Windows
+	\Windows			<= Application version Windows        => Même contenu dans \LinuxMac
+		\src     		<= Répertoire du code Java
+			\bin     	<= Fichier.class lors de la compilation Java
+				\ihm    <= Fichier.java necessaire à l'affichage
+				\metier <= Fichier.java necessaire au fonctionnement
 
 # Windows
 **Lancement**
