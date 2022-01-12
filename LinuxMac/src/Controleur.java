@@ -29,6 +29,7 @@ public class Controleur
 	public  String styloRest;
 	public  String coulVari;
 	public  String coulFonc;
+	public  String coulCond;
 
 	public  ArrayList<Couleur>  listCouleur;
 	public  ArrayList<Variable> alVariables;
@@ -59,6 +60,7 @@ public class Controleur
 		styloRest = alTheme.get(0).ecrire('0');
 		coulVari  = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
 		coulFonc  = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
+		coulCond  = alTheme.get(2).ecrire(alTheme.get(2).getStylo());
 
 		algo = new Algo(this, sLigneAlgo, sLigneVar);
 		alVariables  = algo.recupVar();

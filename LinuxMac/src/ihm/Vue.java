@@ -28,7 +28,7 @@ public class Vue
 	{
 		// *** DESSIN DU FICHIER *** //
 		baseTableauTete();
-		selectVar(sCoul, 0);
+		selectVar(sCoul);
 		baseTableauFin();
 	}
 	
@@ -56,9 +56,10 @@ public class Vue
 		saut(1);
 	}
 
-	public void selectVar(String sCoul, int iSelect)
+	public void selectVar(String sCoul)
 	{
 		String  sLigne    = "";
+		int     iSpace    =  0;
 		ArrayList<String> sStock       = new ArrayList<String>();
 		ArrayList<String> alVari       = new ArrayList<String>();
 
@@ -69,37 +70,36 @@ public class Vue
 			if(sLigne.contains("écrire"))
 			{
 				sLigne = sLigne.replaceAll("écrire", ctrl.coulFonc + "écrire" + ctrl.styloRest);
+				iSpace = 10;
 			}
 			if(sLigne.contains("lire"))
 			{
 				sLigne = sLigne.replaceAll("lire", ctrl.coulFonc + "lire" + ctrl.styloRest);
+				iSpace = 10;
 			}
+			if(sLigne.contains("si"))
+				sLigne = sLigne.replaceAll("lire", ctrl.coulCond + "si" + ctrl.styloRest);
 
 			for(int j = 0; j < ctrl.alVariables.size(); j++)
 			{
 				alVari.add(ctrl.alVariables.get(j).getNom());
 
-				if(sLigne.contains(" " + alVari.get(j)))
+				if(sLigne.contains(alVari.get(j) + " ") || sLigne.contains(alVari.get(j) + ","))
 				{
 					if(i == y)
 					{
-						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), sCoul),
+						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), sCoul),
 										    1, iNbColonnes-6-sLigne.length(),true) + "\n");
 					}
 					else
-						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
+						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), ""),
 										     1, iNbColonnes-6-sLigne.length(),true) + "\n");
 				}
-				if(sLigne.contains("écrire"))
-					sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
-									     1, iNbColonnes+4-sLigne.length(),true) + "\n");
-				if(sLigne.contains("lire"))
-					sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne, alVari.get(j), ""),
-									    1, iNbColonnes+4-sLigne.length(),true) + "\n");
 			}
 
-			if(!sLigne.contains(" " + alVari.get(i)))
-				sStock.add(stockCase(String.format("%3d ",i) + sLigne, 1, iNbColonnes-6-sLigne.length(),true) + "\n");
+			if(!sLigne.contains(alVari.get(i)))
+				sStock.add(stockCase(String.format("%3d ",i) + sLigne + space(iSpace),
+				                     1, iNbColonnes-6-sLigne.length(),true) + "\n");
 			
 			if(i == y)
 				System.out.print(sCoul + sStock.get(0));
@@ -108,6 +108,7 @@ public class Vue
 
 			System.out.print(ctrl.coulRest);
 			sStock.clear();
+			iSpace = 0;
 		}
 	}
 
@@ -115,7 +116,6 @@ public class Vue
 	{
 		String   sRet  = "";
 		String[] parts = sLigne.split(sVari);
-		String[] parts2;
 		
 		if(sLigne.contains(sVari + ","))
 		{
@@ -205,6 +205,15 @@ public class Vue
 	{
 		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
+	}
+
+	public static String space(int iNbEspaces)
+	{
+		String sRet = "";
+		for(int i=0; i<iNbEspaces; i++)
+			sRet += " ";
+		
+		return sRet;
 	}
 
 	public void caseInstruction(String sLigne)
