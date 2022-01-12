@@ -128,7 +128,7 @@ public class Vue
 					sRet += sCoul + ctrl.coulVari + parts[i] + ctrl.styloRest + ",";
 				}
 			}
-			return sRet;
+			return null;
 		}
 		else
 		{
