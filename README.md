@@ -7,14 +7,14 @@ Pour utiliser le logiciel, veuillez extraire le contenu de l'archive **AlgoPars.
 
 Les différents répertoire de AlgoPars :
 
-\AlgoPars    			<= Répertoire racine
-	\lib				<= Fichier.jar necessaire au path
-	\LinuxMac			<= Application version Linux et MacOS => Même contenu dans \Windows
-	\Windows			<= Application version Windows        => Même contenu dans \LinuxMac
-		\src     		<= Répertoire du code Java
-			\bin     	<= Fichier.class lors de la compilation Java
-				\ihm    <= Fichier.java necessaire à l'affichage
-				\metier <= Fichier.java necessaire au fonctionnement
+\AlgoPars    			<= Répertoire racine \n
+	\lib				<= Fichier.jar necessaire au path \n
+	\LinuxMac			<= Application version Linux et MacOS => Même contenu dans \Windows \n
+	\Windows			<= Application version Windows        => Même contenu dans \LinuxMac \n
+		\src     		<= Répertoire du code Java \n
+			\bin     	<= Fichier.class lors de la compilation Java \n
+				\ihm    <= Fichier.java necessaire à l'affichage \n
+				\metier <= Fichier.java necessaire au fonctionnement \n
 
 # Windows
 **Lancement**
