@@ -1,3 +1,6 @@
+# Settings Visual Studio Code
+*.json
+
 # Compiled class file
 *.class
 
