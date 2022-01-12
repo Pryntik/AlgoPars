@@ -13,9 +13,12 @@ public class Vue
 	private final static int  iEspacesParTab =  3;
 	private Controleur        ctrl;
 	private int               y;
+	private ArrayList<String> alCopie = new ArrayList<>();
 	private ArrayList<String> alLignes;
 	private String            sTabs;
 	private String            choix = "";
+	private int               taille;
+	private boolean           f     = true;
 
 	public Vue(Controleur ctrl, ArrayList<String> alLignes)
 	{
@@ -42,6 +45,13 @@ public class Vue
 		espace(iNbColonnes-11);
 		dessinerTrema(11);
 		saut(1);
+
+		//  TABLEAU RECAP DES VARIABLES ET CONSTANTES ENTETE  //
+        if(!f){
+            for(int i = 0; i < taille; i++)
+                System.out.println(ctrl.algo.alVariables.get(i));
+        }
+
 		dessinerLigne(iNbColonnes + 80);
 		saut(1);
 		dessinerCase("CODE", 2, 3,true);
@@ -60,9 +70,15 @@ public class Vue
 	{
 		String  sLigne    = "";
 		int     iSpace    =  0;
-		ArrayList<String> sStock       = new ArrayList<String>();
-		ArrayList<String> alVari       = new ArrayList<String>();
+		ArrayList<String> sStock  = new ArrayList<String>();
+		ArrayList<String> alVari  = new ArrayList<String>();
+		ArrayList<String> alDonnee = new ArrayList<String>();
 
+		for(int i = 0; i < alLignes.size(); i++)
+		{
+			alDonnee.add(donnee(sLigne, i));
+			//System.out.print(alDonnee.get(i));
+		}
 		for(int i = 0; i < alLignes.size(); i++)
 		{
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
@@ -84,27 +100,47 @@ public class Vue
 					if(i == y)
 					{
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), sCoul),
-										    1, iNbColonnes-6-sLigne.length(),true) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
 					}
 					else
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), ""),
-										     1, iNbColonnes-6-sLigne.length(),true) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
 				}
 			}
 
 			if(!sLigne.contains(alVari.get(i)))
 				sStock.add(stockCase(String.format("%3d ",i) + sLigne + space(iSpace),
-				                     1, iNbColonnes-6-sLigne.length(),true) + "\n");
+				                     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
 			
 			if(i == y)
+			{
 				System.out.print(sCoul + sStock.get(0));
+			}
 			else
+			{
 				System.out.print(sStock.get(0));
+			}
 
 			System.out.print(ctrl.coulRest);
 			sStock.clear();
 			iSpace = 0;
 		}
+	}
+
+	// *** FORCE L'AFFICHAGE DES VARIABLES UNE SEULE FOIS *** //
+	public String donnee(String sLigne, int num)
+	{
+		String sDonnee = "";
+		alCopie.add(num + (num < 10 ? " " : "") + sLigne);
+		if(f)
+			taille = ctrl.algo.getVariables().size();
+		if(num < taille)
+		{
+			sDonnee +=  stockCase(" " + ctrl.algo.alVariables.get(num).getNom(),    1, iNbColonnes/2-3-ctrl.algo.alVariables.get(num).getNom().length(), false);
+			sDonnee +=  stockCase(" " + ctrl.algo.alVariables.get(num).getValeur(), 1, iNbColonnes/2-4-ctrl.algo.alVariables.get(num).getValeur().length(), false);
+			num++;
+		}
+		return sDonnee;
 	}
 
 	public String coloreThis(String sLigne, String sVari, String sCoul)
@@ -165,6 +201,7 @@ public class Vue
 	public void baseTableauFin()
 	{
 		// *** DESSIN DU PIED DU TABLEAU *** //
+		f = false;
 		dessinerTrema(iNbColonnes);
 		espace(1);
 		dessinerTrema(79);
@@ -188,25 +225,13 @@ public class Vue
 
 	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
 	{
-		String sPrintTexte;
-
-		if(bLeftBar)
-			sPrintTexte = String.format("|%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		else
-			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-
-		System.out.print(sPrintTexte);
+		System.out.print((bLeftBar ? "|" : "") + String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,""));
 	}
 
 	public static String stockCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
 	{
 		String sPrintTexte;
-
-		if(bLeftBar)
-			sPrintTexte = String.format("|%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-		else
-			sPrintTexte = String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
-
+		sPrintTexte = (bLeftBar ? "|" : "") + String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,"");
 		return sPrintTexte;
 	}
 
@@ -299,8 +324,22 @@ public class Vue
 		baseConsole();
 	}
 
+	public ArrayList<String> getAlCopie()
+	{
+		return alCopie;
+	}
+
 	public int getCompteur()
 	{
 		return this.y;
+	}
+
+	public ArrayList<String> getAlLignes()
+	{
+		return this.alLignes;
+	}
+	public void setCompteur(int y)
+	{
+		this.y = y;
 	}
 }

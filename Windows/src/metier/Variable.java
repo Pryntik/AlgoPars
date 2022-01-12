@@ -44,10 +44,10 @@ public class Variable
     }
 
 	public String toString(){
-		return "Nom: "        + String.format("%-15s",getNomColore())
-		+      " Type: "      + String.format("%-10s",sType) 
-		+      " Constante: " + String.format("%-10s",bConstante)
-		+      " Valeur: "    + sValeur;
+		return "Nom: "        + String.format("%-20s",getNomColore())
+		+      " Type: "      + String.format("%-20s",sType) 
+		+      " Constante: " + String.format("%-20s",bConstante)
+		+      " Valeur: "    + String.format("%-20s",sValeur);
 	}
 
 	public void setValeur(String sValeur){
