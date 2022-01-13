@@ -45,14 +45,6 @@ public class Vue
 		espace(iNbColonnes-11);
 		dessinerTrema(11);
 		saut(1);
-
-		//  TABLEAU RECAP DES VARIABLES ET CONSTANTES ENTETE  //
-        if(!f)
-		{
-            for(int i = 0; i < taille; i++)
-                System.out.println(ctrl.algo.alVariables.get(i));
-        }
-
 		dessinerLigne(iNbColonnes + 80);
 		saut(1);
 		dessinerCase("CODE", 2, 3,true);
@@ -97,17 +89,17 @@ public class Vue
 					if(i == y)
 					{
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), sCoul),
-										     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
 					}
 					else
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), ""),
-										     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
 				}
 			}
 
 			if(!sLigne.contains(alVari.get(i)))
 				sStock.add(stockCase(String.format("%3d ",i) + sLigne + space(iSpace),
-				                     1, iNbColonnes-6-sLigne.length(),true) + alDonnee.get(i) + "\n");
+				                     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
 			
 			if(i == y)
 			{
@@ -282,35 +274,44 @@ public class Vue
 
 	public void defilementPAP()
 	{
-		String sCoul = ctrl.listCouleur.get(0).surligner('R');
-		sTabs = "";
-        for(int i = 0; i<iEspacesParTab; i++)
-            sTabs += " ";
-
-        
-		baseTableau(sCoul);
-		while(this.y < this.alLignes.size())
+		try
 		{
-			Scanner sc = new Scanner(System.in);
-			this.choix = sc.nextLine();
-			ctrl.clearConsole();
-			if(choix.equals("B") && this.y > 0)
-				this.y--;
-			else if(choix.isEmpty())
-				this.y++;
-
+			int    ichoix = 0;
+			String sCoul = ctrl.listCouleur.get(0).surligner('R');
+			sTabs = "";
+			for(int i = 0; i<iEspacesParTab; i++)
+				sTabs += " ";
+	
 			baseTableau(sCoul);
-			if(this.alLignes.get(y).contains("lire"))
+			while(this.y < this.alLignes.size())
 			{
-				ctrl.algo.executeInstruction(this.alLignes.get(y));
-				baseConsole();
-			}
-			else
-			{
-				ctrl.algo.executeInstruction(this.alLignes.get(y));
-				baseConsole();
+				Scanner sc = new Scanner(System.in);
+				this.choix = sc.nextLine();
+				ctrl.clearConsole();
+				if(choix.equals("B") && this.y > 0)
+					this.y--;
+				else if(choix.isEmpty())
+					this.y++;
+				else
+				{
+					ichoix = Integer.parseInt(choix);
+					y = ichoix;
+				}
+
+				baseTableau(sCoul);
+				if(this.alLignes.get(y).contains("lire"))
+				{
+					ctrl.algo.executeInstruction(this.alLignes.get(y));
+					baseConsole();
+				}
+				else
+				{
+					ctrl.algo.executeInstruction(this.alLignes.get(y));
+					baseConsole();
+				}
 			}
 		}
+		catch (Exception e) { System.out.println("Ligne non trouvé"); }
 	}
 
 	public void defilementAuto()
