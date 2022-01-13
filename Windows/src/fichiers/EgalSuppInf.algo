@@ -1,0 +1,32 @@
+ALGORITHME EgalSuppInf
+constante:
+consChar : caractère
+consEnt : entier
+variables:
+  choix : entier
+  val, cpt, truc : entier
+DEBUT
+  écrire ( "valeur initiale :")
+  lire ( val )
+  cpt <-- 0
+
+  écrire ( "action (Q/I/D):")
+  lire ( choix )
+  tq val <= 3 faire
+
+      si choix >= 2 alors
+          val <-- val + 1
+      sinon
+          écrire( "Passage dans le Sinon" )
+      fsi
+
+      cpt <-- cpt + 1
+
+      écrire ( "action (Q/I/D):")
+      lire ( choix )
+
+  ftq
+
+  écrire ( val )
+  écrire ( cpt )
+FIN

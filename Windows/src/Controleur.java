@@ -202,7 +202,7 @@ public class Controleur
 			if (!file.isDirectory())
 				if (file.getName().contains(".algo"))
 					alFichiers.add(file.getName());
-				
+		
 		Collections.sort(alFichiers);
 		return alFichiers;
 	}

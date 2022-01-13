@@ -50,11 +50,9 @@ public class Couleur
 	public char   getStylo() { return this.stylo; }
 	public char   getGras()  { return this.gras;  }
 
-	public String getNomColore()
-	{
-		return ecrire(getStylo()) + getNom() + ecrire('r');
-	}
+	public String getNomColore(){ return ecrire(getStylo()) + getNom() + ecrire('r'); }
 
+	// *** PERMET DE CHOISIR LA COULEUR DU STYLO *** //
 	public String ecrire(char stylo)
 	{
 		switch(stylo)
@@ -70,6 +68,7 @@ public class Couleur
 		}
 	}
 
+	// *** PERMET DE CHOISIR LA COULEUR DU FEUTRE *** //
 	public String surligner(char feutre)
 	{
 		switch(feutre)
@@ -84,6 +83,7 @@ public class Couleur
 		}
 	}
 
+	// *** PERMET DE CHOISIR LE GRAS *** //
 	public String front(char gras)
 	{
 		if(gras == '0')

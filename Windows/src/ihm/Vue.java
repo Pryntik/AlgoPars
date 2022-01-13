@@ -11,6 +11,7 @@ public class Vue
 {
 	private final static int  iNbColonnes    = 80;
 	private final static int  iEspacesParTab =  3;
+
 	private Controleur        ctrl;
 	private int               y;
 	private ArrayList<String> alCopie = new ArrayList<>();
@@ -27,18 +28,17 @@ public class Vue
         this.y = 0;
 	}
 
+	// *** DESSINE LE FICHIER *** //
 	public void baseTableau(String sCoul)
 	{
-		// *** DESSIN DU FICHIER *** //
 		baseTableauTete();
-		selectVar(sCoul);
+		corpsTableau(sCoul);
 		baseTableauFin();
 	}
 	
-
+	// *** DESSINE L'EN TETE DU TABLEAU *** //
 	public void baseTableauTete()
 	{
-		// *** DESSIN DE L'EN TETE DU TABLEAU *** //
 		System.out.print(ctrl.sCoulRest);
 		saut(3);
 		dessinerTrema(11);
@@ -59,13 +59,16 @@ public class Vue
 		saut(1);
 	}
 
-	public void selectVar(String sCoul)
+	// *** AFFICHE LE CORPS DU TABLEAU *** //
+	public void corpsTableau(String sCoul)
 	{
 		String  sLigne    = "";
 		int     iSpace    =  0;
-		ArrayList<String> sStock  = new ArrayList<String>();
-		ArrayList<String> alVari  = new ArrayList<String>();
+		ArrayList<String> sStock   = new ArrayList<String>();
+		ArrayList<String> alVari   = new ArrayList<String>();
 		ArrayList<String> alDonnee = new ArrayList<String>();
+
+		// AFFICHE LES DONNEES ET LEUR VALEUR //
 
 		for(int i = 0; i < alLignes.size(); i++)
 		{
@@ -116,15 +119,13 @@ public class Vue
 		}
 	}
 
-	// *** FORCE L'AFFICHAGE DES VARIABLES UNE SEULE FOIS *** //
+	// *** RECUPERE LES DONNEES ET LES VALEURS EN FONCTION DU .VAR *** //
 	public String getDonnee(String sLigne, int num)
 	{
-		// MOI //
 		Variable varTracer = null;
         int tailleVar;
         String sPremiersChars;
         String sDerniersChars;
-		// MOI //
 
 		String sDonnee = "";
 		alCopie.add(num + (num < 10 ? " " : "") + sLigne);
@@ -149,6 +150,7 @@ public class Vue
 		return sDonnee;
 	}
 
+	// *** COLORE LES VARIABLES DE LA LIGNE DONNE *** //
 	public String coloreThis(String sLigne, String sVari, String sCoul)
 	{
 		String   sRet  = "";
@@ -184,6 +186,7 @@ public class Vue
 		}
 	}
 
+	// *** COLORIE LES CONDITIONS ET FONCTIONS EN FONCTION DE LA LIGNE DONNEE *** //
 	public String coloreFoncCond(String sLigne)
 	{
 		if(sLigne.contains("si "))
@@ -204,9 +207,9 @@ public class Vue
 		return sLigne;
 	}
 
+	// *** DESSINE LE PIED DU TABLEAU *** //
 	public void baseTableauFin()
 	{
-		// *** DESSIN DU PIED DU TABLEAU *** //
 		f = false;
 		dessinerTrema(iNbColonnes);
 		espace(1);
@@ -214,14 +217,14 @@ public class Vue
 		saut(1);
 	}
 
-	// Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné //
+	// *** Permet de dessiner une ligne avec des '-' avec un nombre de colonnes donné *** //
 	public static void dessinerLigne(int inbColonnes)
 	{
 		for(int i=0; i<inbColonnes; i++)
 			System.out.print("-");
 	}
 
-	// Permet de dessiner une ligne avec des '¨' avec un nombre de points donné //
+	// *** Permet de dessiner une ligne avec des '¨' avec un nombre de points donné *** //
 	public static void dessinerTrema(int inbPoints)
 	{
 		for(int i=0; i<inbPoints; i++)
@@ -229,11 +232,13 @@ public class Vue
 
 	}
 
+	// *** PERMET DE DESSINNER UNE CASE *** //
 	public static void dessinerCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
 	{
 		System.out.print((bLeftBar ? "|" : "") + String.format("%"+(iNbColonnesPrefixe+sTexte.length())+"s%"+iNbColonnesSuffixe+"s|",sTexte,""));
 	}
 
+	// *** PERMET DE STOCKER LES CASES (POUR LA COULEUR) *** //
 	public static String stockCase(String sTexte, int iNbColonnesPrefixe, int iNbColonnesSuffixe, boolean bLeftBar)
 	{
 		String sPrintTexte;
@@ -241,18 +246,21 @@ public class Vue
 		return sPrintTexte;
 	}
 
+	// *** PERMET DE FAIRE LE NOMBRE DE SAUT DE LIGNE DONNEE *** //
 	public static void saut(int iNbSauts)
 	{
 		for(int i=0; i<iNbSauts; i++)
 			System.out.print("\n");
 	}
 
+	// *** PERMET DE FAIRE LE NOMBRE D'ESPACES DONNEE *** //
 	public static void espace(int iNbEspaces)
 	{
 		for(int i=0; i<iNbEspaces; i++)
 			System.out.print(" ");
 	}
 
+	// *** PERMET DE RETOURNER LE NOMBRE D'ESPACE DONNEE(POUR LES COULEURS) *** //
 	public static String space(int iNbEspaces)
 	{
 		String sRet = "";
@@ -262,12 +270,14 @@ public class Vue
 		return sRet;
 	}
 
+	// *** PERMET DE DESSINNER LA CASE DE L'INSTRUCTION *** //
 	public void caseInstruction(String sLigne)
 	{
         dessinerCase(sLigne,0,79-sLigne.length(),true);
         saut(1);
 	}
 
+	// *** DESSINE LA BASE DE LA CONSOLE *** //
 	public void baseConsole()
 	{
 		dessinerCase("CONSOLE",1,1,true);
@@ -289,6 +299,7 @@ public class Vue
 		saut(1);
 	}
 
+	// *** FAIS DEFILER LE CODE POUR LE MODE PAS A PAS *** //
 	public void defilementPAP()
 	{
 		try
@@ -331,6 +342,7 @@ public class Vue
 		catch (Exception e) { System.out.println("Ligne non trouvé"); }
 	}
 
+	// *** FAIS DEFILER LE CODE POUR LE MODE AUTO *** //
 	public void defilementAuto()
 	{
 		String sCoul = ctrl.alCouleur.get(0).surligner('0');
@@ -339,22 +351,8 @@ public class Vue
 		baseConsole();
 	}
 
-	public ArrayList<String> getAlCopie()
-	{
-		return alCopie;
-	}
-
-	public int getCompteur()
-	{
-		return this.y;
-	}
-
-	public ArrayList<String> getAlLignes()
-	{
-		return this.alLignes;
-	}
-	public void setCompteur(int y)
-	{
-		this.y = y;
-	}
+	public ArrayList<String> getAlCopie() { return alCopie; }
+	public ArrayList<String> getAlLignes(){ return this.alLignes; }
+	public int getCompteur()              { return this.y; }
+	public void setCompteur(int y)        { this.y = y; }
 }

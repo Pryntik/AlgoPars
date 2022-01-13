@@ -24,6 +24,7 @@ public class Menu
         this.ctrl = ctrl;
     }
 
+    // *** RECUPERE LES 3 TYPES DE FICHIERS *** //
     public ArrayList<String> recupFichier()
     {
         String   sAlgo = choixFichier();
@@ -40,6 +41,7 @@ public class Menu
         return sAllFile;
     }
 
+    // *** PERMET DE CHOISIR LE MODE (AUTO OU PAS A PAS) *** //
     public char choixMode()
     {
         boolean bAuto = true;
@@ -87,7 +89,6 @@ public class Menu
     }
 
     // *** SELECTION DU THEME DE COULEUR *** //
-
     public ArrayList<Couleur> choixTheme()
     {
         int    choix;
@@ -95,6 +96,7 @@ public class Menu
         ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
+
         ctrl.alCouleur.get(0).start();
 
         for (int i = 0; i <= 2; i++)
@@ -145,7 +147,6 @@ public class Menu
     }
 
     // *** SELECTION DU FICHIER *** //
-
     public String choixFichier()
     {
         String sRes;

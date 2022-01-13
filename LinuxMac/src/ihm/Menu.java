@@ -24,6 +24,7 @@ public class Menu
         this.ctrl = ctrl;
     }
 
+    // *** RECUPERE LES 3 TYPES DE FICHIERS *** //
     public ArrayList<String> recupFichier()
     {
         String   sAlgo = choixFichier();
@@ -40,6 +41,7 @@ public class Menu
         return sAllFile;
     }
 
+    // *** PERMET DE CHOISIR LE MODE (AUTO OU PAS A PAS) *** //
     public char choixMode()
     {
         boolean bAuto = true;
@@ -87,7 +89,6 @@ public class Menu
     }
 
     // *** SELECTION DU THEME DE COULEUR *** //
-
     public ArrayList<Couleur> choixTheme()
     {
         int    choix;
@@ -144,7 +145,6 @@ public class Menu
     }
 
     // *** SELECTION DU FICHIER *** //
-
     public String choixFichier()
     {
         String sRes;
