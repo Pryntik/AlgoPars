@@ -39,7 +39,7 @@ public class Vue
 	public void baseTableauTete()
 	{
 		// *** DESSIN DE L'EN TETE DU TABLEAU *** //
-		System.out.print(ctrl.coulRest);
+		System.out.print(ctrl.sCoulRest);
 		saut(3);
 		dessinerTrema(11);
 		espace(iNbColonnes-11);
@@ -89,17 +89,17 @@ public class Vue
 					if(i == y)
 					{
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), sCoul),
-										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.sCoulRest + alDonnee.get(i) + "\n");
 					}
 					else
 						sStock.add(stockCase(String.format("%3d",i) + coloreThis(sLigne + space(iSpace), alVari.get(j), ""),
-										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
+										     1, iNbColonnes-6-sLigne.length(),true) + ctrl.sCoulRest + alDonnee.get(i) + "\n");
 				}
 			}
 
 			if(!sLigne.contains(alVari.get(i)))
 				sStock.add(stockCase(String.format("%3d ",i) + sLigne + space(iSpace),
-				                     1, iNbColonnes-6-sLigne.length(),true) + ctrl.coulRest + alDonnee.get(i) + "\n");
+				                     1, iNbColonnes-6-sLigne.length(),true) + ctrl.sCoulRest + alDonnee.get(i) + "\n");
 			
 			if(i == y)
 			{
@@ -110,7 +110,7 @@ public class Vue
 				System.out.print(sStock.get(0));
 			}
 
-			System.out.print(ctrl.coulRest);
+			System.out.print(ctrl.sCoulRest);
 			sStock.clear();
 			iSpace = 0;
 		}
@@ -162,12 +162,12 @@ public class Vue
 				if(i == parts.length - 1)
 				{
 					parts = parts[i].split(":");
-					sRet += sCoul + ctrl.coulVari + parts[0] + ctrl.styloRest + ":" + parts[1];
+					sRet += sCoul + ctrl.cCoulVari + parts[0] + ctrl.sStyloRest + ":" + parts[1];
 					return " " + sRet;
 				}
 				else
 				{
-					sRet += sCoul + ctrl.coulVari + parts[i] + ctrl.styloRest + ",";
+					sRet += sCoul + ctrl.cCoulVari + parts[i] + ctrl.sStyloRest + ",";
 				}
 			}
 			return null;
@@ -178,7 +178,7 @@ public class Vue
 			{
 				sRet += sCoul + parts[i];
 				if(i != parts.length - 1)
-					sRet +=  ctrl.coulVari + sVari + ctrl.styloRest;
+					sRet +=  ctrl.cCoulVari + sVari + ctrl.sStyloRest;
 			}
 			return " " + sRet;
 		}
@@ -187,19 +187,19 @@ public class Vue
 	public String coloreFoncCond(String sLigne)
 	{
 		if(sLigne.contains("si "))
-			sLigne = sLigne.replaceAll("si",     ctrl.coulCond + "si"     + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("si",     ctrl.cCoulCond + "si"     + ctrl.sStyloRest);
 		if(sLigne.contains("fsi"))
-			sLigne = sLigne.replaceAll("fsi",    ctrl.coulCond + "fsi"    + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("fsi",    ctrl.cCoulCond + "fsi"    + ctrl.sStyloRest);
 		if(sLigne.contains("sinon"))
-			sLigne = sLigne.replaceAll("sinon",  ctrl.coulCond + "sinon"  + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("sinon",  ctrl.cCoulCond + "sinon"  + ctrl.sStyloRest);
 		if(sLigne.contains("tq "))
-			sLigne = sLigne.replaceAll("tq",     ctrl.coulCond + "tq"     + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("tq",     ctrl.cCoulCond + "tq"     + ctrl.sStyloRest);
 		if(sLigne.contains("ftq"))
-			sLigne = sLigne.replaceAll("ftq",    ctrl.coulCond + "ftq"    + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("ftq",    ctrl.cCoulCond + "ftq"    + ctrl.sStyloRest);
 		if(sLigne.contains("écrire"))
-			sLigne = sLigne.replaceAll("écrire", ctrl.coulFonc + "écrire" + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("écrire", ctrl.cCoulFonc + "écrire" + ctrl.sStyloRest);
 		if(sLigne.contains("lire"))
-			sLigne = sLigne.replaceAll("lire",   ctrl.coulFonc + "lire"   + ctrl.styloRest);
+			sLigne = sLigne.replaceAll("lire",   ctrl.cCoulFonc + "lire"   + ctrl.sStyloRest);
 
 		return sLigne;
 	}
@@ -294,7 +294,7 @@ public class Vue
 		/*try
 		{*/
 			int    ichoix = 0;
-			String sCoul = ctrl.listCouleur.get(0).surligner('R');
+			String sCoul = ctrl.alCouleur.get(0).surligner('R');
 			sTabs = "";
 			for(int i = 0; i<iEspacesParTab; i++)
 				sTabs += " ";
@@ -333,7 +333,7 @@ public class Vue
 
 	public void defilementAuto()
 	{
-		String sCoul = ctrl.listCouleur.get(0).surligner('0');
+		String sCoul = ctrl.alCouleur.get(0).surligner('0');
 		baseTableau(sCoul);
 		ctrl.algo.debutInterpretationAuto();
 		baseConsole();

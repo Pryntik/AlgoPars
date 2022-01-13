@@ -559,7 +559,7 @@ public class Algo
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
 			sValeurSecondOperateur  = sValeurSecondOperateur.trim();
 
-			return (Integer.parseInt(sValeurPremierOperateur.trim()) <= Integer.parseInt(sValeurSecondOperateur.trim()));
+			return !(Integer.parseInt(sValeurPremierOperateur.trim()) <= Integer.parseInt(sValeurSecondOperateur.trim()));
 
 		}
 		else if(ligne.contains("< ")){
@@ -621,7 +621,7 @@ public class Algo
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
 			sValeurSecondOperateur  = sValeurSecondOperateur.trim();
 
-			return (Integer.parseInt(sValeurPremierOperateur.trim()) < Integer.parseInt(sValeurSecondOperateur.trim()));
+			return !(Integer.parseInt(sValeurPremierOperateur.trim()) < Integer.parseInt(sValeurSecondOperateur.trim()));
 			
 		}
 		else if(ligne.contains("> ")){

@@ -25,19 +25,19 @@ public class Controleur
 	public Vue      vue;
 
 	public  char   cMode;
-	public  String coulRest;
-	public  String styloRest;
-	public  String coulVari;
-	public  String coulFonc;
-	public  String coulCond;
+	public  String sCoulRest;
+	public  String sStyloRest;
+	public  String cCoulVari;
+	public  String cCoulFonc;
+	public  String cCoulCond;
 
-	public  ArrayList<Couleur>  listCouleur;
+	public  ArrayList<Couleur>  alCouleur;
 	public  ArrayList<Variable> alVariables;
 
 	public  ArrayList<Couleur>  alTheme;
-	private ArrayList<String>   sAllFile;
-	private ArrayList<String>   sLigneAlgo;
-	private ArrayList<String>   sLigneVar;
+	private ArrayList<String>   alAllFile;
+	private ArrayList<String>   alLigneAlgo;
+	private ArrayList<String>   alLigneVar;
 
 	public static void main(String[] args)
 	{
@@ -46,28 +46,39 @@ public class Controleur
 
 	public Controleur()
 	{
-		menu     = new Menu(this);
-		cMode    = menu.choixMode();
-		sAllFile = menu.recupFichier();
 
-		sLigneAlgo  = LireFichierALGO(sAllFile.get(0));
-		sLigneVar   = LireFichierALGO(sAllFile.get(1));
-		listCouleur = LireFichierXML(sAllFile.get(2));
+		// DEMARRAGE DU PROGRAMME //
 
-		alTheme   = new ArrayList<Couleur>();
-		alTheme   = menu.choixTheme();
-		coulRest  = alTheme.get(0).ecrire('r');
-		styloRest = alTheme.get(0).ecrire('W');
-		coulVari  = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
-		coulFonc  = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
-		coulCond  = alTheme.get(2).ecrire(alTheme.get(2).getStylo());
+		menu      = new Menu(this);
+		cMode     = menu.choixMode();
+		alAllFile = menu.recupFichier();
 
-		algo = new Algo(this, sLigneAlgo, sLigneVar);
+		// RECUPERATION DES FICHIERS .algo , .var , .xml //
+
+		alLigneAlgo  = LireFichierALGO(alAllFile.get(0));
+		alLigneVar   = LireFichierALGO(alAllFile.get(1));
+		alCouleur    = LireFichierXML(alAllFile.get(2));
+
+		// CHOIX DU THEME ET OBTENTION DES COULEURS //
+
+		alTheme    = new ArrayList<Couleur>();
+		alTheme    = menu.choixTheme();
+		sCoulRest  = alTheme.get(0).ecrire('r');
+		sStyloRest = alTheme.get(0).ecrire('W');
+		cCoulVari  = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
+		cCoulFonc  = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
+		cCoulCond  = alTheme.get(2).ecrire(alTheme.get(2).getStylo());
+
+		// CREATION DE L'ALGO ET RECUPERATION DES VARIABLES ET CONSTANTES //
+
+		algo         = new Algo(this, alLigneAlgo, alLigneVar);
 		alVariables  = algo.recupVar();
 		
 		clearConsole();
+
+		// AFFICHAGE DU FICHIER EN FONCTION DU MODE CHOISI //
 		
-		vue  = new Vue(this, sLigneAlgo);
+		vue  = new Vue(this, alLigneAlgo);
 		if (cMode == 'A')
 		{
 			vue.defilementAuto();
@@ -80,109 +91,117 @@ public class Controleur
 		}
 	}
 
+	// *** PERMET DE LIRE UN FICHIER DONNE EN PARAMETRE ET DE RETOURNER UNE ARRAYLIST DE CHAQUE LIGNE DE CE FICHIER *** //
 	public ArrayList<String> LireFichierALGO(String fichier)
 	{
 		try
 		{
 			// Creation d'objet pour la lecture de fichier.algo
-			FileInputStream   fis  = new FileInputStream(fichier);							// Fichier d'entree
-			InputStreamReader isr  = new InputStreamReader(fis, StandardCharsets.UTF_8);	// File Reader
-			BufferedReader    br   = new BufferedReader(isr);								// BufferedReader
-			StringBuffer      sb   = new StringBuffer();    
-			String line;
-			ArrayList<String> sList = new ArrayList<String>();
-			int      i = 0;
+			FileInputStream   fis    = new FileInputStream(fichier);				        // Fichier d'entree
+			InputStreamReader isr    = new InputStreamReader(fis, StandardCharsets.UTF_8);	// File Reader
+			BufferedReader    br     = new BufferedReader(isr);								// BufferedReader
+			StringBuffer      sb     = new StringBuffer();    
 
-			while((line = br.readLine()) != null)
+			ArrayList<String> alList = new ArrayList<String>();
+
+			String sLine;
+			int i = 0;
+
+			while((sLine = br.readLine()) != null)
 			{
 				// Ajoute la ligne a l'arraylist
-				sList.add(line);
+				alList.add(sLine);
 				i++;
 			}
 			isr.close();
 
-			return sList;
+			return alList;
 		}
 		catch(IOException e){e.printStackTrace(); return null;}
 	}
 
-	// *** LECTURE DU FICHIER XML *** //
-
+	// *** PERMET DE LIRE UN FICHIER XML DONNE EN PARAMETRE ET DE RETOURNER UNE ARRAYLIST DE COULEUR *** //
 	public ArrayList<Couleur> LireFichierXML(String fichier)
 	{
-		String nomVari = "";
-		String nomFonc = "";
-		String nomCond = "";
-		String nomGene = "";
+		String sNomVari   = "";
+		String sNomFonc   = "";
+		String sNomCond   = "";
+		String sNomGene   = "";
 
-		char coulVari  = ' ';
-		char coulFonc  = ' ';
-		char coulCond  = ' ';
-		char coulGene  = ' ';
+		char   cCoulVari  = ' ';
+		char   cCoulFonc  = ' ';
+		char   cCoulCond  = ' ';
+		char   cCoulGene  = ' ';
 
-		char poidsVari = ' ';
-		char poidsFonc = ' ';
-		char poidsCond = ' ';
-		char poidsGene = ' ';
-		listCouleur = new ArrayList<Couleur>();
+		char   cPoidsVari = ' ';
+		char   cPoidsFonc = ' ';
+		char   cPoidsCond = ' ';
+		char   cPoidsGene = ' ';
 
+		alCouleur = new ArrayList<Couleur>();
+
+		// LECTURE DU FICHIER XML //
 		try
 		{
 			SAXBuilder sax    = new SAXBuilder();
 			Document   doc    = sax.build(new File(fichier));
 			Element    racine = doc.getRootElement();
+
 			List<Element> listConfig = racine.getChildren("theme");
+			
 			for (Element config : listConfig)
 			{
-				String        theme     = config.getAttributeValue("num");
+				String        sTheme     = config.getAttributeValue("num");
 				List<Element> listVari   = config.getChildren("variable");
-				List<Element> listFonc  = config.getChildren("constante");
-				List<Element> listCond  = config.getChildren("chiffre");
-				List<Element> listGene  = config.getChildren("generale");
+				List<Element> listFonc   = config.getChildren("constante");
+				List<Element> listCond   = config.getChildren("chiffre");
+				List<Element> listGene   = config.getChildren("generale");
 
 				for (Element vari : listVari)
 				{
-					nomVari   = vari.getAttributeValue("nom");
-					coulVari  = vari.getAttributeValue("couleur").charAt(0);
-					poidsVari = vari.getAttributeValue("poids").charAt(0);
+					sNomVari   = vari.getAttributeValue("nom");
+					cCoulVari  = vari.getAttributeValue("couleur").charAt(0);
+					cPoidsVari = vari.getAttributeValue("poids").charAt(0);
 				}
 				for (Element cons : listFonc)
 				{
-					nomFonc   = cons.getAttributeValue("nom");
-					coulFonc  = cons.getAttributeValue("couleur").charAt(0);
-					poidsFonc = cons.getAttributeValue("poids").charAt(0);
+					sNomFonc   = cons.getAttributeValue("nom");
+					cCoulFonc  = cons.getAttributeValue("couleur").charAt(0);
+					cPoidsFonc = cons.getAttributeValue("poids").charAt(0);
 				}
 				for (Element chif : listCond)
 				{
-					nomCond   = chif.getAttributeValue("nom");
-					coulCond  = chif.getAttributeValue("couleur").charAt(0);
-					poidsCond = chif.getAttributeValue("poids").charAt(0);
+					sNomCond   = chif.getAttributeValue("nom");
+					cCoulCond  = chif.getAttributeValue("couleur").charAt(0);
+					cPoidsCond = chif.getAttributeValue("poids").charAt(0);
 				}
 				for (Element gene : listGene)
 				{
-					nomGene   = gene.getAttributeValue("nom");
-					coulGene  = gene.getAttributeValue("couleur").charAt(0);
-					poidsGene = gene.getAttributeValue("poids").charAt(0);
+					sNomGene   = gene.getAttributeValue("nom");
+					cCoulGene  = gene.getAttributeValue("couleur").charAt(0);
+					cPoidsGene = gene.getAttributeValue("poids").charAt(0);
 				}
-				listCouleur.add(new Couleur(theme, nomVari, coulVari, poidsVari));
-				listCouleur.add(new Couleur(theme, nomFonc, coulFonc, poidsFonc));
-				listCouleur.add(new Couleur(theme, nomCond, coulCond, poidsCond));
+				alCouleur.add(new Couleur(sTheme, sNomVari, cCoulVari, cPoidsVari));
+				alCouleur.add(new Couleur(sTheme, sNomFonc, cCoulFonc, cPoidsFonc));
+				alCouleur.add(new Couleur(sTheme, sNomCond, cCoulCond, cPoidsCond));
 			}
-			return listCouleur;
+			return alCouleur;
 		}
 		catch(Exception e){e.printStackTrace(); return null;}
 	}
 
+	// RECUPERE LES FICHIERS .algo //
 	public ArrayList<String> recupFichiers()
 	{
-		ArrayList<String> listFichiers = new ArrayList<>();
+		ArrayList<String> alFichiers = new ArrayList<>();
 		File f = new File("../src/fichiers/");
+
 		for (File file : f.listFiles())
 			if (!file.isDirectory())
 				if (file.getName().contains(".algo"))
-					listFichiers.add(file.getName());
+					alFichiers.add(file.getName());
 				
-		return listFichiers;
+		return alFichiers;
 
 	}
 
@@ -191,16 +210,16 @@ public class Controleur
 	{
 		try
 		{
-			String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+			String sOperatingSystem = System.getProperty("os.name"); //Check the current operating system
 			  
-			if(operatingSystem.contains("Windows"))
+			if(sOperatingSystem.contains("Windows"))
 			{        
-				ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+				ProcessBuilder pb    = new ProcessBuilder("cmd", "/c", "cls");
 				Process startProcess = pb.inheritIO().start();
 				startProcess.waitFor();
 			} else
 			{
-				ProcessBuilder pb = new ProcessBuilder("clear");
+				ProcessBuilder pb    = new ProcessBuilder("clear");
 				Process startProcess = pb.inheritIO().start();
 
 				startProcess.waitFor();

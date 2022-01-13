@@ -17,9 +17,7 @@ DEBUT
       si choix = 'I' alors
           val <-- val + 1
       sinon
-          si choix = 'D' alors
-              val <-- val - 1
-          fsi
+          val <-- val - 1
       fsi
 
       nbAction <-- nbAction + 1
