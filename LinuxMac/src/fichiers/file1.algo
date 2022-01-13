@@ -12,7 +12,7 @@ DEBUT
 
   écrire ( "action (Q/I/D):")
   lire ( choix )
-  tq choix != 'Q' faire
+  tq choix /= 'Q' faire
 
       si choix = 'I' alors
           val <-- val + 1
