@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -140,7 +142,7 @@ public class Controleur
 
 		alCouleur = new ArrayList<Couleur>();
 
-		// LECTURE DU FICHIER XML //
+		// LECTURE DU FICHIER .xml //
 		try
 		{
 			SAXBuilder sax    = new SAXBuilder();
@@ -201,8 +203,8 @@ public class Controleur
 				if (file.getName().contains(".algo"))
 					alFichiers.add(file.getName());
 				
+		Collections.sort(alFichiers);
 		return alFichiers;
-
 	}
 
     // *** METHODE POUR EFFACER LA CONSOLE *** //
