@@ -47,7 +47,8 @@ public class Vue
 		saut(1);
 
 		//  TABLEAU RECAP DES VARIABLES ET CONSTANTES ENTETE  //
-        if(!f){
+        if(!f)
+		{
             for(int i = 0; i < taille; i++)
                 System.out.println(ctrl.algo.alVariables.get(i));
         }
@@ -76,12 +77,8 @@ public class Vue
 
 		for(int i = 0; i < alLignes.size(); i++)
 		{
-			alDonnee.add(donnee(sLigne, i));
-			//System.out.print(alDonnee.get(i));
-		}
-		for(int i = 0; i < alLignes.size(); i++)
-		{
 			sLigne = alLignes.get(i).replaceAll("\t", sTabs);
+			alDonnee.add(getDonnee(sLigne, i));
 
 			if(sLigne.contains("si ") || sLigne.contains("tq ") || sLigne.contains("écrire") ||
 			   sLigne.contains("fsi") || sLigne.contains("ftq") || sLigne.contains("lire")   ||
@@ -128,7 +125,7 @@ public class Vue
 	}
 
 	// *** FORCE L'AFFICHAGE DES VARIABLES UNE SEULE FOIS *** //
-	public String donnee(String sLigne, int num)
+	public String getDonnee(String sLigne, int num)
 	{
 		String sDonnee = "";
 		alCopie.add(num + (num < 10 ? " " : "") + sLigne);

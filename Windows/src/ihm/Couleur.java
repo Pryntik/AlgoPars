@@ -65,7 +65,7 @@ public class Couleur
 			case 'Y' : return YELLOW;
 			case 'P' : return PURPLE;
 			case 'C' : return CYAN;
-			case '0' : return WHITE;
+			case 'W' : return WHITE;
 			default  : return RESET;
 		}
 	}

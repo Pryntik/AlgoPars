@@ -57,7 +57,7 @@ public class Controleur
 		alTheme   = new ArrayList<Couleur>();
 		alTheme   = menu.choixTheme();
 		coulRest  = alTheme.get(0).ecrire('r');
-		styloRest = alTheme.get(0).ecrire('0');
+		styloRest = alTheme.get(0).ecrire('W');
 		coulVari  = alTheme.get(0).ecrire(alTheme.get(0).getStylo());
 		coulFonc  = alTheme.get(1).ecrire(alTheme.get(1).getStylo());
 		coulCond  = alTheme.get(2).ecrire(alTheme.get(2).getStylo());

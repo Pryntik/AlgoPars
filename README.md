@@ -28,7 +28,7 @@ Si vous êtes sur Linux ou MacOS, il faudra autorisé l'éxecution du fichier **
 Voici son répertoire : ./AlgoPars/Windows/runLinux.sh
 Faites un clic droit sur le fichier runLinuxMac et aller dans propriétés puis ensuite dans le menu permissions 
 et enfin cocher le bouton "Autoriser l'éxécution du fichier comme un programme".
-Maintenant lancer un terminal
+Maintenant il vous suffit de double-clic sur le fichier **runWindows.bat** et "éxecuter dans un terminale"
 
 **Utilisation**
 
