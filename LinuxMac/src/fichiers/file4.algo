@@ -3,7 +3,9 @@ constante:
 cons : entier
 variables:
     val : entier
+    valeurVraimentTresLongue : entier
 DEBUT
+    valeurVraimentTresLongue <-- 5
     écrire ( "valeur initiale :")
     lire ( val )
     val <-- val + 2

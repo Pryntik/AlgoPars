@@ -10,20 +10,20 @@ import java.util.regex.Pattern;
 
 public class Algo
 {
-
 	private Controleur ctrl;
-	private String sNom;
-	private boolean f = true;
-	private boolean boolTmp = true;
-	private int indexFtq = 0;
-	private int indexTq = 0;
-	private int indexFsi = 0;
-	private int indexSi = 0;
-	private int indexSinon = -1;
-	private ArrayList<String> alLignes = new ArrayList<String>();
-	public ArrayList<Variable> alVariables = new ArrayList<Variable>();
-	public ArrayList<String> alVarsTracer = new ArrayList<String>();
-	private ArrayList<String> alConsole = new ArrayList<String>();
+	private String     sNom;
+	private boolean    f = true;
+	private boolean    boolTmp = true;
+	private int        indexFtq = 0;
+	private int        indexTq = 0;
+	private int        indexFsi = 0;
+	private int        indexSi = 0;
+	private int        indexSinon = -1;
+
+	private ArrayList<String>   alLignes     = new ArrayList<String>();
+	public  ArrayList<Variable> alVariables  = new ArrayList<Variable>();
+	public  ArrayList<String>   alVarsTracer = new ArrayList<String>();
+	private ArrayList<String>   alConsole    = new ArrayList<String>();
 
 	public Algo(Controleur ctrl, ArrayList<String> alLignes, ArrayList<String> alVarsTracer)
 	{
@@ -34,6 +34,7 @@ public class Algo
 		setNom();
 	}
 
+	// *** LANCE LE DEBUT DE L'INTERPRETATION EN MODE AUTOMATIQUE *** //
 	public void debutInterpretationAuto()
 	{
 		// DEBUT DES INSTRUCTIONS //
@@ -57,6 +58,7 @@ public class Algo
 		}
 	}
 
+	// *** LANCE LE DEBUT DE L'INTERPRETATION EN MODE PAS A PAS *** //
 	public void debutInterpretationPAP()
 	{
 		String ligne = "";
@@ -77,6 +79,7 @@ public class Algo
 		}
 	}
 
+	// *** PERMET DE RECUPERER LES VARIABLES ET CONSTANTES DE L'ALGO *** //
 	public ArrayList<Variable> recupVar()
 	{
 		String   ligne = "";
@@ -143,11 +146,10 @@ public class Algo
 		return this.alVariables;
 	}
 
-	public void ajouterLigne(String ligne)
-	{
-		alLignes.add(ligne);
-	}
+	// *** AJOUTE UNE LIGNE A L'ARRAYLIST DES LIGNES DU FICHIER ALGO *** //
+	public void ajouterLigne(String ligne){ alLignes.add(ligne); }
 
+	// *** DONNE LE NOM PRESENT APRES ALGORITHME *** //
 	public void setNom()
 	{
 		String[] parts;
@@ -155,6 +157,7 @@ public class Algo
 		this.sNom = parts[1].trim();
 	}
 
+	// *** RECUPERE L'OBJET VARIABLE DONT LE NOM EST PASSE EN PARAMETRE *** //
 	public Variable getVariable(String sNomVar)
 	{
 		for(Variable var : alVariables)
@@ -167,46 +170,53 @@ public class Algo
 		return null;
 	}
 
+	// *** EXECUTE L'INSTRUCTION DE LA LIGNE *** //
 	public void executeInstruction(String sLigne)
 	{
 		String[] parts;
-		ArrayList<String> ligneFichier = ctrl.vue.getAlCopie();
+		ArrayList<String> alLigneFichier = ctrl.vue.getAlCopie(); // copie du fichier actuel
 
 		if(f)
 		{
-			for(int i = 0; i < ligneFichier.size(); i++)
+			for(int i = 0; i < alLigneFichier.size(); i++)
 			{
-				if(ligneFichier.get(i).length() > 4 && ligneFichier.get(i).replaceAll(" ", "").substring(0, 4).contains("tq"))
+				// PREND LE NUMERO DE LIGNE DU TQ //
+				if(alLigneFichier.get(i).length() > 4 && alLigneFichier.get(i).replaceAll(" ", "").substring(0, 4).contains("tq"))
 				{	
-					if(ligneFichier.get(i).replaceAll(" ", "").substring(2,4).equals("tq"))
-						indexTq = Integer.parseInt(ligneFichier.get(i).replaceAll(" ", "").substring(0,2));
+					if(alLigneFichier.get(i).replaceAll(" ", "").substring(2,4).equals("tq"))
+						indexTq = Integer.parseInt(alLigneFichier.get(i).replaceAll(" ", "").substring(0,2));
 				}
-				if(ligneFichier.get(i).contains("ftq"))
-					indexFtq = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
-				if(ligneFichier.get(i).contains("si "))
-					indexSi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
-				if(ligneFichier.get(i).contains("fsi"))
-					indexFsi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
-				if(ligneFichier.get(i).contains("sinon"))
-					indexSinon = Integer.parseInt(ligneFichier.get(i).substring(0, 2).trim());
+				// PREND LE NUMERO DE LIGNE DU FTQ //
+				if(alLigneFichier.get(i).contains("ftq"))
+					indexFtq = Integer.parseInt(alLigneFichier.get(i).trim().substring(0,2));
+				// PREND LE NUMERO DE LIGNE DU SI //
+				if(alLigneFichier.get(i).contains("si "))
+					indexSi = Integer.parseInt(alLigneFichier.get(i).trim().substring(0,2));
+				// PREND LE NUMERO DE LIGNE DU FSI //
+				if(alLigneFichier.get(i).contains("fsi"))
+					indexFsi = Integer.parseInt(alLigneFichier.get(i).trim().substring(0,2));
+				// PREND LE NUMERO DE LIGNE DU SINON //
+				if(alLigneFichier.get(i).contains("sinon"))
+					indexSinon = Integer.parseInt(alLigneFichier.get(i).substring(0, 2).trim());
 			}
-			//Collections.reverse(alIndexFsi);
 		}
 		f = false;
 
 		if(sLigne.length() >= 2 && !sLigne.contains("sinon") && !sLigne.contains("ftq"))
-		{			
+		{
 			if (sLigne.trim().substring(0, 2).equals("tq"))
 			{
 				if(sLigne.contains("/="))
 				{
+					// VERIFICATION DE LA VALIDITE DE L'INSTRUCTION DU TQ //
 					if(!evaluerBooleen(sLigne))
-						ctrl.vue.setCompteur(indexFtq-1);
+						ctrl.vue.setCompteur(indexFtq-1); // deplacement au ftq
 				}
 				else 
 				{
+					// VERIFICATION DE LA VALIDITE DE L'INSTRUCTION DU TQ //
 					if(evaluerBooleen(sLigne))
-						ctrl.vue.setCompteur(indexFtq-1);
+						ctrl.vue.setCompteur(indexFtq-1); // deplacement au ftq
 				}
 			}
 
@@ -214,20 +224,22 @@ public class Algo
 			{
 				if(sLigne.contains("/="))
 				{
+					// VERIFICATION DE LA VALIDITE DE L'INSTRUCTION DU SI //
 					boolTmp = !evaluerBooleen(sLigne);
 					if(evaluerBooleen(sLigne))
 					{
-						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
-							ctrl.vue.setCompteur(indexSinon-1);
+						if(indexSinon != -1)
+							ctrl.vue.setCompteur(indexSinon-1); // deplacement au fsi
 					}
 				}
 				else 
 				{
+					// VERIFICATION DE LA VALIDITE DE L'INSTRUCTION DU SI //
 					boolTmp = evaluerBooleen(sLigne);
 					if(!evaluerBooleen(sLigne))
 					{
-						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
-							ctrl.vue.setCompteur(indexSinon-1);
+						if(indexSinon != -1)
+							ctrl.vue.setCompteur(indexSinon-1); // deplacement au fsi
 					}
 				}
 			}
@@ -244,7 +256,7 @@ public class Algo
 
 		if(sLigne.trim().equals("ftq"))
 		{
-			String ligneTq = ligneFichier.get(indexTq);
+			String ligneTq = alLigneFichier.get(indexTq);
 
 			if(ligneTq.contains("/="))
 			{
@@ -258,16 +270,17 @@ public class Algo
 			}
 
 		}
-		// Affectation //
+		// AFFECTATION //
 		if (sLigne.contains(""))
 		if(sLigne.contains("<--"))
 		{
 			parts = sLigne.split("<--");
 			if(parts[1].contains(" + ") || parts[1].contains(" - ") || parts[1].contains(" × ") || parts[1].contains(" / "))
-				getVariable(parts[0].trim()).setValeur(evaluerExpression(parts[1]));
+				getVariable(parts[0].trim()).setValeur(evaluersExpression(parts[1]));
 			else
 				getVariable(parts[0].trim()).setValeur(parts[1].replaceAll(" ", ""));
 		}
+		// ECRIRE //
 		if(sLigne.contains("écrire"))
 		{
 			if(sLigne.contains("\""))
@@ -282,10 +295,7 @@ public class Algo
 				this.alConsole.add(getVariable(parts[0].trim()).getValeur());
 			}
 		}
-		if (sLigne.contains("//"))
-		{
-			parts = sLigne.split("//");
-		}
+		// LIRE //
 		if(sLigne.contains("lire"))
 		{
 			String sInput, ligne = "";
@@ -300,6 +310,7 @@ public class Algo
 		}
 	}
 
+	// *** PERMET DE RETOURNER UN BOOLEEN EN FONCTION DE LA LIGNE DONNEE EN PARAMETRE *** //
 	public boolean evaluerBooleen(String ligne)
 	{
 		String parts[];
@@ -316,8 +327,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split("=");
 			sDroite = parts[1];
 
@@ -345,7 +356,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0];
@@ -378,8 +389,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split(Pattern.quote("/="));
 			sDroite = parts[1];
 
@@ -407,7 +418,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0];
@@ -442,8 +453,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split(Pattern.quote(">="));
 			sDroite = parts[1];
 
@@ -471,7 +482,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0].trim();
@@ -504,8 +515,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split(Pattern.quote("<="));
 			sDroite = parts[1];
 
@@ -533,7 +544,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0];
@@ -566,8 +577,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split(Pattern.quote("<"));
 			sDroite = parts[1];
 
@@ -595,7 +606,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0];
@@ -628,8 +639,8 @@ public class Algo
 			ligne.replaceAll(" ", "");
 
 			parts = ligne.split("");
-			if     (ligne.contains("tq")){ parts = ligne.split("tq"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
-			else if(ligne.contains("si")){ parts = ligne.split("si"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2//
+			if     (ligne.contains("tq")){ parts = ligne.split("tq"); }
+			else if(ligne.contains("si")){ parts = ligne.split("si"); }
 			parts = parts[1].split(Pattern.quote(">"));
 			sDroite = parts[1];
 
@@ -657,7 +668,7 @@ public class Algo
 
 			// SECOND OPERATEUR //
 
-			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
+			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); }
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
 			sNomSecondOperateur = parts[0];
@@ -689,13 +700,14 @@ public class Algo
 		return false;
 	}
 
-
-	public String evaluerExpression(String expression){
-        expression = expression.replaceAll(" ", "");
+	// *** EVALUE UNE sEXPRESSION MATHEMATIQUE *** //
+	public String evaluersExpression(String sExpression){
+        sExpression = sExpression.replaceAll(" ", "");
         String parts[];
 
-        if(expression.contains("×")){
-            parts = expression.split(Pattern.quote("×"));
+		// * //
+        if(sExpression.contains("×")){
+            parts = sExpression.split(Pattern.quote("×"));
             for(Variable var : alVariables){
                 if(var.getNom().equals(parts[0])){
                     parts[0] = var.getValeur();
@@ -706,8 +718,9 @@ public class Algo
             }
             return String.valueOf(Integer.parseInt(parts[0]) * Integer.parseInt(parts[1]));
         }
-        else if(expression.contains("/")){
-            parts = expression.split(Pattern.quote("/"));
+		// / //
+        else if(sExpression.contains("/")){
+            parts = sExpression.split(Pattern.quote("/"));
             for(Variable var : alVariables){
                 if(var.getNom().equals(parts[0])){
                     parts[0] = var.getValeur();
@@ -718,8 +731,9 @@ public class Algo
             }
             return String.valueOf(Integer.parseInt(parts[0]) / Integer.parseInt(parts[1]));
         }
-        else if(expression.contains("-")){
-            parts = expression.split(Pattern.quote("-"));
+		// - //
+        else if(sExpression.contains("-")){
+            parts = sExpression.split(Pattern.quote("-"));
             for(Variable var : alVariables){
                 if(var.getNom().equals(parts[0])){
                     parts[0] = var.getValeur();
@@ -730,8 +744,9 @@ public class Algo
             }
             return String.valueOf(Integer.parseInt(parts[0]) - Integer.parseInt(parts[1]));
         }
-        else if(expression.contains("+")){
-            parts = expression.split(Pattern.quote("+"));
+		// + //
+        else if(sExpression.contains("+")){
+            parts = sExpression.split(Pattern.quote("+"));
             for(Variable var : alVariables){
                 if(var.getNom().equals(parts[0])){
                     parts[0] = var.getValeur();
@@ -743,7 +758,7 @@ public class Algo
             return String.valueOf(Integer.parseInt(parts[0]) + Integer.parseInt(parts[1]));
         }
         else{
-            return "Erreur Expression";
+            return "Erreur sExpression";
         }
     }
 
