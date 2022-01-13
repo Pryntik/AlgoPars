@@ -14,11 +14,13 @@ public class Algo
 	private Controleur ctrl;
 	private String sNom;
 	private boolean f = true;
+	private boolean boolTmp = true;
 	private int indexFtq = 0;
 	private int indexTq = 0;
+	private int indexFsi = 0;
+	private int indexSi = 0;
+	private int indexSinon = -1;
 	private ArrayList<String> alLignes = new ArrayList<String>();
-	private ArrayList<Integer> alIndexSi = new ArrayList<>();
-	private ArrayList<Integer> alIndexFsi = new ArrayList<>();
 	public ArrayList<Variable> alVariables = new ArrayList<Variable>();
 	public ArrayList<String> alVarsTracer = new ArrayList<String>();
 	private ArrayList<String> alConsole = new ArrayList<String>();
@@ -182,20 +184,20 @@ public class Algo
 				if(ligneFichier.get(i).contains("ftq"))
 					indexFtq = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
 				if(ligneFichier.get(i).contains("si "))
-					alIndexSi.add(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("si")).length());
+					indexSi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
 				if(ligneFichier.get(i).contains("fsi"))
-					alIndexFsi.add(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("fsi")).length());
+					indexFsi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
+				if(ligneFichier.get(i).contains("sinon"))
+					indexSinon = Integer.parseInt(ligneFichier.get(i).substring(0, 2).trim());
 			}
-			Collections.reverse(alIndexFsi);
+			//Collections.reverse(alIndexFsi);
 		}
 		f = false;
-		
 
 		if(sLigne.length() >= 2 && !sLigne.contains("sinon") && !sLigne.contains("ftq"))
 		{			
 			if (sLigne.trim().substring(0, 2).equals("tq"))
 			{
-				
 				if(sLigne.contains("/="))
 				{
 					if(!evaluerBooleen(sLigne))
@@ -208,23 +210,35 @@ public class Algo
 				}
 			}
 
-			System.out.println(alIndexSi + " | " + alIndexFsi);
-
 			if(sLigne.trim().substring(0, 2).equals("si"))
 			{
-				if (!evaluerBooleen(sLigne))
+				if(sLigne.contains("/="))
 				{
-					for(int i = 0; i < ligneFichier.size(); i++)
+					boolTmp = !evaluerBooleen(sLigne);
+					if(evaluerBooleen(sLigne))
 					{
-						for(int j = 0; j < alIndexFsi.size(); j++)
-						{
-							if(ligneFichier.get(i).contains("fsi")){
-								if(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("fsi")).length() == alIndexFsi.get(j))
-									ctrl.vue.setCompteur(Integer.parseInt(ligneFichier.get(i).substring(0, 2).trim())-1);
-							}
-						}
+						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
+							ctrl.vue.setCompteur(indexSinon-1);
 					}
 				}
+				else 
+				{
+					boolTmp = evaluerBooleen(sLigne);
+					if(!evaluerBooleen(sLigne))
+					{
+						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
+							ctrl.vue.setCompteur(indexSinon-1);
+					}
+				}
+			}
+		}
+
+		if(sLigne.trim().equals("sinon"))
+		{
+			System.out.println(boolTmp);
+			if(boolTmp)
+			{
+				ctrl.vue.setCompteur(indexFsi-1);
 			}
 		}
 
@@ -337,8 +351,8 @@ public class Algo
 			sNomSecondOperateur = parts[0];
 
 			if(sNomSecondOperateur.contains("\'") || sNomSecondOperateur.contains("\"")){
-				parts[0].replaceAll("\'", "");
-				parts[0].replaceAll("\"", "");
+				parts[0] = parts[0].replaceAll("\'", "");
+				parts[0] = parts[0].replaceAll("\"", "");
 				sNomSecondOperateur = parts[0];
 				bEstChaine = true;
 			}
@@ -402,7 +416,6 @@ public class Algo
 				parts[0].replaceAll("\'", "");
 				parts[0].replaceAll(Pattern.quote("\""), "");
 				sNomSecondOperateur = parts[0].replaceAll("\'", "");
-				//System.out.println(sNomSecondOperateur); // valide
 				bEstChaine = true;
 			}
 			else{
@@ -417,7 +430,8 @@ public class Algo
 				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
 			}
 
-			System.out.println(sValeurPremierOperateur + " | " + sValeurSecondOperateur.trim());
+			System.out.println(sValeurPremierOperateur + " | " + sValeurSecondOperateur);
+
 			return !(sValeurPremierOperateur.equals(sValeurSecondOperateur.trim()));
 
 		}
