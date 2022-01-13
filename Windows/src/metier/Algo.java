@@ -14,6 +14,12 @@ public class Algo
 	private Controleur ctrl;
 	private String sNom;
 	private boolean f = true;
+	private boolean boolTmp = true;
+	private int indexFtq = 0;
+	private int indexTq = 0;
+	private int indexFsi = 0;
+	private int indexSi = 0;
+	private int indexSinon = -1;
 	private ArrayList<String> alLignes = new ArrayList<String>();
 	public ArrayList<Variable> alVariables = new ArrayList<Variable>();
 	public ArrayList<String> alVarsTracer = new ArrayList<String>();
@@ -164,32 +170,34 @@ public class Algo
 	public void executeInstruction(String sLigne)
 	{
 		String[] parts;
-		ArrayList<Integer> alIndexSi = new ArrayList<>();
-		ArrayList<Integer> alIndexFsi = new ArrayList<>();
 		ArrayList<String> ligneFichier = ctrl.vue.getAlCopie();
-		int indexFtq = 0;
-		int indexTq = 0;
 
-		for(int i = 0; i < ligneFichier.size(); i++)
+		if(f)
 		{
-			if(ligneFichier.get(i).length() > 4 && ligneFichier.get(i).replaceAll(" ", "").substring(0, 4).contains("tq"))
-			{	
-				if(ligneFichier.get(i).replaceAll(" ", "").substring(2,4).equals("tq"))
-					indexTq = Integer.parseInt(ligneFichier.get(i).replaceAll(" ", "").substring(0,2));
+			for(int i = 0; i < ligneFichier.size(); i++)
+			{
+				if(ligneFichier.get(i).length() > 4 && ligneFichier.get(i).replaceAll(" ", "").substring(0, 4).contains("tq"))
+				{	
+					if(ligneFichier.get(i).replaceAll(" ", "").substring(2,4).equals("tq"))
+						indexTq = Integer.parseInt(ligneFichier.get(i).replaceAll(" ", "").substring(0,2));
+				}
+				if(ligneFichier.get(i).contains("ftq"))
+					indexFtq = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
+				if(ligneFichier.get(i).contains("si "))
+					indexSi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
+				if(ligneFichier.get(i).contains("fsi"))
+					indexFsi = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
+				if(ligneFichier.get(i).contains("sinon"))
+					indexSinon = Integer.parseInt(ligneFichier.get(i).substring(0, 2).trim());
 			}
-			if(ligneFichier.get(i).contains("ftq"))
-				indexFtq = Integer.parseInt(ligneFichier.get(i).trim().substring(0,2));
-			if(ligneFichier.get(i).contains("si "))
-				alIndexSi.add(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("si")).length());
-			if(ligneFichier.get(i).contains("fsi"))
-				alIndexFsi.add(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("fsi")).length());
+			//Collections.reverse(alIndexFsi);
 		}
+		f = false;
 
 		if(sLigne.length() >= 2 && !sLigne.contains("sinon") && !sLigne.contains("ftq"))
 		{			
 			if (sLigne.trim().substring(0, 2).equals("tq"))
 			{
-				
 				if(sLigne.contains("/="))
 				{
 					if(!evaluerBooleen(sLigne))
@@ -201,21 +209,36 @@ public class Algo
 						ctrl.vue.setCompteur(indexFtq-1);
 				}
 			}
+
 			if(sLigne.trim().substring(0, 2).equals("si"))
 			{
-				if (!evaluerBooleen(sLigne))
+				if(sLigne.contains("/="))
 				{
-					for(int i = 0; i < alIndexSi.size(); i++)
+					boolTmp = !evaluerBooleen(sLigne);
+					if(evaluerBooleen(sLigne))
 					{
-						for(int j = 0; j < alIndexFsi.size(); j++)
-						{
-							if(ligneFichier.get(i).contains("fsi")){
-								if(ligneFichier.get(i).substring(2, ligneFichier.get(i).indexOf("fsi")).length() == alIndexFsi.get(j))
-									ctrl.vue.setCompteur(Integer.parseInt(ligneFichier.get(i).substring(0, 2).trim())-1);
-							}
-						}
+						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
+							ctrl.vue.setCompteur(indexSinon-1);
 					}
 				}
+				else 
+				{
+					boolTmp = evaluerBooleen(sLigne);
+					if(!evaluerBooleen(sLigne))
+					{
+						if(indexSinon != -1) // initialisé à -1 pour éviter les erreurs, changé si le programme contient un "sinon"
+							ctrl.vue.setCompteur(indexSinon-1);
+					}
+				}
+			}
+		}
+
+		if(sLigne.trim().equals("sinon"))
+		{
+			System.out.println(boolTmp);
+			if(boolTmp)
+			{
+				ctrl.vue.setCompteur(indexFsi-1);
 			}
 		}
 
@@ -225,12 +248,12 @@ public class Algo
 
 			if(ligneTq.contains("/="))
 			{
-				if(!evaluerBooleen(ligneTq.substring(2)))
+				if(evaluerBooleen(ligneTq.substring(2)))
 					ctrl.vue.setCompteur(indexTq-1);
 			}
 			else 
 			{
-				if(evaluerBooleen(ligneTq.substring(2)))
+				if(!evaluerBooleen(ligneTq.substring(2)))
 					ctrl.vue.setCompteur(indexTq-1);
 			}
 
@@ -313,11 +336,11 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
-				sValeurPremierOperateur = sNomPremierOperateur;
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
+				sValeurPremierOperateur = sNomPremierOperateur.trim();
 			}
 			else{
-				sValeurPremierOperateur = getVariable(sNomPremierOperateur).getValeur();
+				sValeurPremierOperateur = getVariable(sNomPremierOperateur.trim()).getValeur();
 			}
 
 			// SECOND OPERATEUR //
@@ -328,8 +351,8 @@ public class Algo
 			sNomSecondOperateur = parts[0];
 
 			if(sNomSecondOperateur.contains("\'") || sNomSecondOperateur.contains("\"")){
-				parts[0].replaceAll("\'", "");
-				parts[0].replaceAll("\"", "");
+				parts[0] = parts[0].replaceAll("\'", "");
+				parts[0] = parts[0].replaceAll("\"", "");
 				sNomSecondOperateur = parts[0];
 				bEstChaine = true;
 			}
@@ -338,14 +361,14 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
-				sValeurSecondOperateur = sNomSecondOperateur;
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
+				sValeurSecondOperateur = sNomSecondOperateur.trim();
 			}
 			else{
-				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
+				sValeurSecondOperateur = getVariable(sNomSecondOperateur.trim()).getValeur();
 			}
 
-			return sValeurPremierOperateur.equals(sValeurSecondOperateur);
+			return sValeurPremierOperateur.equals(sValeurSecondOperateur.trim());
 
 		}
 
@@ -374,13 +397,12 @@ public class Algo
 				sNomPremierOperateur = parts[0];
 				bEstChaine = false;
 			}
-			//getVariable(sNomPremierOperateur) == null 
-			System.out.println(getVariable(sNomPremierOperateur));
-			if(getVariable(sNomPremierOperateur) == null || bEstChaine){
+			
+			if(getVariable(sNomPremierOperateur.trim()) == null || bEstChaine){
 				sValeurPremierOperateur = sNomPremierOperateur;
 			}
 			else{
-				sValeurPremierOperateur = getVariable(sNomPremierOperateur).getValeur();
+				sValeurPremierOperateur = getVariable(sNomPremierOperateur.trim()).getValeur();
 			}
 
 			// SECOND OPERATEUR //
@@ -394,7 +416,6 @@ public class Algo
 				parts[0].replaceAll("\'", "");
 				parts[0].replaceAll(Pattern.quote("\""), "");
 				sNomSecondOperateur = parts[0].replaceAll("\'", "");
-				System.out.println(sNomSecondOperateur);
 				bEstChaine = true;
 			}
 			else{
@@ -410,7 +431,8 @@ public class Algo
 			}
 
 			System.out.println(sValeurPremierOperateur + " | " + sValeurSecondOperateur);
-			return !(sValeurPremierOperateur.equals(sValeurSecondOperateur));
+
+			return !(sValeurPremierOperateur.equals(sValeurSecondOperateur.trim()));
 
 		}
 
@@ -427,7 +449,7 @@ public class Algo
 
 			// PREMIER OPERATEUR //
 
-			sNomPremierOperateur = parts[0];
+			sNomPremierOperateur = parts[0].trim();
 
 			if(sNomPremierOperateur.contains("\'") || sNomPremierOperateur.contains("\"")){
 				parts[0].replaceAll("\'", "");
@@ -452,7 +474,7 @@ public class Algo
 			if     (ligne.contains("alors")){ parts = sDroite.split("alors"); } // AJOUTER REGEX SI POSSIBLE ICI POUR DETECTER TQ SI ... OU LIMITER SPLIT A 2 //
 			else if(ligne.contains("faire")){ parts = sDroite.split("faire"); }
 
-			sNomSecondOperateur = parts[0];
+			sNomSecondOperateur = parts[0].trim();
 
 			if(sNomSecondOperateur.contains("\'") || sNomSecondOperateur.contains("\"")){
 				parts[0].replaceAll("\'", "");
@@ -465,11 +487,11 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurSecondOperateur = sNomSecondOperateur;
 			}
 			else{
-				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
+				sValeurSecondOperateur = getVariable(sNomSecondOperateur.trim()).getValeur();
 			}
 
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
@@ -502,11 +524,11 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
-				sValeurPremierOperateur = sNomPremierOperateur;
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
+				sValeurPremierOperateur = sNomPremierOperateur.trim();
 			}
 			else{
-				sValeurPremierOperateur = getVariable(sNomPremierOperateur).getValeur();
+				sValeurPremierOperateur = getVariable(sNomPremierOperateur.trim()).getValeur();
 			}
 
 			// SECOND OPERATEUR //
@@ -527,17 +549,17 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurSecondOperateur = sNomSecondOperateur;
 			}
 			else{
-				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
+				sValeurSecondOperateur = getVariable(sNomSecondOperateur.trim()).getValeur();
 			}
 
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
 			sValeurSecondOperateur  = sValeurSecondOperateur.trim();
 
-			return (Integer.parseInt(sValeurPremierOperateur) <= Integer.parseInt(sValeurSecondOperateur));
+			return (Integer.parseInt(sValeurPremierOperateur.trim()) <= Integer.parseInt(sValeurSecondOperateur.trim()));
 
 		}
 		else if(ligne.contains("< ")){
@@ -564,11 +586,11 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurPremierOperateur = sNomPremierOperateur;
 			}
 			else{
-				sValeurPremierOperateur = getVariable(sNomPremierOperateur).getValeur();
+				sValeurPremierOperateur = getVariable(sNomPremierOperateur.trim()).getValeur();
 			}
 
 			// SECOND OPERATEUR //
@@ -589,17 +611,17 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurSecondOperateur = sNomSecondOperateur;
 			}
 			else{
-				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
+				sValeurSecondOperateur = getVariable(sNomSecondOperateur.trim()).getValeur();
 			}
 
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
 			sValeurSecondOperateur  = sValeurSecondOperateur.trim();
 
-			return (Integer.parseInt(sValeurPremierOperateur) < Integer.parseInt(sValeurSecondOperateur));
+			return (Integer.parseInt(sValeurPremierOperateur.trim()) < Integer.parseInt(sValeurSecondOperateur.trim()));
 			
 		}
 		else if(ligne.contains("> ")){
@@ -626,11 +648,11 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurPremierOperateur = sNomPremierOperateur;
 			}
 			else{
-				sValeurPremierOperateur = getVariable(sNomPremierOperateur).getValeur();
+				sValeurPremierOperateur = getVariable(sNomPremierOperateur.trim()).getValeur();
 			}
 
 			// SECOND OPERATEUR //
@@ -651,17 +673,17 @@ public class Algo
 				bEstChaine = false;
 			}
 
-			if(getVariable(parts[0]) == null || bEstChaine){
+			if(getVariable(parts[0].trim()) == null || bEstChaine){
 				sValeurSecondOperateur = sNomSecondOperateur;
 			}
 			else{
-				sValeurSecondOperateur = getVariable(sNomSecondOperateur).getValeur();
+				sValeurSecondOperateur = getVariable(sNomSecondOperateur.trim()).getValeur();
 			}
 
 			sValeurPremierOperateur = sValeurPremierOperateur.trim();
 			sValeurSecondOperateur  = sValeurSecondOperateur.trim();
 
-			return (Integer.parseInt(sValeurPremierOperateur) > Integer.parseInt(sValeurSecondOperateur));
+			return (Integer.parseInt(sValeurPremierOperateur.trim()) > Integer.parseInt(sValeurSecondOperateur.trim()));
 
 		}
 		return false;
