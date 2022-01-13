@@ -119,14 +119,31 @@ public class Vue
 	// *** FORCE L'AFFICHAGE DES VARIABLES UNE SEULE FOIS *** //
 	public String getDonnee(String sLigne, int num)
 	{
+		// MOI //
+		Variable varTracer = null;
+        int tailleVar;
+        String sPremiersChars;
+        String sDerniersChars;
+		// MOI //
+
 		String sDonnee = "";
 		alCopie.add(num + (num < 10 ? " " : "") + sLigne);
 		if(f)
-			taille = ctrl.algo.getVariables().size();
+			taille = ctrl.algo.getVarTracer().size();
+
 		if(num < taille)
 		{
-			sDonnee +=  stockCase(" " + ctrl.algo.alVariables.get(num).getNom(),    1, iNbColonnes/2-3-ctrl.algo.alVariables.get(num).getNom().length(), false);
-			sDonnee +=  stockCase(" " + ctrl.algo.alVariables.get(num).getValeur(), 1, iNbColonnes/2-4-ctrl.algo.alVariables.get(num).getValeur().length(), false);
+			varTracer = ctrl.algo.getVariable(ctrl.algo.alVarsTracer.get(num));
+			tailleVar = ctrl.algo.alVarsTracer.get(num).length();
+			if(ctrl.algo.alVarsTracer.get(num).length() <= 10){
+				sDonnee +=  stockCase(" " + ctrl.algo.alVarsTracer.get(num),    1, iNbColonnes/2-3-ctrl.algo.alVarsTracer.get(num).length(), false);
+			}
+			else{
+				sPremiersChars = ctrl.algo.alVarsTracer.get(num).substring(0,5);
+                sDerniersChars = ctrl.algo.alVarsTracer.get(num).substring(tailleVar-3, tailleVar);
+				sDonnee +=  stockCase(" " + sPremiersChars + "..." + sDerniersChars, 1, iNbColonnes/2-3-(sPremiersChars+sDerniersChars+"...").length(), false);
+			}
+			sDonnee +=  stockCase(" " + varTracer.getValeur(), 1, iNbColonnes/2-4-varTracer.getValeur().length(), false);
 			num++;
 		}
 		return sDonnee;
@@ -274,8 +291,8 @@ public class Vue
 
 	public void defilementPAP()
 	{
-		try
-		{
+		/*try
+		{*/
 			int    ichoix = 0;
 			String sCoul = ctrl.listCouleur.get(0).surligner('R');
 			sTabs = "";
@@ -310,8 +327,8 @@ public class Vue
 					baseConsole();
 				}
 			}
-		}
-		catch (Exception e) { System.out.println("Ligne non trouvé"); }
+		/*}
+		catch (Exception e) { System.out.println("Ligne non trouvé"); }*/
 	}
 
 	public void defilementAuto()
