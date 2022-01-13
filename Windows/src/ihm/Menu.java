@@ -95,7 +95,7 @@ public class Menu
         ArrayList<Couleur> alTheme1  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme2  = new ArrayList<Couleur>();
         ArrayList<Couleur> alTheme3  = new ArrayList<Couleur>();
-        ctrl.listCouleur.get(0).start();
+        ctrl.alCouleur.get(0).start();
 
         for (int i = 0; i <= 2; i++)
             alTheme1.add(ctrl.alCouleur.get(i)); // Vert + Jaune + Bleu

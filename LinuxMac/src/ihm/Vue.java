@@ -119,12 +119,10 @@ public class Vue
 	// *** FORCE L'AFFICHAGE DES VARIABLES UNE SEULE FOIS *** //
 	public String getDonnee(String sLigne, int num)
 	{
-		// MOI //
 		Variable varTracer = null;
         int tailleVar;
         String sPremiersChars;
         String sDerniersChars;
-		// MOI //
 
 		String sDonnee = "";
 		alCopie.add(num + (num < 10 ? " " : "") + sLigne);
@@ -291,8 +289,8 @@ public class Vue
 
 	public void defilementPAP()
 	{
-		/*try
-		{*/
+		try
+		{
 			int    ichoix = 0;
 			String sCoul = ctrl.alCouleur.get(0).surligner('R');
 			sTabs = "";
@@ -327,8 +325,8 @@ public class Vue
 					baseConsole();
 				}
 			}
-		/*}
-		catch (Exception e) { System.out.println("Ligne non trouvé"); }*/
+		}
+		catch (Exception e) { System.out.println("Ligne non trouvé"); }
 	}
 
 	public void defilementAuto()

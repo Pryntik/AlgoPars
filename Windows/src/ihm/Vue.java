@@ -291,8 +291,8 @@ public class Vue
 
 	public void defilementPAP()
 	{
-		/*try
-		{*/
+		try
+		{
 			int    ichoix = 0;
 			String sCoul = ctrl.alCouleur.get(0).surligner('R');
 			sTabs = "";
@@ -327,8 +327,8 @@ public class Vue
 					baseConsole();
 				}
 			}
-		/*}
-		catch (Exception e) { System.out.println("Ligne non trouvé"); }*/
+		}
+		catch (Exception e) { System.out.println("Ligne non trouvé"); }
 	}
 
 	public void defilementAuto()
